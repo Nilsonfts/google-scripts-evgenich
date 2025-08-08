@@ -119,6 +119,83 @@ function quickAnalysis() {
 }
 
 /**
+ * Создает все недостающие листы в таблице
+ */
+function createMissingSheets() {
+  const startTime = new Date();
+  Logger.log('=== СОЗДАНИЕ НЕДОСТАЮЩИХ ЛИСТОВ ===');
+  Logger.log('Время начала: ' + startTime.toLocaleString('ru-RU'));
+  
+  try {
+    const spreadsheet = SpreadsheetApp.openById(CONFIG.MAIN_SPREADSHEET_ID);
+    const existingSheets = spreadsheet.getSheets().map(s => s.getName());
+    const requiredSheets = Object.values(CONFIG.SHEETS);
+    
+    let createdCount = 0;
+    
+    requiredSheets.forEach(sheetName => {
+      // Пропускаем листы с префиксами (они создаются динамически)
+      if (sheetName.includes('АНАЛИТИКА ЕВГЕНИЧЬ СПБ')) return;
+      
+      if (!existingSheets.includes(sheetName)) {
+        Logger.log('Создание листа: ' + sheetName);
+        const newSheet = spreadsheet.insertSheet(sheetName);
+        
+        // Добавляем базовые заголовки для основных листов
+        if (sheetName === 'ЕДИНАЯ_БАЗА_КЛИЕНТОВ') {
+          newSheet.getRange(1, 1, 1, 15).setValues([[
+            'ID (Телефон)', 'Имя', 'Email', 'Первый визит', 'Общая сумма', 
+            'Кол-во визитов', 'Средний чек', 'Последний визит', 'Первый источник',
+            'UTM Source', 'UTM Medium', 'UTM Campaign', 'UTM Content', 'UTM Term', 'Статус'
+          ]]);
+          newSheet.getRange(1, 1, 1, 15).setFontWeight('bold').setBackground('#d0d0d0');
+        } else if (sheetName === 'ПУТЬ_КЛИЕНТА') {
+          newSheet.getRange(1, 1, 1, 8).setValues([[
+            'ID Клиента', 'Дата события', 'Тип события', 'Источник', 
+            'Сумма', 'Описание', 'UTM данные', 'Timestamp'
+          ]]);
+          newSheet.getRange(1, 1, 1, 8).setFontWeight('bold').setBackground('#d0d0d0');
+        } else if (sheetName === 'КАЧЕСТВО_ДАННЫХ') {
+          newSheet.getRange(1, 1, 1, 6).setValues([[
+            'Источник данных', 'Всего записей', 'Валидных записей', 
+            'Процент качества', 'Последняя проверка', 'Статус'
+          ]]);
+          newSheet.getRange(1, 1, 1, 6).setFontWeight('bold').setBackground('#d0d0d0');
+        } else if (sheetName === '_CACHE_ALL_DATA') {
+          newSheet.getRange(1, 1, 1, 4).setValues([[
+            'Источник', 'Данные', 'Timestamp', 'Размер'
+          ]]);
+          newSheet.getRange(1, 1, 1, 4).setFontWeight('bold').setBackground('#f0f0f0');
+        }
+        
+        createdCount++;
+        Logger.log('✓ Лист создан: ' + sheetName);
+      }
+    });
+    
+    const executionTime = (new Date() - startTime) / 1000;
+    Logger.log('=== СОЗДАНИЕ ЛИСТОВ ЗАВЕРШЕНО ===');
+    Logger.log(`Создано листов: ${createdCount}`);
+    Logger.log(`Время выполнения: ${executionTime} секунд`);
+    
+    return {
+      success: true,
+      createdCount: createdCount,
+      executionTime: executionTime,
+      message: `Создано ${createdCount} новых листов`
+    };
+    
+  } catch (error) {
+    Logger.log('ОШИБКА в createMissingSheets: ' + error.toString());
+    return {
+      success: false,
+      error: error.toString(),
+      message: 'Не удалось создать листы'
+    };
+  }
+}
+
+/**
  * Инициализация системы (первый запуск)
  */
 function initializeSystem() {
@@ -143,6 +220,15 @@ function initializeSystem() {
         Logger.log(`✗ ${sheetName} - отсутствует`);
       }
     });
+    
+    // Создаем недостающие листы
+    Logger.log('Создание недостающих листов...');
+    const sheetCreation = createMissingSheets();
+    if (sheetCreation.success) {
+      Logger.log(`✓ Создано листов: ${sheetCreation.createdCount}`);
+    } else {
+      Logger.log('✗ Ошибка создания листов: ' + sheetCreation.error);
+    }
     
     // Настраиваем автоматические триггеры
     Logger.log('Настройка автоматических триггеров...');
@@ -534,6 +620,10 @@ function getFunctionsList() {
       'runUtmAnalysisModule() - UTM анализ',
       'runWeeklyReportsModule() - Еженедельные отчеты',
       'runAmoReportsModule() - AMO отчеты'
+    ],
+    setupFunctions: [
+      'createMissingSheets() - Создать недостающие листы',
+      'initializeSystem() - Полная инициализация системы'
     ],
     maintenanceFunctions: [
       'maintenanceCleanup() - Обслуживание системы',

@@ -682,9 +682,9 @@ function createDataBackup() {
     // Копируем все листы
     const sheets = sourceSpreadsheet.getSheets();
     
-    // Удаляем первый лист в новой таблице (создается автоматически)
+    // Переименовываем первый лист вместо удаления
     const defaultSheet = backupSpreadsheet.getSheets()[0];
-    backupSpreadsheet.deleteSheet(defaultSheet);
+    defaultSheet.setName('TEMP_SHEET');
     
     sheets.forEach(sheet => {
       const sheetName = sheet.getName();
@@ -710,6 +710,16 @@ function createDataBackup() {
         Logger.log('Ошибка копирования форматирования для листа ' + sheetName + ': ' + formatError);
       }
     });
+    
+    // Удаляем временный лист после копирования всех остальных
+    try {
+      const tempSheet = backupSpreadsheet.getSheetByName('TEMP_SHEET');
+      if (tempSheet && backupSpreadsheet.getSheets().length > 1) {
+        backupSpreadsheet.deleteSheet(tempSheet);
+      }
+    } catch (tempError) {
+      Logger.log('Предупреждение: не удалось удалить временный лист: ' + tempError);
+    }
     
     // Сохраняем информацию о бэкапе
     const backupInfo = {
