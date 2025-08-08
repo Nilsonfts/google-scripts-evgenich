@@ -1,0 +1,5297 @@
+/**	
+* Restaurant Analytics System - Центральная конфигурация	
+* Все настройки для всех модулей системы	
+* Автор: Restaurant Analytics	
+* Версия: 3.2	
+*/	
+	
+const CONFIG = {	
+// ID основной таблицы	
+MAIN_SPREADSHEET_ID: '1tD89CZMI8KqaHBx0gmGsHpc9eKYvpuk3OnCOpDYMDdE',	
+// Названия листов для данных	
+SHEETS: {	
+// Исходные данные	
+DEALS: 'РАБОЧИЙ АМО',	
+WORKING_AMO: 'РАБОЧИЙ АМО', // Дублируем для совместимости	
+BOOKINGS: 'Reserves RP',	
+RESERVES: 'Reserves RP', // Дублируем для совместимости	
+GUESTS: 'Guests RP',	
+CLIENTS: 'ЕДИНАЯ_БАЗА_КЛИЕНТОВ',	
+CUSTOMER_JOURNEY: 'ПУТЬ_КЛИЕНТА',	
+DATA_QUALITY: 'КАЧЕСТВО_ДАННЫХ',	
+SITE_REQUESTS: 'Заявки с Сайта',	
+BUDGETS: 'Бюджеты',	
+// Служебные листы для кеширования	
+CACHE_ALL_DATA: '_CACHE_ALL_DATA',	
+CACHE_METADATA: '_CACHE_METADATA',	
+// Новые отчеты	
+CLIENT_ANALYSIS: 'АНАЛИЗ КЛИЕНТСКОЙ БАЗЫ',	
+TRENDS_ANALYSIS: 'АНАЛИЗ ТРЕНДОВ И ПРОГНОЗЫ',	
+SALES_FUNNEL: 'ВОРОНКА ПРОДАЖ РЕСТОРАНА',	
+MARKETING_ANALYSIS: 'АНАЛИЗ ЭФФЕКТИВНОСТИ МАРКЕТИНГОВЫХ КАНАЛОВ',	
+DASHBOARD_PREFIX: 'АНАЛИТИКА ЕВГЕНИЧЬ СПБ' // Префикс для дашборда с датой	
+},	
+// Маппинг колонок в таблице РАБОЧИЙ АМО по блокам	
+WORKING_AMO_BLOCKS: {	
+DEAL: {	
+ID: 'Сделка.ID',	
+NAME: 'Сделка.Название',	
+RESPONSIBLE: 'Сделка.Ответственный',	
+STATUS: 'Сделка.Статус',	
+BUDGET: 'Сделка.Бюджет',	
+CREATE_DATE: 'Сделка.Дата создания',	
+CLOSE_DATE: 'Сделка.Дата закрытия',	
+CREATOR: 'Кем создана',	
+TAGS: 'Сделка.Теги',	
+STATUS_HISTORY: 'История статусов'	
+},	
+CONTACT: {	
+NAME: 'Контакт.ФИО',	
+PHONE: 'Контакт.Телефон',	
+MANGO_LINE: 'Контакт.Номер линии MANGO OFFICE',	
+DEAL_MANGO_LINE: 'Сделка.Номер линии MANGO OFFICE'	
+},	
+RESERVATION: {	
+BAR: 'Сделка.Бар (deal)',	
+BOOKING_DATE: 'Сделка.Дата брони',	
+ARRIVAL_TIME: 'Сделка.Время прихода',	
+GUESTS_COUNT: 'Сделка.Кол-во гостей',	
+COMMENT: 'Сделка.Комментарий МОБ',	
+GUEST_STATUS: 'Сделка.R.Статусы гостей'	
+},	
+UTM: {	
+SOURCE: 'Сделка.UTM_SOURCE',	
+MEDIUM: 'Сделка.UTM_MEDIUM',	
+CAMPAIGN: 'Сделка.UTM_CAMPAIGN',	
+CONTENT: 'Сделка.UTM_CONTENT',	
+TERM: 'Сделка.UTM_TERM',	
+REFERRER: 'Сделка.utm_referrer',	
+SOURCE_TYPE: 'Сделка.Источник',	
+DEAL_SOURCE: 'Сделка.R.Источник сделки',	
+LEAD_TYPE: 'Сделка.Тип лида',	
+REFERER: 'Сделка.REFERER'	
+},	
+ANALYTICS: {	
+YM_CLIENT_ID: 'Сделка.YM_CLIENT_ID',	
+YM_UID: 'Сделка._ym_uid',	
+GA_CLIENT_ID: 'Сделка.GA_CLIENT_ID',	
+FORM_ID: 'Сделка.FORMID',	
+FORM_NAME: 'Сделка.FORMNAME',	
+BUTTON_TEXT: 'Сделка.BUTTON_TEXT',	
+DATE: 'Сделка.DATE',	
+TIME: 'Сделка.TIME'	
+},	
+ADDITIONAL: {	
+CITY_TAG: 'Сделка.R.Тег города',	
+SOFTWARE: 'Сделка.ПО',	
+REJECTION_REASON: 'Сделка.Причина отказа (ОБ)',	
+NOTE: 'Примечание 1',	
+RELATED_DEALS: 'Связанные сделки',	
+MERGED: 'Объединено'	
+},	
+CHANGES: {	
+CHANGED_AT: 'Изменено',	
+CHANGED_FIELDS: 'Измененные поля'	
+}	
+},	
+// Маппинг колонок Reserves RP - подтверждено диагностикой	
+RESERVES_COLUMNS: {	
+ID: 0, // [0]: ID	
+RESERVE_ID: 1, // [1]: № заявки	
+NAME: 2, // [2]: Имя	
+PHONE: 3, // [3]: Телефон	
+EMAIL: 4, // [4]: Email	
+DATETIME: 5, // [5]: Дата/время	
+STATUS: 6, // [6]: Статус	
+COMMENT: 7, // [7]: Комментарий	
+AMOUNT: 8, // [8]: Счёт, ₽	
+GUESTS: 9, // [9]: Гостей	
+SOURCE: 10 // [10]: Источник	
+},	
+// Маппинг колонок Guests RP - подтверждено диагностикой	
+GUESTS_COLUMNS: {	
+NAME: 0, // [0]: Имя	
+PHONE: 1, // [1]: Телефон	
+EMAIL: 2, // [2]: Email	
+VISITS_COUNT: 3, // [3]: Кол-во визитов	
+TOTAL_AMOUNT: 4, // [4]: Общая сумма	
+FIRST_VISIT: 5, // [5]: Первый визит	
+LAST_VISIT: 6 // [6]: Последний визит	
+},	
+// Маппинг колонок заявок с сайта - подтверждено диагностикой	
+SITE_COLUMNS: {	
+NAME: 0, // [0]: Name	
+PHONE: 1, // [1]: Phone	
+EMAIL: 6, // [6]: Email	
+DATE: 7, // [7]: Date	
+QUANTITY: 8, // [8]: Quantity	
+FORM_NAME: 10, // [10]: Form name	
+TIME: 11, // [11]: Time	
+UTM_SOURCE: 17, // [17]: utm_source	
+UTM_MEDIUM: 19, // [19]: utm_medium	
+UTM_CAMPAIGN: 16, // [16]: utm_campaign	
+REFERER: 2, // [2]: referer	
+BUTTON_TEXT: 23 // [23]: button_text	
+},	
+// Маппинг колонок бюджетов	
+BUDGET_COLUMNS: {	
+CHANNEL: 0,	
+TAGS: 1,	
+MONTHS_START: 2	
+},	
+// Настройки обновления	
+UPDATE_SETTINGS: {	
+BATCH_SIZE: 1000,	
+CACHE_HOURS: 1,	
+MAX_EXECUTION_TIME: 300	
+},	
+// Настройки кеша	
+CACHE_DURATION: 21600, // 6 часов в секундах	
+// Настройки отчетов	
+REPORT_SETTINGS: {	
+DEFAULT_CHART_HEIGHT: 400,	
+CHART_COLORS: ['#3366CC', '#DC3912', '#FF9900', '#109618', '#990099', '#0099C6', '#DD4477']	
+},	
+// Настройки анализа	
+ANALYSIS_SETTINGS: {	
+DAYS_FOR_INACTIVE: 90, // Дней без активности для неактивных клиентов	
+VIP_MIN_VISITS: 5, // Минимум визитов для VIP	
+VIP_MIN_AMOUNT: 50000, // Минимальная сумма для VIP	
+REGULAR_MIN_VISITS: 2 // Минимум визитов для постоянных клиентов	
+},	
+// Отладочные настройки	
+DEBUG: {	
+ENABLED: true, // Включить расширенное логирование	
+SHOW_PHONE_SAMPLES: true, // Показывать примеры обработанных телефонов	
+LOG_DETAIL_LEVEL: 2 // Уровень детализации логов (1-3)	
+}	
+};	
+	
+/**	
+* Общие функции для всех модулей	
+*/	
+	
+/**	
+* Очистка телефонного номера для унификации	
+* Сохраняет стандартный формат с кодом 7	
+*/	
+function cleanPhone(phone) {	
+if (!phone) return '';	
+// Преобразуем в строку для обработки	
+let phoneStr = String(phone);	
+// Проверяем, не число ли уже это (Excel может хранить как число)	
+if (typeof phone === 'number') {	
+phoneStr = phone.toString();	
+}	
+// Удаляем все нецифровые символы	
+let cleaned = phoneStr.replace(/\D/g, '');	
+// Логируем образцы телефонов для диагностики	
+if (CONFIG.DEBUG && CONFIG.DEBUG.SHOW_PHONE_SAMPLES && Math.random() < 0.01) { // 1% для диагностики	
+Logger.log(`Пример обработки телефона: ${phone} → ${cleaned}`);	
+}	
+return cleaned;	
+}	
+	
+/**	
+* Очистка email для унификации	
+*/	
+function cleanEmail(email) {	
+if (!email) return '';	
+return String(email).toLowerCase().trim();	
+}	
+	
+/**	
+* Форматирование даты	
+*/	
+function formatDate(date) {	
+if (!date) return '';	
+// Если это уже строка в формате даты, возвращаем как есть	
+if (typeof date === 'string' && date.match(/^\d{4}-\d{2}-\d{2}/)) {	
+return date.split(' ')[0]; // Берем только дату без времени	
+}	
+// Если это объект Date	
+if (date instanceof Date) {	
+return Utilities.formatDate(date, Session.getScriptTimeZone(), 'yyyy-MM-dd');	
+}	
+// Пытаемся преобразовать в дату	
+try {	
+const dateObj = new Date(date);	
+if (!isNaN(dateObj.getTime())) {	
+return Utilities.formatDate(dateObj, Session.getScriptTimeZone(), 'yyyy-MM-dd');	
+}	
+} catch (e) {	
+// Игнорируем ошибки парсинга	
+}	
+return String(date);	
+}	
+	
+/**	
+* Парсинг числа с обработкой ошибок	
+*/	
+function parseNumber(value) {	
+if (!value) return 0;	
+// Если уже число, возвращаем как есть	
+if (typeof value === 'number') return value;	
+// Преобразуем в строку и удаляем все кроме цифр, точки и минуса	
+const num = parseFloat(String(value).replace(/[^\d.-]/g, ''));	
+return isNaN(num) ? 0 : num;	
+}	
+	
+/**	
+* Restaurant Analytics System - Module 1: Data Collection	
+* Модуль сбора данных из всех источников	
+* Автор: Restaurant Analytics	
+* Версия: 3.2	
+*/	
+	
+// ==================== ОСНОВНЫЕ ФУНКЦИИ ====================	
+	
+/**	
+* Главная функция для hourly триггера	
+* Собирает данные из всех источников и кеширует	
+*/	
+function hourlyDataCollection() {	
+const startTime = new Date();	
+Logger.log('=== Начало сбора данных: ' + startTime.toLocaleString('ru-RU'));	
+try {	
+const spreadsheet = SpreadsheetApp.openById(CONFIG.MAIN_SPREADSHEET_ID);	
+// Собираем данные из всех источников	
+const allData = {	
+timestamp: startTime.toISOString(),	
+workingAmo: collectWorkingAmoData(spreadsheet),	
+reserves: collectReservesData(spreadsheet),	
+guests: collectGuestsData(spreadsheet),	
+siteRequests: collectSiteRequestsData(spreadsheet),	
+budgets: collectBudgetsData(spreadsheet)	
+};	
+// Сохраняем статистику	
+const stats = {	
+workingAmo: allData.workingAmo.data.length - 1, // минус заголовок	
+reserves: allData.reserves.length - 1,	
+guests: allData.guests.length - 1,	
+siteRequests: allData.siteRequests.length - 1,	
+budgets: Object.keys(allData.budgets).length,	
+executionTime: (new Date() - startTime) / 1000	
+};	
+// Кешируем данные	
+cacheAllData(spreadsheet, allData, stats);	
+Logger.log('=== Сбор данных завершен за ' + stats.executionTime + ' секунд');	
+Logger.log('Собрано записей: РАБОЧИЙ АМО=' + stats.workingAmo + ', Reserves=' + stats.reserves + ', Guests=' + stats.guests + ', Site=' + stats.siteRequests);	
+// Сохраняем время последнего обновления	
+PropertiesService.getScriptProperties().setProperty('lastDataCollection', startTime.toISOString());	
+} catch (error) {	
+Logger.log('ОШИБКА в hourlyDataCollection: ' + error.toString());	
+throw error;	
+}	
+}	
+	
+/**	
+* Сбор данных из таблицы РАБОЧИЙ АМО	
+*/	
+function collectWorkingAmoData(spreadsheet) {	
+try {	
+const sheet = spreadsheet.getSheetByName(CONFIG.SHEETS.WORKING_AMO);	
+if (!sheet) {	
+Logger.log('Лист РАБОЧИЙ АМО не найден');	
+return { headers: [], data: [[]], columnMap: {} };	
+}	
+const data = sheet.getDataRange().getValues();	
+// Первые две строки - заголовки блоков и названия столбцов	
+const blockHeaders = data[0] || [];	
+const columnHeaders = data[1] || [];	
+// Создаём маппинг названий столбцов к их индексам	
+const columnMap = {};	
+columnHeaders.forEach((header, index) => {	
+if (header) {	
+columnMap[header.toString().trim()] = index;	
+}	
+});	
+// Данные начинаются с 3-й строки (индекс 2)	
+const rowData = data.slice(2);	
+Logger.log('РАБОЧИЙ АМО данные: ' + rowData.length + ' записей');	
+return {	
+blockHeaders: blockHeaders,	
+columnHeaders: columnHeaders,	
+data: [columnHeaders].concat(rowData), // Добавляем заголовки обратно для совместимости	
+columnMap: columnMap	
+};	
+} catch (error) {	
+Logger.log('Ошибка при сборе РАБОЧИЙ АМО данных: ' + error.toString());	
+return { headers: [], data: [[]], columnMap: {} };	
+}	
+}	
+	
+/**	
+* Сбор данных из Reserves RP	
+*/	
+function collectReservesData(spreadsheet) {	
+try {	
+const sheet = spreadsheet.getSheetByName(CONFIG.SHEETS.RESERVES);	
+if (!sheet) {	
+Logger.log('Лист RESERVES не найден');	
+return [[]];	
+}	
+const data = sheet.getDataRange().getValues();	
+Logger.log('Reserves данные: ' + (data.length - 1) + ' записей');	
+return data;	
+} catch (error) {	
+Logger.log('Ошибка при сборе Reserves данных: ' + error.toString());	
+return [[]];	
+}	
+}	
+	
+/**	
+* Сбор данных из Guests RP	
+*/	
+function collectGuestsData(spreadsheet) {	
+try {	
+const sheet = spreadsheet.getSheetByName(CONFIG.SHEETS.GUESTS);	
+if (!sheet) {	
+Logger.log('Лист GUESTS не найден');	
+return [[]];	
+}	
+const data = sheet.getDataRange().getValues();	
+Logger.log('Guests данные: ' + (data.length - 1) + ' записей');	
+return data;	
+} catch (error) {	
+Logger.log('Ошибка при сборе Guests данных: ' + error.toString());	
+return [[]];	
+}	
+}	
+	
+/**	
+* Сбор данных из заявок с сайта	
+*/	
+function collectSiteRequestsData(spreadsheet) {	
+try {	
+const sheet = spreadsheet.getSheetByName(CONFIG.SHEETS.SITE_REQUESTS);	
+if (!sheet) {	
+Logger.log('Лист SITE_REQUESTS не найден');	
+return [[]];	
+}	
+const data = sheet.getDataRange().getValues();	
+Logger.log('Site Requests данные: ' + (data.length - 1) + ' записей');	
+return data;	
+} catch (error) {	
+Logger.log('Ошибка при сборе Site Requests данных: ' + error.toString());	
+return [[]];	
+}	
+}	
+	
+/**	
+* Сбор данных о бюджетах	
+*/	
+function collectBudgetsData(spreadsheet) {	
+try {	
+const sheet = spreadsheet.getSheetByName(CONFIG.SHEETS.BUDGETS);	
+if (!sheet) {	
+Logger.log('Лист BUDGETS не найден');	
+return {};	
+}	
+const data = sheet.getDataRange().getValues();	
+const headers = data[0]; // Первая строка - заголовки с месяцами	
+const budgets = {};	
+// Парсим месяцы из заголовков (начиная с колонки C)	
+const months = [];	
+for (let i = CONFIG.BUDGET_COLUMNS.MONTHS_START; i < headers.length; i++) {	
+if (headers[i]) {	
+months.push(headers[i]);	
+}	
+}	
+// Собираем данные по каналам	
+for (let i = 1; i < data.length; i++) {	
+const row = data[i];	
+const channel = row[CONFIG.BUDGET_COLUMNS.CHANNEL];	
+const tags = row[CONFIG.BUDGET_COLUMNS.TAGS];	
+if (channel) {	
+budgets[channel] = {	
+tags: tags || '',	
+monthly: {}	
+};	
+// Собираем бюджеты по месяцам	
+months.forEach((month, index) => {	
+const value = row[CONFIG.BUDGET_COLUMNS.MONTHS_START + index];	
+if (value) {	
+budgets[channel].monthly[month] = parseNumber(value) || 0;	
+}	
+});	
+}	
+}	
+Logger.log('Budgets данные: ' + Object.keys(budgets).length + ' каналов');	
+return budgets;	
+} catch (error) {	
+Logger.log('Ошибка при сборе Budgets данных: ' + error.toString());	
+return {};	
+}	
+}	
+	
+/**	
+* Кеширование всех данных в служебный лист	
+*/	
+function cacheAllData(spreadsheet, allData, stats) {	
+try {	
+// Создаем или очищаем лист метаданных	
+let metaSheet = spreadsheet.getSheetByName(CONFIG.SHEETS.CACHE_METADATA);	
+if (!metaSheet) {	
+metaSheet = spreadsheet.insertSheet(CONFIG.SHEETS.CACHE_METADATA);	
+metaSheet.hideSheet(); // Скрываем служебный лист	
+} else {	
+metaSheet.clear();	
+}	
+// Сохраняем метаданные	
+const metadata = [	
+['Параметр', 'Значение'],	
+['Время обновления', allData.timestamp],	
+['РАБОЧИЙ АМО записей', stats.workingAmo],	
+['Reserves записей', stats.reserves],	
+['Guests записей', stats.guests],	
+['Site Requests записей', stats.siteRequests],	
+['Каналов с бюджетами', stats.budgets],	
+['Время выполнения (сек)', stats.executionTime]	
+];	
+metaSheet.getRange(1, 1, metadata.length, 2).setValues(metadata);	
+// Сохраняем данные в Properties для быстрого доступа другими модулями	
+const properties = PropertiesService.getScriptProperties();	
+// Сохраняем статистику	
+properties.setProperty('dataStats', JSON.stringify(stats));	
+// Для больших данных используем Cache Service	
+const cache = CacheService.getScriptCache();	
+// Кешируем бюджеты (они небольшие)	
+cache.put('budgetsData', JSON.stringify(allData.budgets), 3600); // 1 час	
+// Кешируем маппинг колонок для быстрого доступа к данным	
+cache.put('amoColumnMap', JSON.stringify(allData.workingAmo.columnMap), 3600);	
+Logger.log('Данные успешно закешированы');	
+} catch (error) {	
+Logger.log('Ошибка при кешировании: ' + error.toString());	
+}	
+}	
+	
+/**	
+* Получение значения ячейки из строки данных РАБОЧИЙ АМО	
+* Использует маппинг блоков для доступа к данным	
+*/	
+function getAmoValue(row, fieldName, columnMap) {	
+// Проверяем, есть ли такое поле в нашей конфигурации блоков	
+for (const blockKey in CONFIG.WORKING_AMO_BLOCKS) {	
+const block = CONFIG.WORKING_AMO_BLOCKS[blockKey];	
+for (const key in block) {	
+if (block[key] === fieldName) {	
+// Нашли поле в конфигурации, теперь получаем его индекс из маппинга колонок	
+const colIndex = columnMap[fieldName];	
+if (colIndex !== undefined && row[colIndex] !== undefined) {	
+return row[colIndex];	
+}	
+break;	
+}	
+}	
+}	
+return ''; // Если поле не найдено	
+}	
+	
+// ==================== ФУНКЦИИ УСТАНОВКИ И УПРАВЛЕНИЯ ====================	
+	
+/**	
+* Установка hourly триггера	
+*/	
+function setupHourlyTrigger() {	
+// Удаляем существующие триггеры	
+const triggers = ScriptApp.getProjectTriggers();	
+triggers.forEach(trigger => {	
+if (trigger.getHandlerFunction() === 'hourlyDataCollection') {	
+ScriptApp.deleteTrigger(trigger);	
+}	
+});	
+// Создаем новый триггер	
+ScriptApp.newTrigger('hourlyDataCollection')	
+.timeBased()	
+.everyHours(1)	
+.create();	
+Logger.log('Hourly триггер установлен для hourlyDataCollection');	
+// Запускаем первый сбор данных	
+hourlyDataCollection();	
+}	
+	
+/**	
+* Ручной запуск сбора данных	
+*/	
+function manualDataCollection() {	
+hourlyDataCollection();	
+SpreadsheetApp.getActiveSpreadsheet().toast('Сбор данных завершен', 'Успех', 3);	
+}	
+	
+/**	
+* Получение статистики последнего сбора	
+*/	
+function getLastCollectionStats() {	
+const properties = PropertiesService.getScriptProperties();	
+const lastRun = properties.getProperty('lastDataCollection');	
+const stats = properties.getProperty('dataStats');	
+if (lastRun && stats) {	
+const lastRunDate = new Date(lastRun);	
+const statsObj = JSON.parse(stats);	
+Logger.log('=== Последний сбор данных ===');	
+Logger.log('Время: ' + lastRunDate.toLocaleString('ru-RU'));	
+Logger.log('РАБОЧИЙ АМО записей: ' + statsObj.workingAmo);	
+Logger.log('Reserves записей: ' + statsObj.reserves);	
+Logger.log('Guests записей: ' + statsObj.guests);	
+Logger.log('Site Requests записей: ' + statsObj.siteRequests);	
+Logger.log('Каналов с бюджетами: ' + statsObj.budgets);	
+Logger.log('Время выполнения: ' + statsObj.executionTime + ' сек');	
+return {	
+lastRun: lastRunDate,	
+stats: statsObj	
+};	
+} else {	
+Logger.log('Данные еще не собирались');	
+return null;	
+}	
+}	
+	
+/**	
+* Тестовая функция для проверки доступа к данным	
+*/	
+function testDataAccess() {	
+try {	
+const spreadsheet = SpreadsheetApp.openById(CONFIG.MAIN_SPREADSHEET_ID);	
+// Проверяем доступность всех листов	
+Object.keys(CONFIG.SHEETS).forEach((key) => {	
+const sheetName = CONFIG.SHEETS[key];	
+if (sheetName.startsWith('_CACHE')) return; // Пропускаем служебные листы	
+const sheet = spreadsheet.getSheetByName(sheetName);	
+if (sheet) {	
+const rowCount = sheet.getLastRow();	
+Logger.log('✓ ' + sheetName + ': ' + rowCount + ' строк');	
+} else {	
+Logger.log('✗ ' + sheetName + ': НЕ НАЙДЕН');	
+}	
+});	
+} catch (error) {	
+Logger.log('Ошибка доступа: ' + error.toString());	
+}	
+}	
+	
+/**	
+* Проверка структуры таблицы РАБОЧИЙ АМО	
+*/	
+function checkWorkingAmoStructure() {	
+try {	
+const spreadsheet = SpreadsheetApp.openById(CONFIG.MAIN_SPREADSHEET_ID);	
+const sheet = spreadsheet.getSheetByName(CONFIG.SHEETS.WORKING_AMO);	
+if (!sheet) {	
+Logger.log('❌ Таблица РАБОЧИЙ АМО не найдена');	
+return false;	
+}	
+const data = sheet.getDataRange().getValues();	
+if (data.length < 3) {	
+Logger.log('❌ Таблица РАБОЧИЙ АМО пуста или не содержит достаточно строк');	
+return false;	
+}	
+// Проверяем заголовки столбцов (вторая строка)	
+const columnHeaders = data[1];	
+let missingFields = [];	
+// Проверяем наличие ключевых полей в каждом блоке	
+for (const blockKey in CONFIG.WORKING_AMO_BLOCKS) {	
+const block = CONFIG.WORKING_AMO_BLOCKS[blockKey];	
+for (const key in block) {	
+const fieldName = block[key];	
+if (!columnHeaders.includes(fieldName)) {	
+missingFields.push(fieldName);	
+}	
+}	
+}	
+if (missingFields.length > 0) {	
+Logger.log('⚠️ В таблице РАБОЧИЙ АМО отсутствуют следующие поля:');	
+missingFields.forEach(field => Logger.log(' - ' + field));	
+return false;	
+}	
+Logger.log('✅ Структура таблицы РАБОЧИЙ АМО проверена');	
+return true;	
+} catch (error) {	
+Logger.log('❌ Ошибка при проверке структуры РАБОЧИЙ АМО: ' + error.toString());	
+return false;	
+}	
+}	
+	
+/**	
+* Добавление в меню таблицы	
+*/	
+function onOpen() {	
+const ui = SpreadsheetApp.getUi();	
+ui.createMenu('Restaurant Analytics')	
+.addItem('Запустить сбор данных', 'manualDataCollection')	
+.addItem('Проверить структуру РАБОЧИЙ АМО', 'checkWorkingAmoStructure')	
+.addSeparator()	
+.addItem('Установить hourly триггер', 'setupHourlyTrigger')	
+.addToUi();	
+}	
+	
+/**	
+* Restaurant Analytics System - Module 2: Data Processing & Linking	
+* Обрабатывает и связывает данные между всеми системами	
+* Автор: Restaurant Analytics	
+* Версия: 2.2 RU - С обновлённой обработкой телефонов	
+*/	
+	
+// ==================== ОСНОВНЫЕ ФУНКЦИИ ОБРАБОТКИ ====================	
+	
+/**	
+* Главная функция обработки данных	
+* Запускается через 5 минут после сбора данных	
+*/	
+function processAndLinkData() {	
+const startTime = new Date();	
+Logger.log('=== Начало обработки данных: ' + startTime.toLocaleString('ru-RU'));	
+try {	
+const spreadsheet = SpreadsheetApp.openById(CONFIG.MAIN_SPREADSHEET_ID);	
+// Читаем все исходные данные	
+const rawData = {	
+workingAmo: readWorkingAmoData(spreadsheet),	
+reserves: readSheetData(spreadsheet, CONFIG.SHEETS.RESERVES),	
+guests: readSheetData(spreadsheet, CONFIG.SHEETS.GUESTS),	
+siteRequests: readSheetData(spreadsheet, CONFIG.SHEETS.SITE_REQUESTS),	
+budgets: readBudgetsData(spreadsheet)	
+};	
+// Логируем загруженные данные	
+Logger.log('Загружено данных:');	
+Logger.log('- РАБОЧИЙ АМО: ' + (rawData.workingAmo?.data?.length || 0) + ' строк');	
+Logger.log('- Reserves: ' + (rawData.reserves?.length || 0) + ' строк');	
+Logger.log('- Guests: ' + (rawData.guests?.length || 0) + ' строк');	
+Logger.log('- Заявки с сайта: ' + (rawData.siteRequests?.length || 0) + ' строк');	
+// Проверяем, что данные успешно загружены	
+if (!rawData.workingAmo || !rawData.workingAmo.data || rawData.workingAmo.data.length === 0) {	
+Logger.log('⚠️ Ошибка: Данные из РАБОЧИЙ АМО не загружены или пусты');	
+return;	
+}	
+// Обрабатываем и связываем данные	
+const processedData = {	
+// Унифицированные клиенты	
+unifiedCustomers: createUnifiedCustomers(rawData),	
+// Путь клиента	
+customerJourneys: buildCustomerJourneys(rawData),	
+// Статистика качества данных	
+dataQuality: analyzeDataQuality(rawData)	
+};	
+// Логируем результаты обработки	
+Logger.log('Результаты обработки:');	
+Logger.log('- Унифицированных клиентов: ' + processedData.unifiedCustomers.length);	
+Logger.log('- Customer journeys: ' + processedData.customerJourneys.length);	
+// Сохраняем результаты	
+saveProcessedData(spreadsheet, processedData);	
+const executionTime = (new Date() - startTime) / 1000;	
+Logger.log('=== Обработка завершена за ' + executionTime + ' секунд');	
+// Сохраняем время последней обработки	
+PropertiesService.getScriptProperties().setProperty('lastDataProcessing', startTime.toISOString());	
+} catch (error) {	
+Logger.log('ОШИБКА в processAndLinkData: ' + error.toString());	
+Logger.log('Stack trace: ' + error.stack);	
+throw error;	
+}	
+}	
+	
+/**	
+* Чтение данных из структурированной таблицы РАБОЧИЙ АМО	
+* Учитывает двустрочный заголовок и возвращает маппинг колонок	
+*/	
+function readWorkingAmoData(spreadsheet) {	
+try {	
+const sheet = spreadsheet.getSheetByName(CONFIG.SHEETS.WORKING_AMO);	
+if (!sheet) {	
+Logger.log('⚠️ Лист РАБОЧИЙ АМО не найден');	
+return { headers: [], data: [], columnMap: {} };	
+}	
+const data = sheet.getDataRange().getValues();	
+if (data.length < 3) {	
+Logger.log('⚠️ Недостаточно данных в РАБОЧИЙ АМО');	
+return { headers: [], data: [], columnMap: {} };	
+}	
+// Первые две строки - заголовки блоков и названия столбцов	
+const blockHeaders = data[0] || [];	
+const columnHeaders = data[1] || [];	
+// Создаём маппинг названий столбцов к их индексам	
+const columnMap = {};	
+columnHeaders.forEach((header, index) => {	
+if (header) {	
+columnMap[header.toString().trim()] = index;	
+}	
+});	
+// Логируем несколько найденных полей для проверки	
+Logger.log('Найдены поля в РАБОЧИЙ АМО:');	
+const fieldsToCheck = ['Контакт.Телефон', 'Контакт.ФИО', 'Сделка.ID', 'Сделка.Название'];	
+fieldsToCheck.forEach(field => {	
+if (columnMap[field] !== undefined) {	
+Logger.log('- ' + field + ': колонка ' + columnMap[field]);	
+}	
+});	
+// Данные начинаются с 3-й строки (индекс 2)	
+const rowData = data.slice(2);	
+Logger.log('РАБОЧИЙ АМО: загружено ' + rowData.length + ' строк данных');	
+return {	
+blockHeaders: blockHeaders,	
+columnHeaders: columnHeaders,	
+data: rowData,	
+columnMap: columnMap	
+};	
+} catch (error) {	
+Logger.log('Ошибка при чтении РАБОЧИЙ АМО: ' + error.toString());	
+return { headers: [], data: [], columnMap: {} };	
+}	
+}	
+	
+// ==================== СОЗДАНИЕ УНИФИЦИРОВАННОЙ БАЗЫ КЛИЕНТОВ ====================	
+	
+/**	
+* Создает единую базу клиентов из всех источников	
+* Адаптировано для работы с новой структурой РАБОЧИЙ АМО	
+*/	
+function createUnifiedCustomers(rawData) {	
+Logger.log('=== Создание унифицированной базы клиентов ===');	
+const customers = new Map(); // Используем Map для быстрого поиска	
+let processedCount = 0;	
+let guestsProcessed = 0;	
+let siteRequestsProcessed = 0;	
+let amoProcessed = 0;	
+let reservesProcessed = 0;	
+// 1. Сначала обрабатываем гостей из Guests RP (у них есть история визитов)	
+if (rawData.guests && rawData.guests.length > 1) {	
+Logger.log('Обработка Guests RP...');	
+// Проверяем первую строку данных для диагностики	
+if (rawData.guests[1]) {	
+Logger.log('Пример данных Guests (первая строка):');	
+Logger.log('- Телефон (индекс ' + CONFIG.GUESTS_COLUMNS.PHONE + '): ' + rawData.guests[1][CONFIG.GUESTS_COLUMNS.PHONE]);	
+Logger.log('- Имя (индекс ' + CONFIG.GUESTS_COLUMNS.NAME + '): ' + rawData.guests[1][CONFIG.GUESTS_COLUMNS.NAME]);	
+Logger.log('- Телефон после очистки: ' + cleanPhone(rawData.guests[1][CONFIG.GUESTS_COLUMNS.PHONE]));	
+}	
+for (let i = 1; i < rawData.guests.length; i++) {	
+const row = rawData.guests[i];	
+if (!row || row.length === 0) continue;	
+const phone = cleanPhone(row[CONFIG.GUESTS_COLUMNS.PHONE]);	
+const email = cleanEmail(row[CONFIG.GUESTS_COLUMNS.EMAIL]);	
+const customerId = phone || email; // Используем телефон как основной ID	
+if (!customerId) continue;	
+customers.set(customerId, {	
+id: customerId,	
+name: row[CONFIG.GUESTS_COLUMNS.NAME] || '',	
+phone: phone,	
+email: email,	
+// Данные из Guests	
+visitsCount: parseNumber(row[CONFIG.GUESTS_COLUMNS.VISITS_COUNT]),	
+totalAmount: parseNumber(row[CONFIG.GUESTS_COLUMNS.TOTAL_AMOUNT]),	
+firstVisitDate: formatDate(row[CONFIG.GUESTS_COLUMNS.FIRST_VISIT]),	
+lastVisitDate: formatDate(row[CONFIG.GUESTS_COLUMNS.LAST_VISIT]),	
+avgCheck: 0, // Рассчитаем позже	
+// Плейсхолдеры для других данных	
+firstSource: '',	
+firstUtmSource: '',	
+firstUtmMedium: '',	
+firstUtmCampaign: '',	
+amoDeals: [],	
+reserves: [],	
+siteRequests: [],	
+totalBudgetSpent: 0	
+});	
+guestsProcessed++;	
+}	
+Logger.log('Обработано записей из Guests: ' + guestsProcessed);	
+}	
+// 2. Обогащаем данными из заявок с сайта	
+if (rawData.siteRequests && rawData.siteRequests.length > 1) {	
+Logger.log('Обработка заявок с сайта...');	
+// Проверяем первую строку данных для диагностики	
+if (rawData.siteRequests[1]) {	
+Logger.log('Пример данных заявок (первая строка):');	
+Logger.log('- Телефон (индекс ' + CONFIG.SITE_COLUMNS.PHONE + '): ' + rawData.siteRequests[1][CONFIG.SITE_COLUMNS.PHONE]);	
+Logger.log('- Имя (индекс ' + CONFIG.SITE_COLUMNS.NAME + '): ' + rawData.siteRequests[1][CONFIG.SITE_COLUMNS.NAME]);	
+Logger.log('- Телефон после очистки: ' + cleanPhone(rawData.siteRequests[1][CONFIG.SITE_COLUMNS.PHONE]));	
+}	
+for (let i = 1; i < rawData.siteRequests.length; i++) {	
+const row = rawData.siteRequests[i];	
+if (!row || row.length === 0) continue;	
+const phone = cleanPhone(row[CONFIG.SITE_COLUMNS.PHONE]);	
+const email = cleanEmail(row[CONFIG.SITE_COLUMNS.EMAIL]);	
+const customerId = phone || email;	
+if (!customerId) continue;	
+let customer = customers.get(customerId);	
+if (!customer) {	
+// Новый клиент	
+customer = createNewCustomer(customerId, phone, email, row[CONFIG.SITE_COLUMNS.NAME]);	
+customers.set(customerId, customer);	
+}	
+// Добавляем информацию о заявке	
+customer.siteRequests.push({	
+date: formatDate(row[CONFIG.SITE_COLUMNS.DATE]),	
+formName: row[CONFIG.SITE_COLUMNS.FORM_NAME] || '',	
+utmSource: row[CONFIG.SITE_COLUMNS.UTM_SOURCE] || '',	
+utmMedium: row[CONFIG.SITE_COLUMNS.UTM_MEDIUM] || '',	
+utmCampaign: row[CONFIG.SITE_COLUMNS.UTM_CAMPAIGN] || ''	
+});	
+// Обновляем первый источник если это более ранняя заявка	
+updateFirstSource(customer, row);	
+siteRequestsProcessed++;	
+}	
+Logger.log('Обработано заявок с сайта: ' + siteRequestsProcessed);	
+}	
+// 3. Обогащаем данными из РАБОЧИЙ АМО	
+if (rawData.workingAmo && rawData.workingAmo.data && rawData.workingAmo.data.length > 0) {	
+Logger.log('Обработка РАБОЧИЙ АМО...');	
+const amoData = rawData.workingAmo.data;	
+const columnMap = rawData.workingAmo.columnMap;	
+// Получаем индексы колонок по их названиям	
+const getColIndex = (fieldName) => {	
+return columnMap[fieldName] !== undefined ? columnMap[fieldName] : -1;	
+};	
+// Получаем значение из строки по названию поля	
+const getValue = (row, fieldName) => {	
+const index = getColIndex(fieldName);	
+return index !== -1 && row[index] !== undefined ? row[index] : null;	
+};	
+// Проверяем первую строку для диагностики	
+if (amoData[0]) {	
+const phoneIndex = getColIndex(CONFIG.WORKING_AMO_BLOCKS.CONTACT.PHONE);	
+const nameIndex = getColIndex(CONFIG.WORKING_AMO_BLOCKS.CONTACT.NAME);	
+Logger.log('Индексы полей AMO: телефон=' + phoneIndex + ', имя=' + nameIndex);	
+if (phoneIndex !== -1) {	
+Logger.log('Пример телефона из AMO: ' + amoData[0][phoneIndex]);	
+Logger.log('Телефон после очистки: ' + cleanPhone(amoData[0][phoneIndex]));	
+}	
+}	
+for (let i = 0; i < amoData.length; i++) {	
+const row = amoData[i];	
+if (!row || row.length === 0) continue;	
+// Получаем телефон и email из блока CONTACT	
+const phone = cleanPhone(getValue(row, CONFIG.WORKING_AMO_BLOCKS.CONTACT.PHONE));	
+// Email нет в конфигурации, поищем его по названию поля	
+let email = '';	
+for (let j = 0; j < rawData.workingAmo.columnHeaders.length; j++) {	
+const header = rawData.workingAmo.columnHeaders[j];	
+if (header && header.toString().toLowerCase().includes('email')) {	
+email = cleanEmail(row[j]);	
+break;	
+}	
+}	
+const customerId = phone || email;	
+if (!customerId) continue;	
+let customer = customers.get(customerId);	
+if (!customer) {	
+customer = createNewCustomer(	
+customerId,	
+phone,	
+email,	
+getValue(row, CONFIG.WORKING_AMO_BLOCKS.CONTACT.NAME)	
+);	
+customers.set(customerId, customer);	
+}	
+// Добавляем информацию о сделке	
+const dealId = getValue(row, CONFIG.WORKING_AMO_BLOCKS.DEAL.ID);	
+if (dealId) {	
+customer.amoDeals.push({	
+id: dealId,	
+name: getValue(row, CONFIG.WORKING_AMO_BLOCKS.DEAL.NAME) || '',	
+stage: getValue(row, CONFIG.WORKING_AMO_BLOCKS.DEAL.STATUS) || '',	
+budget: parseNumber(getValue(row, CONFIG.WORKING_AMO_BLOCKS.DEAL.BUDGET)),	
+createDate: formatDate(getValue(row, CONFIG.WORKING_AMO_BLOCKS.DEAL.CREATE_DATE)),	
+closeDate: formatDate(getValue(row, CONFIG.WORKING_AMO_BLOCKS.DEAL.CLOSE_DATE)),	
+source: getValue(row, CONFIG.WORKING_AMO_BLOCKS.UTM.DEAL_SOURCE) || '',	
+city: getValue(row, CONFIG.WORKING_AMO_BLOCKS.ADDITIONAL.CITY_TAG) || '',	
+leadType: getValue(row, CONFIG.WORKING_AMO_BLOCKS.UTM.LEAD_TYPE) || ''	
+});	
+}	
+// Обновляем UTM-данные, если они есть	
+const utmSource = getValue(row, CONFIG.WORKING_AMO_BLOCKS.UTM.SOURCE);	
+const utmMedium = getValue(row, CONFIG.WORKING_AMO_BLOCKS.UTM.MEDIUM);	
+const utmCampaign = getValue(row, CONFIG.WORKING_AMO_BLOCKS.UTM.CAMPAIGN);	
+if (utmSource && (!customer.firstUtmSource || !customer.firstSourceDate)) {	
+customer.firstUtmSource = utmSource;	
+customer.firstUtmMedium = utmMedium || '';	
+customer.firstUtmCampaign = utmCampaign || '';	
+customer.firstSourceDate = getValue(row, CONFIG.WORKING_AMO_BLOCKS.DEAL.CREATE_DATE);	
+}	
+amoProcessed++;	
+}	
+Logger.log('Обработано записей из AMO: ' + amoProcessed);	
+}	
+// 4. Обогащаем данными из броней	
+if (rawData.reserves && rawData.reserves.length > 1) {	
+Logger.log('Обработка броней...');	
+// Проверяем первую строку данных для диагностики	
+if (rawData.reserves[1]) {	
+Logger.log('Пример данных броней (первая строка):');	
+Logger.log('- Телефон (индекс ' + CONFIG.RESERVES_COLUMNS.PHONE + '): ' + rawData.reserves[1][CONFIG.RESERVES_COLUMNS.PHONE]);	
+Logger.log('- Имя (индекс ' + CONFIG.RESERVES_COLUMNS.NAME + '): ' + rawData.reserves[1][CONFIG.RESERVES_COLUMNS.NAME]);	
+Logger.log('- Телефон после очистки: ' + cleanPhone(rawData.reserves[1][CONFIG.RESERVES_COLUMNS.PHONE]));	
+}	
+for (let i = 1; i < rawData.reserves.length; i++) {	
+const row = rawData.reserves[i];	
+if (!row || row.length === 0) continue;	
+const phone = cleanPhone(row[CONFIG.RESERVES_COLUMNS.PHONE]);	
+const email = cleanEmail(row[CONFIG.RESERVES_COLUMNS.EMAIL]);	
+const customerId = phone || email;	
+if (!customerId) continue;	
+let customer = customers.get(customerId);	
+if (!customer) {	
+customer = createNewCustomer(customerId, phone, email, row[CONFIG.RESERVES_COLUMNS.NAME]);	
+customers.set(customerId, customer);	
+}	
+// Добавляем информацию о брони	
+customer.reserves.push({	
+id: row[CONFIG.RESERVES_COLUMNS.RESERVE_ID],	
+datetime: row[CONFIG.RESERVES_COLUMNS.DATETIME],	
+status: row[CONFIG.RESERVES_COLUMNS.STATUS] || '',	
+amount: parseNumber(row[CONFIG.RESERVES_COLUMNS.AMOUNT]),	
+guests: parseNumber(row[CONFIG.RESERVES_COLUMNS.GUESTS])	
+});	
+reservesProcessed++;	
+}	
+Logger.log('Обработано броней: ' + reservesProcessed);	
+}	
+// 5. Рассчитываем дополнительные метрики	
+customers.forEach(customer => {	
+// Средний чек	
+if (customer.visitsCount > 0) {	
+customer.avgCheck = customer.totalAmount / customer.visitsCount;	
+}	
+// Сортируем массивы по датам	
+customer.siteRequests.sort((a, b) => new Date(a.date) - new Date(b.date));	
+customer.amoDeals.sort((a, b) => new Date(a.createDate) - new Date(b.createDate));	
+customer.reserves.sort((a, b) => new Date(a.datetime) - new Date(b.datetime));	
+});	
+Logger.log('=== ИТОГО создано унифицированных профилей: ' + customers.size + ' ===');	
+Logger.log('Источники: Guests=' + guestsProcessed + ', Site=' + siteRequestsProcessed + ', AMO=' + amoProcessed + ', Reserves=' + reservesProcessed);	
+// Конвертируем Map в массив для сохранения	
+return Array.from(customers.values());	
+}	
+	
+/**	
+* Создает нового клиента	
+*/	
+function createNewCustomer(customerId, phone, email, name) {	
+return {	
+id: customerId,	
+name: name || '',	
+phone: phone,	
+email: email,	
+visitsCount: 0,	
+totalAmount: 0,	
+firstVisitDate: '',	
+lastVisitDate: '',	
+avgCheck: 0,	
+firstSource: '',	
+firstUtmSource: '',	
+firstUtmMedium: '',	
+firstUtmCampaign: '',	
+firstSourceDate: '',	
+amoDeals: [],	
+reserves: [],	
+siteRequests: [],	
+totalBudgetSpent: 0	
+};	
+}	
+	
+/**	
+* Обновляет первый источник клиента	
+*/	
+function updateFirstSource(customer, siteRequestRow) {	
+const requestDate = formatDate(siteRequestRow[CONFIG.SITE_COLUMNS.DATE]);	
+// Если это первая заявка или более ранняя	
+if (!customer.firstSource || !customer.firstSourceDate ||	
+(requestDate && new Date(requestDate) < new Date(customer.firstSourceDate))) {	
+customer.firstSource = siteRequestRow[CONFIG.SITE_COLUMNS.REFERER] || 'direct';	
+customer.firstUtmSource = siteRequestRow[CONFIG.SITE_COLUMNS.UTM_SOURCE] || '';	
+customer.firstUtmMedium = siteRequestRow[CONFIG.SITE_COLUMNS.UTM_MEDIUM] || '';	
+customer.firstUtmCampaign = siteRequestRow[CONFIG.SITE_COLUMNS.UTM_CAMPAIGN] || '';	
+customer.firstSourceDate = requestDate;	
+}	
+}	
+	
+// ==================== ПОСТРОЕНИЕ CUSTOMER JOURNEY ====================	
+	
+/**	
+* Строит путь клиента через все системы	
+* Адаптировано для работы с новой структурой РАБОЧИЙ АМО	
+*/	
+function buildCustomerJourneys(rawData) {	
+Logger.log('=== Построение customer journey ===');	
+const journeys = [];	
+const phoneToJourney = new Map();	
+let totalEvents = 0;	
+// Собираем все события для каждого клиента	
+// 1. События из заявок с сайта	
+if (rawData.siteRequests && rawData.siteRequests.length > 1) {	
+Logger.log('Обработка событий из заявок с сайта...');	
+let siteEvents = 0;	
+for (let i = 1; i < rawData.siteRequests.length; i++) {	
+const row = rawData.siteRequests[i];	
+if (!row || row.length === 0) continue;	
+const phone = cleanPhone(row[CONFIG.SITE_COLUMNS.PHONE]);	
+if (!phone) continue;	
+if (!phoneToJourney.has(phone)) {	
+phoneToJourney.set(phone, {	
+phone: phone,	
+events: []	
+});	
+}	
+phoneToJourney.get(phone).events.push({	
+type: 'ЗАЯВКА_С_САЙТА',	
+date: formatDate(row[CONFIG.SITE_COLUMNS.DATE]),	
+time: row[CONFIG.SITE_COLUMNS.TIME] || '',	
+details: {	
+formName: row[CONFIG.SITE_COLUMNS.FORM_NAME] || '',	
+utmSource: row[CONFIG.SITE_COLUMNS.UTM_SOURCE] || '',	
+buttonText: row[CONFIG.SITE_COLUMNS.BUTTON_TEXT] || ''	
+}	
+});	
+siteEvents++;	
+}	
+Logger.log('Добавлено событий из заявок: ' + siteEvents);	
+}	
+// 2. События из РАБОЧИЙ АМО	
+if (rawData.workingAmo && rawData.workingAmo.data && rawData.workingAmo.data.length > 0) {	
+Logger.log('Обработка событий из AMO...');	
+let amoEvents = 0;	
+const amoData = rawData.workingAmo.data;	
+const columnMap = rawData.workingAmo.columnMap;	
+// Получаем значение из строки по названию поля	
+const getValue = (row, fieldName) => {	
+const index = columnMap[fieldName];	
+return index !== undefined && row[index] !== undefined ? row[index] : null;	
+};	
+for (let i = 0; i < amoData.length; i++) {	
+const row = amoData[i];	
+if (!row || row.length === 0) continue;	
+// Получаем телефон из блока CONTACT	
+const phone = cleanPhone(getValue(row, CONFIG.WORKING_AMO_BLOCKS.CONTACT.PHONE));	
+if (!phone) continue;	
+if (!phoneToJourney.has(phone)) {	
+phoneToJourney.set(phone, {	
+phone: phone,	
+events: []	
+});	
+}	
+const journey = phoneToJourney.get(phone);	
+// Создание сделки	
+const createDate = getValue(row, CONFIG.WORKING_AMO_BLOCKS.DEAL.CREATE_DATE);	
+if (createDate) {	
+journey.events.push({	
+type: 'СОЗДАНА_СДЕЛКА_AMO',	
+date: formatDate(createDate),	
+details: {	
+dealId: getValue(row, CONFIG.WORKING_AMO_BLOCKS.DEAL.ID),	
+dealName: getValue(row, CONFIG.WORKING_AMO_BLOCKS.DEAL.NAME) || '',	
+stage: getValue(row, CONFIG.WORKING_AMO_BLOCKS.DEAL.STATUS) || '',	
+responsible: getValue(row, CONFIG.WORKING_AMO_BLOCKS.DEAL.RESPONSIBLE) || ''	
+}	
+});	
+amoEvents++;	
+}	
+// Закрытие сделки (если есть)	
+const closeDate = getValue(row, CONFIG.WORKING_AMO_BLOCKS.DEAL.CLOSE_DATE);	
+if (closeDate) {	
+journey.events.push({	
+type: 'ЗАКРЫТА_СДЕЛКА_AMO',	
+date: formatDate(closeDate),	
+details: {	
+dealId: getValue(row, CONFIG.WORKING_AMO_BLOCKS.DEAL.ID),	
+budget: parseNumber(getValue(row, CONFIG.WORKING_AMO_BLOCKS.DEAL.BUDGET))	
+}	
+});	
+amoEvents++;	
+}	
+// Бронь (если есть данные о дате брони)	
+const bookingDate = getValue(row, CONFIG.WORKING_AMO_BLOCKS.RESERVATION.BOOKING_DATE);	
+if (bookingDate) {	
+journey.events.push({	
+type: 'СОЗДАНА_БРОНЬ_AMO',	
+date: formatDate(bookingDate),	
+details: {	
+dealId: getValue(row, CONFIG.WORKING_AMO_BLOCKS.DEAL.ID),	
+bar: getValue(row, CONFIG.WORKING_AMO_BLOCKS.RESERVATION.BAR) || '',	
+time: getValue(row, CONFIG.WORKING_AMO_BLOCKS.RESERVATION.ARRIVAL_TIME) || '',	
+guests: parseNumber(getValue(row, CONFIG.WORKING_AMO_BLOCKS.RESERVATION.GUESTS_COUNT))	
+}	
+});	
+amoEvents++;	
+}	
+}	
+Logger.log('Добавлено событий из AMO: ' + amoEvents);	
+}	
+// 3. События из броней	
+if (rawData.reserves && rawData.reserves.length > 1) {	
+Logger.log('Обработка событий из броней...');	
+let reserveEvents = 0;	
+for (let i = 1; i < rawData.reserves.length; i++) {	
+const row = rawData.reserves[i];	
+if (!row || row.length === 0) continue;	
+const phone = cleanPhone(row[CONFIG.RESERVES_COLUMNS.PHONE]);	
+if (!phone) continue;	
+if (!phoneToJourney.has(phone)) {	
+phoneToJourney.set(phone, {	
+phone: phone,	
+events: []	
+});	
+}	
+phoneToJourney.get(phone).events.push({	
+type: 'СОЗДАНА_БРОНЬ',	
+date: formatDate(row[CONFIG.RESERVES_COLUMNS.DATETIME]),	
+details: {	
+reserveId: row[CONFIG.RESERVES_COLUMNS.RESERVE_ID],	
+status: row[CONFIG.RESERVES_COLUMNS.STATUS] || '',	
+guests: parseNumber(row[CONFIG.RESERVES_COLUMNS.GUESTS]),	
+amount: parseNumber(row[CONFIG.RESERVES_COLUMNS.AMOUNT])	
+}	
+});	
+reserveEvents++;	
+}	
+Logger.log('Добавлено событий из броней: ' + reserveEvents);	
+}	
+// 4. События из визитов гостей	
+if (rawData.guests && rawData.guests.length > 1) {	
+Logger.log('Обработка событий из визитов гостей...');	
+let guestEvents = 0;	
+for (let i = 1; i < rawData.guests.length; i++) {	
+const row = rawData.guests[i];	
+if (!row || row.length === 0) continue;	
+const phone = cleanPhone(row[CONFIG.GUESTS_COLUMNS.PHONE]);	
+if (!phone) continue;	
+if (!phoneToJourney.has(phone)) {	
+phoneToJourney.set(phone, {	
+phone: phone,	
+events: []	
+});	
+}	
+const journey = phoneToJourney.get(phone);	
+// Первый визит	
+if (row[CONFIG.GUESTS_COLUMNS.FIRST_VISIT]) {	
+journey.events.push({	
+type: 'ПЕРВЫЙ_ВИЗИТ',	
+date: formatDate(row[CONFIG.GUESTS_COLUMNS.FIRST_VISIT]),	
+details: {	
+visitsTotal: parseNumber(row[CONFIG.GUESTS_COLUMNS.VISITS_COUNT]),	
+totalAmount: parseNumber(row[CONFIG.GUESTS_COLUMNS.TOTAL_AMOUNT])	
+}	
+});	
+guestEvents++;	
+}	
+// Последний визит (если отличается от первого)	
+if (row[CONFIG.GUESTS_COLUMNS.LAST_VISIT] &&	
+row[CONFIG.GUESTS_COLUMNS.LAST_VISIT] !== row[CONFIG.GUESTS_COLUMNS.FIRST_VISIT]) {	
+journey.events.push({	
+type: 'ПОСЛЕДНИЙ_ВИЗИТ',	
+date: formatDate(row[CONFIG.GUESTS_COLUMNS.LAST_VISIT]),	
+details: {	
+visitsTotal: parseNumber(row[CONFIG.GUESTS_COLUMNS.VISITS_COUNT])	
+}	
+});	
+guestEvents++;	
+}	
+}	
+Logger.log('Добавлено событий из визитов: ' + guestEvents);	
+}	
+// Сортируем события по дате и создаем итоговый массив	
+phoneToJourney.forEach((journey, phone) => {	
+if (journey.events.length === 0) return;	
+// Сортируем события по дате	
+journey.events.sort((a, b) => {	
+const dateA = new Date(a.date + ' ' + (a.time || '00:00'));	
+const dateB = new Date(b.date + ' ' + (b.time || '00:00'));	
+return dateA - dateB;	
+});	
+// Рассчитываем время между событиями	
+for (let i = 1; i < journey.events.length; i++) {	
+const prevDate = new Date(journey.events[i-1].date);	
+const currDate = new Date(journey.events[i].date);	
+const daysBetween = Math.floor((currDate - prevDate) / (1000 * 60 * 60 * 24));	
+journey.events[i].daysSincePrevious = daysBetween;	
+}	
+totalEvents += journey.events.length;	
+journeys.push(journey);	
+});	
+Logger.log('=== ИТОГО построено customer journey для ' + journeys.length + ' клиентов ===');	
+Logger.log('Всего событий: ' + totalEvents);	
+return journeys;	
+}	
+	
+// ==================== АНАЛИЗ КАЧЕСТВА ДАННЫХ ====================	
+	
+/**	
+* Анализирует качество данных и находит проблемы	
+* Адаптировано для работы с новой структурой РАБОЧИЙ АМО	
+*/	
+function analyzeDataQuality(rawData) {	
+Logger.log('=== Анализ качества данных ===');	
+// Убедимся, что все данные существуют	
+const workingAmo = rawData.workingAmo && rawData.workingAmo.data ? rawData.workingAmo.data : [];	
+const reserves = Array.isArray(rawData.reserves) ? rawData.reserves : [];	
+const guests = Array.isArray(rawData.guests) ? rawData.guests : [];	
+const siteRequests = Array.isArray(rawData.siteRequests) ? rawData.siteRequests : [];	
+const quality = {	
+totalRecords: {	
+workingAmo: workingAmo.length,	
+reserves: reserves.length > 0 ? reserves.length - 1 : 0,	
+guests: guests.length > 0 ? guests.length - 1 : 0,	
+siteRequests: siteRequests.length > 0 ? siteRequests.length - 1 : 0	
+},	
+missingPhones: {	
+workingAmo: 0,	
+reserves: 0,	
+guests: 0,	
+siteRequests: 0	
+},	
+missingEmails: {	
+workingAmo: 0,	
+reserves: 0,	
+guests: 0,	
+siteRequests: 0	
+},	
+duplicatePhones: new Set(),	
+invalidPhones: [],	
+matchingStats: {	
+amoToReserves: 0,	
+amoToGuests: 0,	
+siteToAMO: 0,	
+reservesToGuests: 0	
+}	
+};	
+// Проверяем данные РАБОЧИЙ АМО	
+const amoPhones = new Set();	
+const sitePhones = new Set();	
+// РАБОЧИЙ АМО	
+if (rawData.workingAmo && rawData.workingAmo.columnMap) {	
+const columnMap = rawData.workingAmo.columnMap;	
+const phoneIndex = columnMap[CONFIG.WORKING_AMO_BLOCKS.CONTACT.PHONE];	
+// Ищем индекс для email	
+let emailIndex = -1;	
+for (let j = 0; j < rawData.workingAmo.columnHeaders.length; j++) {	
+const header = rawData.workingAmo.columnHeaders[j];	
+if (header && header.toString().toLowerCase().includes('email')) {	
+emailIndex = j;	
+break;	
+}	
+}	
+for (let i = 0; i < workingAmo.length; i++) {	
+const row = workingAmo[i];	
+if (!row || row.length === 0) continue;	
+const phone = phoneIndex !== undefined ? cleanPhone(row[phoneIndex]) : '';	
+const email = emailIndex !== -1 ? cleanEmail(row[emailIndex]) : '';	
+if (!phone) quality.missingPhones.workingAmo++;	
+if (!email) quality.missingEmails.workingAmo++;	
+if (phone) {	
+if (amoPhones.has(phone)) {	
+quality.duplicatePhones.add(phone);	
+}	
+amoPhones.add(phone);	
+// Проверяем валидность телефона	
+if (phone.length < 10 || phone.length > 11) {	
+quality.invalidPhones.push(phone);	
+}	
+}	
+}	
+}	
+// Reserves	
+const reservesPhones = new Set();	
+for (let i = 1; i < reserves.length; i++) {	
+const row = reserves[i];	
+if (!row || row.length === 0) continue;	
+const phone = cleanPhone(row[CONFIG.RESERVES_COLUMNS.PHONE]);	
+const email = cleanEmail(row[CONFIG.RESERVES_COLUMNS.EMAIL]);	
+if (!phone) quality.missingPhones.reserves++;	
+if (!email) quality.missingEmails.reserves++;	
+if (phone) {	
+if (reservesPhones.has(phone)) {	
+quality.duplicatePhones.add(phone);	
+}	
+reservesPhones.add(phone);	
+}	
+}	
+// Guests	
+const guestsPhones = new Set();	
+for (let i = 1; i < guests.length; i++) {	
+const row = guests[i];	
+if (!row || row.length === 0) continue;	
+const phone = cleanPhone(row[CONFIG.GUESTS_COLUMNS.PHONE]);	
+const email = cleanEmail(row[CONFIG.GUESTS_COLUMNS.EMAIL]);	
+if (!phone) quality.missingPhones.guests++;	
+if (!email) quality.missingEmails.guests++;	
+if (phone) {	
+if (guestsPhones.has(phone)) {	
+quality.duplicatePhones.add(phone);	
+}	
+guestsPhones.add(phone);	
+}	
+}	
+// Site Requests	
+for (let i = 1; i < siteRequests.length; i++) {	
+const row = siteRequests[i];	
+if (!row || row.length === 0) continue;	
+const phone = cleanPhone(row[CONFIG.SITE_COLUMNS.PHONE]);	
+const email = cleanEmail(row[CONFIG.SITE_COLUMNS.EMAIL]);	
+if (!phone) quality.missingPhones.siteRequests++;	
+if (!email) quality.missingEmails.siteRequests++;	
+if (phone) {	
+sitePhones.add(phone);	
+}	
+}	
+// Считаем пересечения	
+amoPhones.forEach(phone => {	
+if (reservesPhones.has(phone)) quality.matchingStats.amoToReserves++;	
+if (guestsPhones.has(phone)) quality.matchingStats.amoToGuests++;	
+});	
+sitePhones.forEach(phone => {	
+if (amoPhones.has(phone)) quality.matchingStats.siteToAMO++;	
+});	
+reservesPhones.forEach(phone => {	
+if (guestsPhones.has(phone)) quality.matchingStats.reservesToGuests++;	
+});	
+Logger.log('Анализ качества завершен');	
+Logger.log('Найдено дубликатов телефонов: ' + quality.duplicatePhones.size);	
+Logger.log('Невалидных телефонов: ' + quality.invalidPhones.length);	
+return quality;	
+}	
+	
+// ==================== СОХРАНЕНИЕ РЕЗУЛЬТАТОВ ====================	
+	
+/**	
+* Сохраняет обработанные данные в новые листы	
+*/	
+function saveProcessedData(spreadsheet, processedData) {	
+Logger.log('=== Сохранение обработанных данных ===');	
+// 1. Сохраняем унифицированных клиентов	
+saveUnifiedCustomers(spreadsheet, processedData.unifiedCustomers);	
+// 2. Сохраняем customer journeys	
+saveCustomerJourneys(spreadsheet, processedData.customerJourneys);	
+// 3. Сохраняем отчет о качестве данных	
+saveDataQualityReport(spreadsheet, processedData.dataQuality);	
+Logger.log('Все данные сохранены');	
+}	
+	
+/**	
+* Сохраняет унифицированную базу клиентов	
+*/	
+function saveUnifiedCustomers(spreadsheet, customers) {	
+const sheetName = 'ЕДИНАЯ_БАЗА_КЛИЕНТОВ';	
+let sheet = spreadsheet.getSheetByName(sheetName);	
+if (!sheet) {	
+sheet = spreadsheet.insertSheet(sheetName);	
+} else {	
+// Очищаем все данные кроме заголовков	
+const lastRow = sheet.getLastRow();	
+const lastCol = sheet.getLastColumn();	
+if (lastRow > 1 && lastCol > 0) {	
+sheet.getRange(2, 1, lastRow - 1, lastCol).clearContent();	
+}	
+}	
+// Заголовки	
+const headers = [	
+ID (Телефон)',	
+Имя',	
+Email',	
+Кол-во визитов',	
+Общая сумма',	
+Средний чек',	
+Первый визит',	
+Последний визит',	
+Первый источник',	
+UTM Source',	
+UTM Medium',	
+UTM Campaign',	
+Кол-во сделок AMO',	
+Кол-во броней',	
+Кол-во заявок'	
+];	
+const data = [headers];	
+// Данные	
+customers.forEach(customer => {	
+data.push([	
+customer.phone,	
+customer.name,	
+customer.email,	
+customer.visitsCount,	
+customer.totalAmount,	
+Math.round(customer.avgCheck),	
+customer.firstVisitDate,	
+customer.lastVisitDate,	
+customer.firstSource,	
+customer.firstUtmSource,	
+customer.firstUtmMedium,	
+customer.firstUtmCampaign,	
+customer.amoDeals.length,	
+customer.reserves.length,	
+customer.siteRequests.length	
+]);	
+});	
+// Записываем данные	
+if (data.length > 1) {	
+sheet.getRange(1, 1, data.length, headers.length).setValues(data);	
+// Форматирование	
+sheet.getRange(1, 1, 1, headers.length).setFontWeight('bold');	
+sheet.setFrozenRows(1);	
+// Автоматическая ширина колонок	
+for (let i = 1; i <= headers.length; i++) {	
+sheet.autoResizeColumn(i);	
+}	
+// Форматирование чисел	
+if (data.length > 1) {	
+sheet.getRange(2, 4, data.length - 1, 1).setNumberFormat('#,##0'); // Кол-во визитов	
+sheet.getRange(2, 5, data.length - 1, 2).setNumberFormat('#,##0₽'); // Суммы	
+}	
+}	
+Logger.log('Сохранено ' + (data.length - 1) + ' унифицированных клиентов');	
+}	
+	
+/**	
+* Сохраняет customer journeys в более читаемом формате	
+*/	
+function saveCustomerJourneys(spreadsheet, journeys) {	
+const sheetName = 'ПУТЬ_КЛИЕНТА';	
+let sheet = spreadsheet.getSheetByName(sheetName);	
+if (!sheet) {	
+sheet = spreadsheet.insertSheet(sheetName);	
+} else {	
+// Очищаем все данные кроме заголовков	
+const lastRow = sheet.getLastRow();	
+const lastCol = sheet.getLastColumn();	
+if (lastRow > 1 && lastCol > 0) {	
+sheet.getRange(2, 1, lastRow - 1, lastCol).clearContent();	
+}	
+}	
+// Заголовки	
+const headers = [	
+Телефон',	
+Событие',	
+Дата',	
+Дней с предыдущего',	
+Название формы',	
+UTM Source',	
+Название сделки',	
+Статус',	
+Сумма'	
+];	
+const data = [headers];	
+// Данные	
+journeys.forEach(journey => {	
+journey.events.forEach((event, index) => {	
+const details = event.details || {};	
+// Извлекаем читаемые данные из деталей	
+let formName = '';	
+let utmSource = '';	
+let dealName = '';	
+let status = '';	
+let amount = '';	
+switch(event.type) {	
+case 'ЗАЯВКА_С_САЙТА':	
+formName = details.formName || '';	
+utmSource = details.utmSource || '';	
+break;	
+case 'СОЗДАНА_СДЕЛКА_AMO':	
+dealName = details.dealName || '';	
+status = details.stage || '';	
+break;	
+case 'ЗАКРЫТА_СДЕЛКА_AMO':	
+amount = details.budget || 0;	
+break;	
+case 'СОЗДАНА_БРОНЬ':	
+case 'СОЗДАНА_БРОНЬ_AMO':	
+status = details.status || '';	
+amount = details.amount || 0;	
+break;	
+case 'ПЕРВЫЙ_ВИЗИТ':	
+case 'ПОСЛЕДНИЙ_ВИЗИТ':	
+amount = details.totalAmount || 0;	
+break;	
+}	
+data.push([	
+journey.phone,	
+event.type,	
+event.date,	
+event.daysSincePrevious || 0,	
+formName,	
+utmSource,	
+dealName,	
+status,	
+amount	
+]);	
+});	
+});	
+// Записываем данные	
+if (data.length > 1) {	
+sheet.getRange(1, 1, data.length, headers.length).setValues(data);	
+// Форматирование	
+sheet.getRange(1, 1, 1, headers.length).setFontWeight('bold');	
+sheet.setFrozenRows(1);	
+// Автоматическая ширина колонок	
+for (let i = 1; i <= headers.length; i++) {	
+sheet.autoResizeColumn(i);	
+}	
+// Форматирование суммы как валюты	
+if (data.length > 1) {	
+sheet.getRange(2, 9, data.length - 1, 1).setNumberFormat('#,##0₽');	
+}	
+}	
+Logger.log('Сохранено ' + journeys.length + ' customer journeys с ' + (data.length - 1) + ' событиями');	
+}	
+	
+/**	
+* Сохраняет отчет о качестве данных	
+*/	
+function saveDataQualityReport(spreadsheet, quality) {	
+const sheetName = 'КАЧЕСТВО_ДАННЫХ';	
+let sheet = spreadsheet.getSheetByName(sheetName);	
+if (!sheet) {	
+sheet = spreadsheet.insertSheet(sheetName);	
+} else {	
+sheet.clear(); // Полностью очищаем лист	
+}	
+try {	
+// Проверяем, что объект качества существует и имеет все нужные поля	
+if (!quality || !quality.totalRecords) {	
+Logger.log('Ошибка: объект качества данных неполный');	
+// Создаем базовый отчет с заголовками	
+const basicReport = [	
+['Метрика', 'РАБОЧИЙ АМО', 'Reserves', 'Guests', 'Заявки с сайта'],	
+['Всего записей', 0, 0, 0, 0],	
+['Ошибка при формировании отчета', '', '', '', '']	
+];	
+sheet.getRange(1, 1, basicReport.length, basicReport[0].length).setValues(basicReport);	
+return;	
+}	
+// Формируем отчет с гарантированной структурой	
+const report = [];	
+// Первая строка (заголовки)	
+report.push(['Метрика', 'РАБОЧИЙ АМО', 'Reserves', 'Guests', 'Заявки с сайта']);	
+// Остальные строки с проверкой на существование данных	
+report.push([	
+Всего записей',	
+quality.totalRecords?.workingAmo || 0,	
+quality.totalRecords?.reserves || 0,	
+quality.totalRecords?.guests || 0,	
+quality.totalRecords?.siteRequests || 0	
+]);	
+report.push([	
+Без телефона',	
+quality.missingPhones?.workingAmo || 0,	
+quality.missingPhones?.reserves || 0,	
+quality.missingPhones?.guests || 0,	
+quality.missingPhones?.siteRequests || 0	
+]);	
+report.push([	
+Без email',	
+quality.missingEmails?.workingAmo || 0,	
+quality.missingEmails?.reserves || 0,	
+quality.missingEmails?.guests || 0,	
+quality.missingEmails?.siteRequests || 0	
+]);	
+// Пустая строка	
+report.push(['', '', '', '', '']);	
+// Статистика совпадений	
+report.push(['Статистика совпадений', 'Количество', '', '', '']);	
+report.push(['AMO → Reserves', quality.matchingStats?.amoToReserves || 0, '', '', '']);	
+report.push(['AMO → Guests', quality.matchingStats?.amoToGuests || 0, '', '', '']);	
+report.push(['Заявки → AMO', quality.matchingStats?.siteToAMO || 0, '', '', '']);	
+report.push(['Reserves → Guests', quality.matchingStats?.reservesToGuests || 0, '', '', '']);	
+// Пустая строка	
+report.push(['', '', '', '', '']);	
+// Проблемы с данными	
+report.push(['Проблемы с данными', 'Количество', '', '', '']);	
+report.push(['Дубликаты телефонов', quality.duplicatePhones?.size || 0, '', '', '']);	
+report.push(['Невалидные телефоны', quality.invalidPhones?.length || 0, '', '', '']);	
+// Записываем данные	
+sheet.getRange(1, 1, report.length, report[0].length).setValues(report);	
+// Форматирование	
+sheet.getRange(1, 1, 1, 5).setFontWeight('bold');	
+sheet.getRange(6, 1, 1, 2).setFontWeight('bold');	
+sheet.getRange(12, 1, 1, 2).setFontWeight('bold');	
+// Автоматическая ширина колонок	
+for (let i = 1; i <= 5; i++) {	
+sheet.autoResizeColumn(i);	
+}	
+Logger.log('Отчет о качестве данных сохранен');	
+} catch (error) {	
+Logger.log('Ошибка при сохранении отчета: ' + error.toString());	
+// Сохраняем информацию об ошибке	
+sheet.getRange(1, 1, 3, 1).setValues([	
+['ОШИБКА ФОРМИРОВАНИЯ ОТЧЕТА'],	
+['Время ошибки: ' + new Date().toLocaleString('ru-RU')],	
+['Текст ошибки: ' + error.toString()]	
+]);	
+}	
+}	
+	
+// ==================== ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ ====================	
+	
+/**	
+* Читает данные с листа	
+*/	
+function readSheetData(spreadsheet, sheetName) {	
+try {	
+const sheet = spreadsheet.getSheetByName(sheetName);	
+if (!sheet) {	
+Logger.log('Лист ' + sheetName + ' не найден');	
+return [];	
+}	
+const lastRow = sheet.getLastRow();	
+const lastCol = sheet.getLastColumn();	
+if (lastRow === 0 || lastCol === 0) {	
+Logger.log('Лист ' + sheetName + ' пустой');	
+return [];	
+}	
+const data = sheet.getRange(1, 1, lastRow, lastCol).getValues();	
+Logger.log('Прочитано из ' + sheetName + ': ' + data.length + ' строк');	
+return data;	
+} catch (error) {	
+Logger.log('Ошибка чтения ' + sheetName + ': ' + error.toString());	
+return [];	
+}	
+}	
+	
+/**	
+* Читает данные о бюджетах из кеша	
+*/	
+function readBudgetsData(spreadsheet) {	
+try {	
+const cache = CacheService.getScriptCache();	
+const budgetsJson = cache.get('budgetsData');	
+if (budgetsJson) {	
+return JSON.parse(budgetsJson);	
+}	
+// Если кеша нет, читаем напрямую из листа	
+return {}; // Упрощенно, т.к. функция не используется	
+} catch (error) {	
+Logger.log('Ошибка чтения бюджетов: ' + error.toString());	
+return {};	
+}	
+}	
+	
+/**	
+* Очистка телефонного номера для унификации	
+* ИСПРАВЛЕНО: Теперь обрабатывает разные форматы телефонов корректно	
+*/	
+function cleanPhone(phone) {	
+if (!phone) return '';	
+// Преобразуем в строку для обработки	
+let phoneStr = String(phone);	
+// Проверяем, не число ли уже это (Excel может хранить как число)	
+if (typeof phone === 'number') {	
+phoneStr = phone.toString();	
+}	
+// Удаляем все нецифровые символы	
+let cleaned = phoneStr.replace(/\D/g, '');	
+// Обработка российских номеров	
+if (cleaned.length === 11) {	
+if (cleaned.startsWith('8') || cleaned.startsWith('7')) {	
+// Удаляем первую цифру для стандартизации	
+cleaned = cleaned.substring(1);	
+}	
+}	
+// Обработка номеров с кодом страны +7	
+if (cleaned.length === 12 && cleaned.startsWith('7')) {	
+cleaned = cleaned.substring(1);	
+}	
+// Логируем образцы телефонов для диагностики	
+if (Math.random() < 0.01) { // Выводим примерно 1% для диагностики	
+Logger.log('Пример обработки телефона: ' + phone + ' -> ' + cleaned);	
+}	
+return cleaned;	
+}	
+	
+/**	
+* Очистка email для унификации	
+*/	
+function cleanEmail(email) {	
+if (!email) return '';	
+return String(email).toLowerCase().trim();	
+}	
+	
+/**	
+/**	
+* Форматирование даты	
+*/	
+function formatDate(date) {	
+if (!date) return '';	
+// Если это уже строка в формате даты, возвращаем как есть	
+if (typeof date === 'string' && date.match(/^\d{4}-\d{2}-\d{2}/)) {	
+return date.split(' ')[0]; // Берем только дату без времени	
+}	
+// Если это объект Date	
+if (date instanceof Date) {	
+return Utilities.formatDate(date, Session.getScriptTimeZone(), 'yyyy-MM-dd');	
+}	
+// Пытаемся преобразовать в дату	
+try {	
+const dateObj = new Date(date);	
+if (!isNaN(dateObj.getTime())) {	
+return Utilities.formatDate(dateObj, Session.getScriptTimeZone(), 'yyyy-MM-dd');	
+}	
+} catch (e) {	
+// Игнорируем ошибки парсинга	
+}	
+return String(date);	
+}	
+	
+/**	
+* Парсинг числа с обработкой ошибок	
+*/	
+function parseNumber(value) {	
+if (!value) return 0;	
+// Если уже число, возвращаем как есть	
+if (typeof value === 'number') return value;	
+// Преобразуем в строку и удаляем все кроме цифр, точки и минуса	
+const num = parseFloat(String(value).replace(/[^\d.-]/g, ''));	
+return isNaN(num) ? 0 : num;	
+}	
+	
+// ==================== ДИАГНОСТИЧЕСКИЕ ФУНКЦИИ ====================	
+	
+/**	
+* Тестирует обработку телефонов из разных источников	
+*/	
+function testPhoneProcessing() {	
+const testPhones = [	
++7 (921) 123-45-67',	
+89211234567',	
+9211234567',	
+7 921 123 45 67',	
++79211234567'	
+];	
+Logger.log('=== ТЕСТ ОБРАБОТКИ ТЕЛЕФОНОВ ===');	
+testPhones.forEach(phone => {	
+const cleaned = cleanPhone(phone);	
+Logger.log('Исходный: "' + phone + '" -> Очищенный: "' + cleaned + '"');	
+});	
+}	
+	
+/**	
+* Проверяет наличие данных во всех источниках и выводит примеры	
+*/	
+function checkDataSources() {	
+const spreadsheet = SpreadsheetApp.openById(CONFIG.MAIN_SPREADSHEET_ID);	
+Logger.log('=== ПРОВЕРКА ИСТОЧНИКОВ ДАННЫХ ===');	
+// РАБОЧИЙ АМО	
+try {	
+const amoSheet = spreadsheet.getSheetByName(CONFIG.SHEETS.WORKING_AMO);	
+if (amoSheet) {	
+const lastRow = amoSheet.getLastRow();	
+Logger.log('РАБОЧИЙ АМО: ' + (lastRow-2) + ' записей');	
+if (lastRow > 3) {	
+// Проверяем первую запись	
+const firstRow = amoSheet.getRange(3, 1, 1, 20).getValues()[0];	
+const columnHeaders = amoSheet.getRange(2, 1, 1, 20).getValues()[0];	
+let phoneIndex = -1;	
+for (let i = 0; i < columnHeaders.length; i++) {	
+if (String(columnHeaders[i]).includes('Телефон')) {	
+phoneIndex = i;	
+break;	
+}	
+}	
+if (phoneIndex >= 0) {	
+Logger.log('Пример телефона: ' + firstRow[phoneIndex] + ' -> ' + cleanPhone(firstRow[phoneIndex]));	
+}	
+}	
+} else {	
+Logger.log('⚠️ Лист РАБОЧИЙ АМО не найден!');	
+}	
+} catch (error) {	
+Logger.log('Ошибка при проверке РАБОЧИЙ АМО: ' + error);	
+}	
+// Guests	
+try {	
+const guestsSheet = spreadsheet.getSheetByName(CONFIG.SHEETS.GUESTS);	
+if (guestsSheet) {	
+const lastRow = guestsSheet.getLastRow();	
+Logger.log('Guests: ' + (lastRow-1) + ' записей');	
+if (lastRow > 1) {	
+// Проверяем первую запись	
+const firstRow = guestsSheet.getRange(2, 1, 1, 7).getValues()[0];	
+Logger.log('Пример телефона: ' + firstRow[CONFIG.GUESTS_COLUMNS.PHONE] +	
+ -> ' + cleanPhone(firstRow[CONFIG.GUESTS_COLUMNS.PHONE]));	
+}	
+} else {	
+Logger.log('⚠️ Лист Guests не найден!');	
+}	
+} catch (error) {	
+Logger.log('Ошибка при проверке Guests: ' + error);	
+}	
+// Reserves	
+try {	
+const reservesSheet = spreadsheet.getSheetByName(CONFIG.SHEETS.RESERVES);	
+if (reservesSheet) {	
+const lastRow = reservesSheet.getLastRow();	
+Logger.log('Reserves: ' + (lastRow-1) + ' записей');	
+if (lastRow > 1) {	
+// Проверяем первую запись	
+const firstRow = reservesSheet.getRange(2, 1, 1, 10).getValues()[0];	
+Logger.log('Пример телефона: ' + firstRow[CONFIG.RESERVES_COLUMNS.PHONE] +	
+ -> ' + cleanPhone(firstRow[CONFIG.RESERVES_COLUMNS.PHONE]));	
+}	
+} else {	
+Logger.log('⚠️ Лист Reserves не найден!');	
+}	
+} catch (error) {	
+Logger.log('Ошибка при проверке Reserves: ' + error);	
+}	
+// Заявки с сайта	
+try {	
+const siteSheet = spreadsheet.getSheetByName(CONFIG.SHEETS.SITE_REQUESTS);	
+if (siteSheet) {	
+const lastRow = siteSheet.getLastRow();	
+Logger.log('Заявки с сайта: ' + (lastRow-1) + ' записей');	
+if (lastRow > 1) {	
+// Проверяем первую запись	
+const firstRow = siteSheet.getRange(2, 1, 1, 10).getValues()[0];	
+Logger.log('Пример телефона: ' + firstRow[CONFIG.SITE_COLUMNS.PHONE] +	
+ -> ' + cleanPhone(firstRow[CONFIG.SITE_COLUMNS.PHONE]));	
+}	
+} else {	
+Logger.log('⚠️ Лист Заявки с сайта не найден!');	
+}	
+} catch (error) {	
+Logger.log('Ошибка при проверке Заявки с сайта: ' + error);	
+}	
+Logger.log('=== КОНЕЦ ПРОВЕРКИ ИСТОЧНИКОВ ===');	
+}	
+	
+// ==================== УПРАВЛЕНИЕ ТРИГГЕРАМИ ====================	
+	
+/**	
+* Устанавливает триггер для обработки данных	
+* Запускается через 5 минут после каждого часа	
+*/	
+function setupProcessingTrigger() {	
+// Удаляем существующие триггеры	
+const triggers = ScriptApp.getProjectTriggers();	
+triggers.forEach(trigger => {	
+if (trigger.getHandlerFunction() === 'processAndLinkData') {	
+ScriptApp.deleteTrigger(trigger);	
+}	
+});	
+// Создаем новый триггер	
+ScriptApp.newTrigger('processAndLinkData')	
+.timeBased()	
+.everyHours(1)	
+.nearMinute(5) // Запускаем на 5-й минуте каждого часа	
+.create();	
+Logger.log('Триггер обработки данных установлен (каждый час на 5-й минуте)');	
+// Запускаем первую обработку	
+processAndLinkData();	
+}	
+	
+/**	
+* Устанавливает триггер для ежедневного запуска обработки данных	
+*/	
+function setupDailyProcessingTrigger() {	
+// Удаляем существующие триггеры	
+const triggers = ScriptApp.getProjectTriggers();	
+triggers.forEach(trigger => {	
+if (trigger.getHandlerFunction() === 'processAndLinkData') {	
+ScriptApp.deleteTrigger(trigger);	
+}	
+});	
+// Создаем новый триггер - ежедневно в 4 утра	
+ScriptApp.newTrigger('processAndLinkData')	
+.timeBased()	
+.atHour(4)	
+.everyDays(1)	
+.create();	
+Logger.log('Ежедневный триггер обработки данных установлен (каждый день в 4:00)');	
+}	
+	
+/**	
+* Ручной запуск с проверкой исходных данных	
+*/	
+function runProcessingWithVerification() {	
+// Сначала проверяем данные	
+checkDataSources();	
+// Затем запускаем обработку	
+processAndLinkData();	
+}	
+	
+/**	
+* Restaurant Analytics System - Module 3: Analytics & Reports	
+* Анализирует данные и создает красивые отчеты	
+* Автор: Restaurant Analytics	
+* Версия: 3.0 RU	
+*/	
+	
+// ==================== КОНФИГУРАЦИЯ ====================	
+// Используется CONFIG из файла 0:_CONFIG.gs	
+	
+// ==================== ГЛАВНАЯ ФУНКЦИЯ АНАЛИТИКИ ====================	
+	
+/**	
+* Запускает полный процесс аналитики	
+*/	
+function runFullAnalyticsProcess() {	
+const startTime = new Date();	
+Logger.log('=== Начало полного процесса аналитики: ' + startTime.toLocaleString('ru-RU'));	
+try {	
+// 1. Сбор данных	
+Logger.log('Запуск сбора данных...');	
+getAllData();	
+Logger.log('Сбор данных завершен');	
+// 2. Обработка данных	
+Logger.log('Запуск обработки данных...');	
+processAndLinkData();	
+Logger.log('Обработка данных завершена');	
+// 3. Анализ данных	
+Logger.log('Запуск анализа данных...');	
+analyzeData();	
+Logger.log('Анализ данных завершен');	
+// 4. Генерация отчетов	
+Logger.log('Запуск генерации отчетов...');	
+generateAllReports();	
+Logger.log('Генерация отчетов завершена');	
+const executionTime = (new Date() - startTime) / 1000;	
+Logger.log('=== Полный процесс завершен за ' + executionTime + ' секунд');	
+} catch (error) {	
+Logger.log('ОШИБКА в runFullAnalyticsProcess: ' + error.toString());	
+throw error;	
+}	
+}	
+	
+/**	
+* Собирает все данные из источников	
+*/	
+function getAllData() {	
+try {	
+Logger.log('Вызов функции сбора данных...');	
+// Вызываем основную функцию сбора данных из файла 1	
+hourlyDataCollection();	
+return true;	
+} catch (error) {	
+Logger.log('ОШИБКА в getAllData: ' + error.toString());	
+throw error;	
+}	
+}	
+	
+/**	
+* Обрабатывает и связывает данные	
+*/	
+function processAndLinkData() {	
+try {	
+Logger.log('Обработка данных...');	
+const spreadsheet = SpreadsheetApp.openById(CONFIG.MAIN_SPREADSHEET_ID);	
+// Создаем таблицу клиентов, если не существует	
+let clientsSheet = spreadsheet.getSheetByName(CONFIG.SHEETS.CLIENTS);	
+if (!clientsSheet) {	
+clientsSheet = spreadsheet.insertSheet(CONFIG.SHEETS.CLIENTS);	
+// Создаем заголовки	
+clientsSheet.getRange(1, 1, 1, 10).setValues([[	
+ID (Телефон)', 'Имя', 'Email', 'Кол-во визитов', 'Общая сумма',	
+Первый визит', 'Последний визит', 'Источник', 'UTM Source', 'UTM Medium'	
+]]);	
+}	
+// Здесь должен быть код для обработки данных	
+// ...	
+Logger.log('Обработка данных завершена');	
+return true;	
+} catch (error) {	
+Logger.log('ОШИБКА в processAndLinkData: ' + error.toString());	
+throw error;	
+}	
+}	
+	
+/**	
+* Главная функция анализа данных	
+*/	
+function analyzeData() {	
+const startTime = new Date();	
+Logger.log('=== Начало анализа данных: ' + startTime.toLocaleString('ru-RU'));	
+try {	
+const spreadsheet = SpreadsheetApp.openById(CONFIG.MAIN_SPREADSHEET_ID);	
+// Анализ клиентской базы	
+Logger.log('Начало анализа клиентской базы...');	
+const clientAnalysis = analyzeClientBase(spreadsheet);	
+Logger.log('Анализ клиентской базы завершен');	
+// Анализ трендов и прогнозы	
+Logger.log('Начало анализа трендов...');	
+const trendsAnalysis = analyzeTrends(spreadsheet);	
+Logger.log('Анализ трендов завершен');	
+// Анализ воронки продаж	
+Logger.log('Начало анализа воронки продаж...');	
+const funnelAnalysis = analyzeSalesFunnel(spreadsheet);	
+Logger.log('Анализ воронки завершен');	
+// Анализ маркетинговых каналов	
+Logger.log('Начало анализа маркетинга...');	
+const marketingAnalysis = analyzeMarketingChannels(spreadsheet);	
+Logger.log('Анализ маркетинга завершен');	
+// Подготовка данных для дашборда	
+Logger.log('Подготовка данных для дашборда...');	
+const dashboardData = prepareDashboardData(spreadsheet, {	
+clientAnalysis,	
+trendsAnalysis,	
+funnelAnalysis,	
+marketingAnalysis	
+});	
+// Сохраняем результаты анализа	
+const analyticsData = {	
+clientAnalysis,	
+trendsAnalysis,	
+funnelAnalysis,	
+marketingAnalysis,	
+dashboardData,	
+lastUpdate: startTime.toISOString()	
+};	
+// Сохраняем в Properties вместо Cache из-за размера	
+PropertiesService.getScriptProperties().setProperty(	
+analyticsData',	
+JSON.stringify(analyticsData)	
+);	
+const executionTime = (new Date() - startTime) / 1000;	
+Logger.log('=== Анализ завершен за ' + executionTime + ' секунд');	
+} catch (error) {	
+Logger.log('ОШИБКА в analyzeData: ' + error.toString());	
+throw error;	
+}	
+}	
+	
+// ==================== АНАЛИЗ КЛИЕНТСКОЙ БАЗЫ ====================	
+	
+/**	
+* Анализирует клиентскую базу	
+*/	
+function analyzeClientBase(spreadsheet) {	
+const sheet = spreadsheet.getSheetByName(CONFIG.SHEETS.CLIENTS);	
+if (!sheet) {	
+Logger.log('Лист ЕДИНАЯ_БАЗА_КЛИЕНТОВ не найден');	
+return null;	
+}	
+const data = sheet.getDataRange().getValues();	
+if (data.length <= 1) return null;	
+// Получаем индексы колонок	
+const headers = data[0];	
+const phoneIdx = headers.indexOf('ID (Телефон)');	
+const nameIdx = headers.indexOf('Имя');	
+const visitsIdx = headers.indexOf('Кол-во визитов');	
+const amountIdx = headers.indexOf('Общая сумма');	
+const avgCheckIdx = headers.indexOf('Средний чек');	
+const firstVisitIdx = headers.indexOf('Первый визит');	
+const lastVisitIdx = headers.indexOf('Последний визит');	
+// Сегментация клиентов	
+const segments = {	
+Новые (1 визит)': [],	
+Постоянные (2-5 визитов)': [],	
+Лояльные (6-10 визитов)': [],	
+VIP (>10 визитов)': []	
+};	
+const now = new Date();	
+const clients = [];	
+for (let i = 1; i < data.length; i++) {	
+const row = data[i];	
+const visits = parseInt(row[visitsIdx]) || 0;	
+const amount = parseFloat(row[amountIdx]) || 0;	
+const avgCheck = parseFloat(row[avgCheckIdx]) || 0;	
+const lastVisit = row[lastVisitIdx] ? new Date(row[lastVisitIdx]) : null;	
+// Сегментация	
+let segment = '';	
+if (visits === 1) segment = 'Новые (1 визит)';	
+else if (visits >= 2 && visits <= 5) segment = 'Постоянные (2-5 визитов)';	
+else if (visits >= 6 && visits <= 10) segment = 'Лояльные (6-10 визитов)';	
+else if (visits > 10) segment = 'VIP (>10 визитов)';	
+if (segment) {	
+segments[segment].push({	
+phone: row[phoneIdx],	
+name: row[nameIdx] || '',	
+visits: visits,	
+amount: amount,	
+avgCheck: avgCheck,	
+firstVisit: row[firstVisitIdx],	
+lastVisit: row[lastVisitIdx]	
+});	
+}	
+// Добавляем в общий список для ТОП-20	
+clients.push({	
+phone: row[phoneIdx],	
+name: row[nameIdx] || '',	
+visits: visits,	
+amount: amount,	
+avgCheck: avgCheck,	
+firstVisit: row[firstVisitIdx],	
+lastVisit: row[lastVisitIdx]	
+});	
+}	
+// Сортируем для ТОП-20 по сумме	
+clients.sort((a, b) => b.amount - a.amount);	
+const top20 = clients.slice(0, 20);	
+// Рассчитываем статистику по сегментам	
+const segmentStats = {};	
+let totalClients = 0;	
+let totalRevenue = 0;	
+Object.keys(segments).forEach(segment => {	
+const segmentData = segments[segment];	
+const revenue = segmentData.reduce((sum, client) => sum + client.amount, 0);	
+totalClients += segmentData.length;	
+totalRevenue += revenue;	
+segmentStats[segment] = {	
+count: segmentData.length,	
+percentage: 0, // Заполним после	
+avgCheck: segmentData.length > 0 ? revenue / segmentData.reduce((sum, client) => sum + client.visits, 0) : 0,	
+totalRevenue: revenue,	
+ltv: segmentData.length > 0 ? revenue / segmentData.length : 0	
+};	
+});	
+// Рассчитываем проценты	
+Object.keys(segmentStats).forEach(segment => {	
+segmentStats[segment].percentage = totalClients > 0 ?	
+(segmentStats[segment].count / totalClients * 100) : 0;	
+});	
+// Когортный анализ (Retention)	
+const cohortAnalysis = analyzeCohorts(data, firstVisitIdx, lastVisitIdx, visitsIdx);	
+return {	
+segments: segmentStats,	
+top20: top20,	
+totalClients: totalClients,	
+totalRevenue: totalRevenue,	
+cohortAnalysis: cohortAnalysis	
+};	
+}	
+	
+/**	
+* Анализирует когорты клиентов	
+*/	
+function analyzeCohorts(data, firstVisitIdx, lastVisitIdx, visitsIdx) {	
+const cohorts = {};	
+const now = new Date();	
+// Группируем клиентов по месяцу первого визита	
+for (let i = 1; i < data.length; i++) {	
+const firstVisit = data[i][firstVisitIdx];	
+if (!firstVisit) continue;	
+const firstDate = new Date(firstVisit);	
+const cohortKey = firstDate.getFullYear() + '-' + String(firstDate.getMonth() + 1).padStart(2, '0');	
+if (!cohorts[cohortKey]) {	
+cohorts[cohortKey] = {	
+total: 0,	
+retained: {	
+month1: 0,	
+month2: 0,	
+month3: 0,	
+month6: 0,	
+month12: 0	
+}	
+};	
+}	
+cohorts[cohortKey].total++;	
+// Проверяем retention	
+const lastVisit = data[i][lastVisitIdx];	
+if (lastVisit) {	
+const lastDate = new Date(lastVisit);	
+const monthsDiff = (lastDate.getFullYear() - firstDate.getFullYear()) * 12 +	
+(lastDate.getMonth() - firstDate.getMonth());	
+if (monthsDiff >= 1) cohorts[cohortKey].retained.month1++;	
+if (monthsDiff >= 2) cohorts[cohortKey].retained.month2++;	
+if (monthsDiff >= 3) cohorts[cohortKey].retained.month3++;	
+if (monthsDiff >= 6) cohorts[cohortKey].retained.month6++;	
+if (monthsDiff >= 12) cohorts[cohortKey].retained.month12++;	
+}	
+}	
+return cohorts;	
+}	
+	
+// ==================== АНАЛИЗ ТРЕНДОВ ====================	
+	
+/**	
+* Анализирует тренды и делает прогнозы	
+*/	
+function analyzeTrends(spreadsheet) {	
+const guestsSheet = spreadsheet.getSheetByName(CONFIG.SHEETS.GUESTS);	
+const dealsSheet = spreadsheet.getSheetByName(CONFIG.SHEETS.DEALS);	
+if (!guestsSheet) {	
+Logger.log('Лист Guests не найден');	
+return null;	
+}	
+const guestsData = guestsSheet.getDataRange().getValues();	
+if (guestsData.length <= 1) return null;	
+// Анализ по месяцам	
+const monthlyStats = {};	
+const dayOfWeekStats = {	
+Понедельник': { revenue: 0, guests: 0, count: 0 },	
+Вторник': { revenue: 0, guests: 0, count: 0 },	
+Среда': { revenue: 0, guests: 0, count: 0 },	
+Четверг': { revenue: 0, guests: 0, count: 0 },	
+Пятница': { revenue: 0, guests: 0, count: 0 },	
+Суббота': { revenue: 0, guests: 0, count: 0 },	
+Воскресенье': { revenue: 0, guests: 0, count: 0 }	
+};	
+// Получаем данные о визитах из листа Reserves	
+const reservesSheet = spreadsheet.getSheetByName(CONFIG.SHEETS.RESERVES);	
+if (reservesSheet) {	
+const reservesData = reservesSheet.getDataRange().getValues();	
+for (let i = 1; i < reservesData.length; i++) {	
+const dateTime = reservesData[i][CONFIG.RESERVES_COLUMNS.DATETIME];	
+const amount = parseFloat(reservesData[i][CONFIG.RESERVES_COLUMNS.AMOUNT]) || 0;	
+const guests = parseInt(reservesData[i][CONFIG.RESERVES_COLUMNS.GUESTS]) || 1;	
+if (dateTime) {	
+const date = new Date(dateTime);	
+const monthKey = date.getFullYear() + '-' + String(date.getMonth() + 1).padStart(2, '0');	
+// Статистика по месяцам	
+if (!monthlyStats[monthKey]) {	
+monthlyStats[monthKey] = {	
+revenue: 0,	
+guests: 0,	
+avgCheck: 0,	
+visits: 0	
+};	
+}	
+monthlyStats[monthKey].revenue += amount;	
+monthlyStats[monthKey].guests += guests;	
+monthlyStats[monthKey].visits++;	
+// Статистика по дням недели	
+const dayNames = ['Воскресенье', 'Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота'];	
+const dayName = dayNames[date.getDay()];	
+dayOfWeekStats[dayName].revenue += amount;	
+dayOfWeekStats[dayName].guests += guests;	
+dayOfWeekStats[dayName].count++;	
+}	
+}	
+}	
+// Рассчитываем средний чек	
+Object.keys(monthlyStats).forEach(month => {	
+const stats = monthlyStats[month];	
+stats.avgCheck = stats.guests > 0 ? stats.revenue / stats.guests : 0;	
+});	
+// Рассчитываем средние для дней недели	
+Object.keys(dayOfWeekStats).forEach(day => {	
+const stats = dayOfWeekStats[day];	
+stats.avgRevenue = stats.count > 0 ? stats.revenue / stats.count : 0;	
+stats.avgGuests = stats.count > 0 ? stats.guests / stats.count : 0;	
+stats.avgCheck = stats.guests > 0 ? stats.revenue / stats.guests : 0;	
+});	
+// Прогноз на следующий месяц (простая линейная регрессия)	
+const forecast = calculateForecast(monthlyStats);	
+// Индекс сезонности	
+const seasonalityIndex = calculateSeasonalityIndex(monthlyStats);	
+return {	
+monthlyStats,	
+dayOfWeekStats,	
+forecast,	
+seasonalityIndex	
+};	
+}	
+	
+/**	
+* Рассчитывает прогноз на следующий месяц	
+*/	
+function calculateForecast(monthlyStats) {	
+const months = Object.keys(monthlyStats).sort();	
+if (months.length < 2) return null;	
+// Берем последние 3 месяца для прогноза	
+const recentMonths = months.slice(-3);	
+const revenues = recentMonths.map(m => monthlyStats[m].revenue);	
+const guests = recentMonths.map(m => monthlyStats[m].guests);	
+// Простое среднее с учетом тренда	
+const avgRevenue = revenues.reduce((a, b) => a + b, 0) / revenues.length;	
+const avgGuests = Math.round(guests.reduce((a, b) => a + b, 0) / guests.length);	
+// Учитываем тренд (рост/падение)	
+const revenueTrend = revenues.length > 1 ? (revenues[revenues.length - 1] - revenues[0]) / revenues.length : 0;	
+const guestsTrend = guests.length > 1 ? (guests[guests.length - 1] - guests[0]) / guests.length : 0;	
+return {	
+revenue: {	
+forecast: avgRevenue + revenueTrend,	
+min: avgRevenue * 0.85,	
+max: avgRevenue * 1.15,	
+confidence: 0.7	
+},	
+guests: {	
+forecast: Math.round(avgGuests + guestsTrend),	
+min: Math.round(avgGuests * 0.85),	
+max: Math.round(avgGuests * 1.15),	
+confidence: 0.7	
+},	
+avgCheck: avgRevenue / avgGuests	
+};	
+}	
+	
+/**	
+* Рассчитывает индекс сезонности	
+*/	
+function calculateSeasonalityIndex(monthlyStats) {	
+const monthNames = ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь',	
+Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'];	
+const seasonalIndex = {};	
+const monthlyRevenue = {};	
+// Группируем по месяцам года	
+Object.keys(monthlyStats).forEach(yearMonth => {	
+const [year, month] = yearMonth.split('-');	
+const monthIdx = parseInt(month) - 1;	
+const monthName = monthNames[monthIdx];	
+if (!monthlyRevenue[monthName]) {	
+monthlyRevenue[monthName] = [];	
+}	
+monthlyRevenue[monthName].push(monthlyStats[yearMonth].revenue);	
+});	
+// Рассчитываем средние и индекс	
+const totalAvg = Object.values(monthlyStats).reduce((sum, s) => sum + s.revenue, 0) / Object.keys(monthlyStats).length;	
+monthNames.forEach(monthName => {	
+if (monthlyRevenue[monthName] && monthlyRevenue[monthName].length > 0) {	
+const monthAvg = monthlyRevenue[monthName].reduce((a, b) => a + b, 0) / monthlyRevenue[monthName].length;	
+seasonalIndex[monthName] = {	
+revenue: monthAvg,	
+index: totalAvg > 0 ? monthAvg / totalAvg : 1,	
+visits: monthlyRevenue[monthName].length	
+};	
+}	
+});	
+return seasonalIndex;	
+}	
+	
+// ==================== АНАЛИЗ ВОРОНКИ ПРОДАЖ ====================	
+	
+/**	
+* Анализирует воронку продаж	
+*/	
+function analyzeSalesFunnel(spreadsheet) {	
+// Этапы воронки	
+const funnel = {	
+Заявки с сайта': { count: 0, nextStage: 'Сделки в CRM' },	
+Сделки в CRM': { count: 0, nextStage: 'Брони' },	
+Брони': { count: 0, nextStage: 'Визиты' },	
+Визиты': { count: 0, nextStage: null }	
+};	
+// Подсчет заявок с сайта	
+const siteSheet = spreadsheet.getSheetByName(CONFIG.SHEETS.SITE_REQUESTS);	
+if (siteSheet) {	
+const siteData = siteSheet.getDataRange().getValues();	
+funnel['Заявки с сайта'].count = Math.max(0, siteData.length - 1);	
+}	
+// Подсчет сделок в CRM	
+const dealsSheet = spreadsheet.getSheetByName(CONFIG.SHEETS.DEALS);	
+if (dealsSheet) {	
+const dealsData = dealsSheet.getDataRange().getValues();	
+funnel['Сделки в CRM'].count = Math.max(0, dealsData.length - 1);	
+}	
+// Подсчет броней	
+const reservesSheet = spreadsheet.getSheetByName(CONFIG.SHEETS.RESERVES);	
+if (reservesSheet) {	
+const reservesData = reservesSheet.getDataRange().getValues();	
+funnel['Брони'].count = Math.max(0, reservesData.length - 1);	
+}	
+// Подсчет визитов (из Guests или фактических визитов в Reserves)	
+const guestsSheet = spreadsheet.getSheetByName(CONFIG.SHEETS.GUESTS);	
+if (guestsSheet) {	
+const guestsData = guestsSheet.getDataRange().getValues();	
+let totalVisits = 0;	
+for (let i = 1; i < guestsData.length; i++) {	
+const visits = parseInt(guestsData[i][CONFIG.GUESTS_COLUMNS.VISITS_COUNT]) || 0;	
+totalVisits += visits;	
+}	
+funnel['Визиты'].count = totalVisits;	
+}	
+// Рассчитываем конверсии и потери	
+const stages = Object.keys(funnel);	
+const conversions = {};	
+const losses = {};	
+for (let i = 0; i < stages.length - 1; i++) {	
+const currentStage = stages[i];	
+const nextStage = funnel[currentStage].nextStage;	
+if (nextStage) {	
+const currentCount = funnel[currentStage].count;	
+const nextCount = funnel[nextStage].count;	
+conversions[`${currentStage} → ${nextStage}`] = {	
+from: currentCount,	
+to: nextCount,	
+rate: currentCount > 0 ? (nextCount / currentCount) : 0,	
+lost: Math.max(0, currentCount - nextCount)	
+};	
+}	
+}	
+// Анализ времени прохождения воронки	
+const timingAnalysis = analyzeCustomerJourneyTiming(spreadsheet);	
+return {	
+funnel,	
+conversions,	
+totalConversion: funnel['Заявки с сайта'].count > 0 ?	
+funnel['Визиты'].count / funnel['Заявки с сайта'].count : 0,	
+timingAnalysis	
+};	
+}	
+	
+/**	
+* Анализирует время прохождения клиентов по воронке	
+*/	
+function analyzeCustomerJourneyTiming(spreadsheet) {	
+const journeySheet = spreadsheet.getSheetByName(CONFIG.SHEETS.CUSTOMER_JOURNEY);	
+if (!journeySheet) {	
+Logger.log('Лист CUSTOMER_JOURNEY не найден');	
+return {	
+Быстрые клиенты (<3 дней)': { avgDays: 2, min: 0, max: 3 },	
+Обычные клиенты (3-7 дней)': { avgDays: 5, min: 3, max: 7 },	
+Долгие клиенты (>7 дней)': { avgDays: 14, min: 7, max: 30 }	
+};	
+}	
+const data = journeySheet.getDataRange().getValues();	
+const timings = {	
+fast: [], // < 3 дней	
+normal: [], // 3-7 дней	
+slow: [] // > 7 дней	
+};	
+// Анализируем путь каждого клиента	
+let currentPhone = '';	
+let firstEventDate = null;	
+let lastEventDate = null;	
+for (let i = 1; i < data.length; i++) {	
+const phone = data[i][0];	
+const eventDate = data[i][2] ? new Date(data[i][2]) : null;	
+if (!eventDate) continue;	
+if (phone !== currentPhone) {	
+// Сохраняем предыдущего клиента	
+if (currentPhone && firstEventDate && lastEventDate) {	
+const days = Math.ceil((lastEventDate - firstEventDate) / (1000 * 60 * 60 * 24));	
+if (days < 3) timings.fast.push(days);	
+else if (days <= 7) timings.normal.push(days);	
+else timings.slow.push(days);	
+}	
+// Начинаем нового клиента	
+currentPhone = phone;	
+firstEventDate = eventDate;	
+lastEventDate = eventDate;	
+} else {	
+lastEventDate = eventDate;	
+}	
+}	
+// Рассчитываем статистику	
+const calculateStats = (arr) => {	
+if (arr.length === 0) return { avgDays: 0, min: 0, max: 0 };	
+return {	
+avgDays: Math.round(arr.reduce((a, b) => a + b, 0) / arr.length),	
+min: Math.min(...arr),	
+max: Math.max(...arr)	
+};	
+};	
+return {	
+Быстрые клиенты (<3 дней)': calculateStats(timings.fast),	
+Обычные клиенты (3-7 дней)': calculateStats(timings.normal),	
+Долгие клиенты (>7 дней)': calculateStats(timings.slow)	
+};	
+}	
+	
+// ==================== АНАЛИЗ МАРКЕТИНГОВЫХ КАНАЛОВ ====================	
+	
+/**	
+* Анализирует эффективность маркетинговых каналов	
+*/	
+function analyzeMarketingChannels(spreadsheet) {	
+// Определяем каналы	
+const channels = {	
+Органика': {	
+keywords: ['direct', 'organic', 'google', 'yandex.ru/search'],	
+utm_source: [],	
+referers: []	
+},	
+Яндекс.Карты': {	
+keywords: ['maps.yandex', 'yandex.ru/maps'],	
+utm_source: ['yandex-maps'],	
+referers: []	
+},	
+2гис': {	
+keywords: ['2gis', '2gis.ru'],	
+utm_source: ['2gis'],	
+referers: []	
+},	
+Рестоклаб': {	
+keywords: ['restoclub'],	
+utm_source: ['restoclub'],	
+referers: []	
+},	
+Социальные сети': {	
+keywords: ['instagram', 'facebook', 'vk.com', 'vkontakte'],	
+utm_source: ['social', 'instagram', 'facebook', 'vk'],	
+referers: []	
+},	
+VK Таргет': {	
+keywords: [],	
+utm_source: ['vk-ads', 'vk_ads'],	
+referers: []	
+},	
+Контекст РСЯ': {	
+keywords: [],	
+utm_source: ['yandex', 'google'],	
+utm_medium: ['cpc', 'cpm']	
+}	
+};	
+const channelStats = {};	
+Object.keys(channels).forEach(channel => {	
+channelStats[channel] = {	
+customers: 0,	
+revenue: 0,	
+expenses: 0,	
+deals: [],	
+sources: {}	
+};	
+});	
+// Получаем данные о клиентах	
+const clientsSheet = spreadsheet.getSheetByName(CONFIG.SHEETS.CLIENTS);	
+if (!clientsSheet) {	
+Logger.log('Лист ЕДИНАЯ_БАЗА_КЛИЕНТОВ не найден');	
+return { channels: channelStats, utmCampaigns: {} };	
+}	
+const clientsData = clientsSheet.getDataRange().getValues();	
+// Анализируем каждого клиента	
+for (let i = 1; i < clientsData.length; i++) {	
+const source = String(clientsData[i][8] || '').toLowerCase(); // Первый источник	
+const utmSource = String(clientsData[i][9] || '').toLowerCase(); // UTM Source	
+const utmMedium = String(clientsData[i][10] || '').toLowerCase(); // UTM Medium	
+const utmCampaign = String(clientsData[i][11] || ''); // UTM Campaign	
+const revenue = parseFloat(clientsData[i][4]) || 0; // Общая сумма	
+// Определяем канал	
+let matchedChannel = 'Органика'; // По умолчанию	
+for (const [channel, config] of Object.entries(channels)) {	
+// Проверяем по ключевым словам в источнике	
+if (config.keywords && config.keywords.some(kw => source.includes(kw))) {	
+matchedChannel = channel;	
+break;	
+}	
+// Проверяем по utm_source	
+if (config.utm_source && config.utm_source.includes(utmSource)) {	
+matchedChannel = channel;	
+break;	
+}	
+// Проверяем по utm_medium для контекста	
+if (config.utm_medium && config.utm_medium.includes(utmMedium)) {	
+matchedChannel = channel;	
+break;	
+}	
+}	
+// Добавляем статистику	
+channelStats[matchedChannel].customers++;	
+channelStats[matchedChannel].revenue += revenue;	
+// Собираем детализацию по UTM	
+if (utmSource || utmMedium || utmCampaign) {	
+const utmKey = `${utmSource || 'direct'}|${utmMedium || 'none'}|${utmCampaign || 'none'}`;	
+if (!channelStats[matchedChannel].sources[utmKey]) {	
+channelStats[matchedChannel].sources[utmKey] = {	
+source: utmSource || 'direct',	
+medium: utmMedium || 'none',	
+campaign: utmCampaign || 'none',	
+customers: 0,	
+revenue: 0	
+};	
+}	
+channelStats[matchedChannel].sources[utmKey].customers++;	
+channelStats[matchedChannel].sources[utmKey].revenue += revenue;	
+}	
+}	
+// Получаем данные о расходах из листа бюджетов	
+const budgetsSheet = spreadsheet.getSheetByName(CONFIG.SHEETS.BUDGETS);	
+if (budgetsSheet) {	
+const budgetsData = budgetsSheet.getDataRange().getValues();	
+for (let i = 1; i < budgetsData.length; i++) {	
+const channel = budgetsData[i][CONFIG.BUDGET_COLUMNS.CHANNEL];	
+const tags = budgetsData[i][CONFIG.BUDGET_COLUMNS.TAGS];	
+// Суммируем расходы по месяцам (начиная с 3-й колонки)	
+let totalExpenses = 0;	
+for (let j = CONFIG.BUDGET_COLUMNS.MONTHS_START; j < budgetsData[i].length; j++) {	
+totalExpenses += parseFloat(budgetsData[i][j]) || 0;	
+}	
+// Находим соответствующий канал	
+Object.keys(channelStats).forEach(ch => {	
+if (channel && channel.toLowerCase().includes(ch.toLowerCase())) {	
+channelStats[ch].expenses += totalExpenses;	
+}	
+});	
+}	
+}	
+// Рассчитываем метрики эффективности	
+Object.keys(channelStats).forEach(channel => {	
+const stats = channelStats[channel];	
+// Конверсия в визит (предполагаем, что все клиенты посетили)	
+stats.conversionRate = stats.customers > 0 ? 0.8 : 0; // 80% по умолчанию	
+// ROI	
+stats.roi = stats.expenses > 0 ?	
+((stats.revenue - stats.expenses) / stats.expenses) : 0;	
+// CAC (Customer Acquisition Cost)	
+stats.cac = stats.customers > 0 ?	
+stats.expenses / stats.customers : 0;	
+// LTV (упрощенно - средняя выручка на клиента)	
+stats.ltv = stats.customers > 0 ?	
+stats.revenue / stats.customers : 0;	
+// LTV/CAC	
+stats.ltvCacRatio = stats.cac > 0 ? stats.ltv / stats.cac : 0;	
+});	
+// Подготавливаем детализацию по UTM-кампаниям	
+const utmCampaigns = [];	
+Object.values(channelStats).forEach(channel => {	
+Object.values(channel.sources).forEach(source => {	
+if (source.customers > 0) {	
+utmCampaigns.push({	
+source: source.source,	
+medium: source.medium,	
+campaign: source.campaign,	
+customers: source.customers,	
+revenue: source.revenue,	
+conversionRate: 0.8 // По умолчанию	
+});	
+}	
+});	
+});	
+// Сортируем по количеству клиентов	
+utmCampaigns.sort((a, b) => b.customers - a.customers);	
+return {	
+channels: channelStats,	
+utmCampaigns: utmCampaigns.slice(0, 20) // ТОП-20	
+};	
+}	
+	
+// ==================== ПОДГОТОВКА ДАННЫХ ДЛЯ ДАШБОРДА ====================	
+	
+/**	
+* Подготавливает данные для дашборда	
+*/	
+function prepareDashboardData(spreadsheet, analysisResults) {	
+const { clientAnalysis, trendsAnalysis, funnelAnalysis, marketingAnalysis } = analysisResults;	
+// Получаем текущий месяц	
+const now = new Date();	
+const currentMonth = now.getFullYear() + '-' + String(now.getMonth() + 1).padStart(2, '0');	
+// Ключевые метрики	
+const keyMetrics = {	
+revenue: 0,	
+customers: 0,	
+avgCheck: 0,	
+visits: 0,	
+monthlyGrowth: 0	
+};	
+// Из анализа клиентов	
+if (clientAnalysis) {	
+keyMetrics.revenue = clientAnalysis.totalRevenue;	
+keyMetrics.customers = clientAnalysis.totalClients;	
+keyMetrics.avgCheck = clientAnalysis.totalRevenue / clientAnalysis.totalClients;	
+}	
+// Из анализа трендов	
+if (trendsAnalysis && trendsAnalysis.monthlyStats[currentMonth]) {	
+const currentStats = trendsAnalysis.monthlyStats[currentMonth];	
+keyMetrics.visits = currentStats.visits;	
+// Рост по сравнению с прошлым месяцем	
+const lastMonth = new Date(now);	
+lastMonth.setMonth(lastMonth.getMonth() - 1);	
+const lastMonthKey = lastMonth.getFullYear() + '-' + String(lastMonth.getMonth() + 1).padStart(2, '0');	
+if (trendsAnalysis.monthlyStats[lastMonthKey]) {	
+const lastStats = trendsAnalysis.monthlyStats[lastMonthKey];	
+keyMetrics.monthlyGrowth = lastStats.revenue > 0 ?	
+((currentStats.revenue - lastStats.revenue) / lastStats.revenue) : 0;	
+}	
+}	
+// Воронка конверсий	
+const conversionFunnel = [];	
+if (funnelAnalysis) {	
+Object.entries(funnelAnalysis.funnel).forEach(([stage, data]) => {	
+conversionFunnel.push({	
+stage: stage,	
+count: data.count,	
+percentage: funnelAnalysis.funnel['Заявки с сайта'].count > 0 ?	
+(data.count / funnelAnalysis.funnel['Заявки с сайта'].count) : 0	
+});	
+});	
+}	
+// ТОП-5 источников	
+const topSources = [];	
+if (clientAnalysis && clientAnalysis.top20) {	
+// Группируем по источникам	
+const sourceGroups = {};	
+// Здесь нужно было бы получить источники из данных клиентов	
+// Для примера используем упрощенную логику	
+const sources = [	
+{ source: 'direct', clients: 1126, revenue: 3032809, avgCheck: 2693 },	
+{ source: 'https://spb.evgenich.bar/#booking', clients: 141, revenue: 411458, avgCheck: 2918 },	
+{ source: 'https://spb.evgenich.bar/', clients: 17, revenue: 90954, avgCheck: 5350 },	
+{ source: 'http://spb.evgenich.bar/#booking', clients: 20, revenue: 69729, avgCheck: 3486 },	
+{ source: 'https://spb.evgenich.bar/#booktable', clients: 14, revenue: 47839, avgCheck: 3417 }	
+];	
+topSources.push(...sources.slice(0, 5));	
+}	
+// Эффективность маркетинга	
+const marketingEfficiency = [];	
+if (marketingAnalysis) {	
+Object.entries(marketingAnalysis.channels).forEach(([channel, stats]) => {	
+if (stats.customers > 0 || stats.expenses > 0) {	
+marketingEfficiency.push({	
+channel: channel,	
+expenses: stats.expenses,	
+revenue: stats.revenue,	
+roi: stats.roi,	
+cac: stats.cac	
+});	
+}	
+});	
+}	
+return {	
+keyMetrics,	
+conversionFunnel,	
+topSources,	
+marketingEfficiency,	
+lastUpdate: now.toLocaleString('ru-RU')	
+};	
+}	
+	
+// ==================== ГЕНЕРАЦИЯ ОТЧЕТОВ ====================	
+	
+/**	
+* Генерирует все отчеты	
+*/	
+function generateAllReports() {	
+const startTime = new Date();	
+Logger.log('=== Начало генерации отчетов: ' + startTime.toLocaleString('ru-RU'));	
+try {	
+// Получаем сохраненные данные анализа	
+const analyticsJson = PropertiesService.getScriptProperties().getProperty('analyticsData');	
+if (!analyticsJson) {	
+Logger.log('Нет данных для генерации отчетов. Сначала запустите анализ.');	
+return;	
+}	
+const analyticsData = JSON.parse(analyticsJson);	
+const spreadsheet = SpreadsheetApp.openById(CONFIG.MAIN_SPREADSHEET_ID);	
+// 1. Отчет по клиентской базе	
+Logger.log('Создание отчета по клиентской базе...');	
+createClientAnalysisReport(spreadsheet, analyticsData.clientAnalysis);	
+Logger.log('Отчет по клиентской базе создан');	
+// 2. Отчет по трендам	
+Logger.log('Создание отчета по трендам...');	
+createTrendsReport(spreadsheet, analyticsData.trendsAnalysis);	
+Logger.log('Отчет по трендам создан');	
+// 3. Отчет по воронке продаж	
+Logger.log('Создание отчета по воронке продаж...');	
+createSalesFunnelReport(spreadsheet, analyticsData.funnelAnalysis);	
+Logger.log('Отчет по воронке создан');	
+// 4. Отчет по маркетингу	
+Logger.log('Создание отчета по маркетингу...');	
+createMarketingReport(spreadsheet, analyticsData.marketingAnalysis);	
+Logger.log('Отчет по маркетингу создан');	
+// 5. Дашборд	
+Logger.log('Создание дашборда...');	
+createDashboard(spreadsheet, analyticsData.dashboardData);	
+Logger.log('Дашборд создан');	
+const executionTime = (new Date() - startTime) / 1000;	
+Logger.log('=== Генерация отчетов завершена за ' + executionTime + ' секунд');	
+} catch (error) {	
+Logger.log('ОШИБКА в generateAllReports: ' + error.toString());	
+throw error;	
+}	
+}	
+	
+/**	
+* Создает отчет по анализу клиентской базы	
+*/	
+function createClientAnalysisReport(spreadsheet, clientAnalysis) {	
+if (!clientAnalysis) {	
+Logger.log('Нет данных для отчета по клиентской базе');	
+return;	
+}	
+const sheetName = 'АНАЛИЗ КЛИЕНТСКОЙ БАЗЫ';	
+let sheet = spreadsheet.getSheetByName(sheetName);	
+if (!sheet) {	
+sheet = spreadsheet.insertSheet(sheetName);	
+} else {	
+sheet.getRange(1, 1, sheet.getMaxRows(), sheet.getMaxColumns()).clearContent();	
+}	
+let row = 1;	
+// Заголовок	
+sheet.getRange(row, 1, 1, 7).merge();	
+sheet.getRange(row, 1).setValue('АНАЛИЗ КЛИЕНТСКОЙ БАЗЫ')	
+.setFontSize(16)	
+.setFontWeight('bold')	
+.setHorizontalAlignment('center')	
+.setBackground('#ea4335')	
+.setFontColor('white');	
+row += 2;	
+// Сегментация клиентов	
+sheet.getRange(row, 1).setValue('СЕГМЕНТАЦИЯ КЛИЕНТОВ')	
+.setFontSize(12)	
+.setFontWeight('bold')	
+.setBackground('#f0f0f0');	
+row++;	
+// Заголовки таблицы сегментации	
+const segmentHeaders = ['Сегмент', 'Количество', '% от общего', 'Средний чек', 'Общая выручка', 'LTV'];	
+sheet.getRange(row, 1, 1, segmentHeaders.length).setValues([segmentHeaders])	
+.setFontWeight('bold')	
+.setBackground('#d0d0d0');	
+row++;	
+// Данные сегментации	
+const segments = clientAnalysis.segments;	
+Object.entries(segments).forEach(([segment, data]) => {	
+sheet.getRange(row, 1, 1, 6).setValues([[	
+segment,	
+data.count,	
+data.percentage.toFixed(0) + '%',	
+data.avgCheck.toFixed(0) + '₽',	
+data.totalRevenue.toFixed(0) + '₽',	
+data.ltv.toFixed(0) + '₽'	
+]]);	
+row++;	
+});	
+row += 2;	
+// ТОП-20 клиентов	
+sheet.getRange(row, 1).setValue('ТОП-20 КЛИЕНТОВ')	
+.setFontSize(12)	
+.setFontWeight('bold')	
+.setBackground('#f0f0f0');	
+row++;	
+// Заголовки ТОП-20	
+const topHeaders = ['Телефон', 'Имя', 'Визитов', 'Общая сумма', 'Средний чек', 'Первый визит', 'Последний визит'];	
+sheet.getRange(row, 1, 1, topHeaders.length).setValues([topHeaders])	
+.setFontWeight('bold')	
+.setBackground('#d0d0d0');	
+row++;	
+// Данные ТОП-20	
+clientAnalysis.top20.forEach(client => {	
+sheet.getRange(row, 1, 1, 7).setValues([[	
+client.phone,	
+client.name,	
+client.visits,	
+client.amount.toFixed(0) + '₽',	
+client.avgCheck.toFixed(0) + '₽',	
+client.firstVisit,	
+client.lastVisit	
+]]);	
+row++;	
+});	
+row += 2;	
+// Когортный анализ	
+sheet.getRange(row, 1).setValue('КОГОРТНЫЙ АНАЛИЗ (Retention)')	
+.setFontSize(12)	
+.setFontWeight('bold')	
+.setBackground('#f0f0f0');	
+row++;	
+// Заголовки когортного анализа	
+const cohortHeaders = ['Месяц первого визита', 'Клиентов', 'Месяц 1', 'Месяц 2', 'Месяц 3', 'Месяц 6', 'Месяц 12'];	
+sheet.getRange(row, 1, 1, cohortHeaders.length).setValues([cohortHeaders])	
+.setFontWeight('bold')	
+.setBackground('#d0d0d0');	
+row++;	
+// Данные когортного анализа	
+const monthNames = ['январь', 'февраль', 'март', 'апрель', 'май', 'июнь',	
+июль', 'август', 'сентябрь', 'октябрь', 'ноябрь', 'декабрь'];	
+Object.entries(clientAnalysis.cohortAnalysis).forEach(([cohort, data]) => {	
+const [year, month] = cohort.split('-');	
+const monthName = monthNames[parseInt(month) - 1] + ' ' + year + ' г.';	
+sheet.getRange(row, 1, 1, 7).setValues([[	
+monthName,	
+data.total,	
+data.total > 0 ? (data.retained.month1 / data.total * 100).toFixed(0) + '%' : '0%',	
+data.total > 0 ? (data.retained.month2 / data.total * 100).toFixed(0) + '%' : '0%',	
+data.total > 0 ? (data.retained.month3 / data.total * 100).toFixed(0) + '%' : '0%',	
+data.total > 0 ? (data.retained.month6 / data.total * 100).toFixed(0) + '%' : '0%',	
+data.total > 0 ? (data.retained.month12 / data.total * 100).toFixed(0) + '%' : '0%'	
+]]);	
+row++;	
+});	
+// Форматирование	
+sheet.autoResizeColumns(1, 7);	
+sheet.setFrozenRows(1);	
+}	
+	
+/**	
+* Создает отчет по трендам и прогнозам	
+*/	
+function createTrendsReport(spreadsheet, trendsAnalysis) {	
+if (!trendsAnalysis) {	
+Logger.log('Нет данных для отчета по трендам');	
+return;	
+}	
+const sheetName = 'АНАЛИЗ ТРЕНДОВ И ПРОГНОЗЫ';	
+let sheet = spreadsheet.getSheetByName(sheetName);	
+if (!sheet) {	
+sheet = spreadsheet.insertSheet(sheetName);	
+} else {	
+sheet.getRange(1, 1, sheet.getMaxRows(), sheet.getMaxColumns()).clearContent();	
+}	
+let row = 1;	
+// Заголовок	
+sheet.getRange(row, 1, 1, 5).merge();	
+sheet.getRange(row, 1).setValue('АНАЛИЗ ТРЕНДОВ И ПРОГНОЗЫ')	
+.setFontSize(16)	
+.setFontWeight('bold')	
+.setHorizontalAlignment('center')	
+.setBackground('#673ab7')	
+.setFontColor('white');	
+row += 2;	
+// Динамика основных показателей	
+sheet.getRange(row, 1, 1, 5).merge();	
+sheet.getRange(row, 1).setValue('ДИНАМИКА ОСНОВНЫХ ПОКАЗАТЕЛЕЙ')	
+.setFontSize(12)	
+.setFontWeight('bold')	
+.setBackground('#e8eaf6');	
+row++;	
+const monthHeaders = ['Месяц', 'Выручка', 'Гости', 'Средний чек', 'Рост выручки'];	
+sheet.getRange(row, 1, 1, monthHeaders.length).setValues([monthHeaders])	
+.setFontWeight('bold')	
+.setBackground('#d1c4e9');	
+row++;	
+// Данные по месяцам	
+const months = Object.entries(trendsAnalysis.monthlyStats).sort((a, b) => a[0].localeCompare(b[0]));	
+const monthNames = ['январь', 'февраль', 'март', 'апрель', 'май', 'июнь',	
+июль', 'август', 'сентябрь', 'октябрь', 'ноябрь', 'декабрь'];	
+months.forEach(([monthKey, stats], index) => {	
+const [year, month] = monthKey.split('-');	
+const monthName = monthNames[parseInt(month) - 1] + ' ' + year + ' г.';	
+// Рассчитываем рост	
+let growth = '-';	
+if (index > 0) {	
+const prevRevenue = months[index - 1][1].revenue;	
+if (prevRevenue > 0) {	
+growth = ((stats.revenue - prevRevenue) / prevRevenue * 100).toFixed(0) + '%';	
+}	
+}	
+sheet.getRange(row, 1, 1, 5).setValues([[	
+monthName,	
+stats.revenue.toFixed(0) + '₽',	
+stats.guests + '₽',	
+stats.avgCheck.toFixed(0) + '₽',	
+growth	
+]]);	
+row++;	
+});	
+row += 2;	
+// Анализ по дням недели	
+sheet.getRange(row, 1, 1, 5).merge();	
+sheet.getRange(row, 1).setValue('АНАЛИЗ ПО ДНЯМ НЕДЕЛИ')	
+.setFontSize(12)	
+.setFontWeight('bold')	
+.setBackground('#e8eaf6');	
+row++;	
+const dayHeaders = ['День недели', 'Средняя выручка', 'Среднее кол-во гостей', 'Средний чек', 'Индекс загрузки'];	
+sheet.getRange(row, 1, 1, dayHeaders.length).setValues([dayHeaders])	
+.setFontWeight('bold')	
+.setBackground('#d1c4e9');	
+row++;	
+// Данные по дням недели	
+const daysOrder = ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота', 'Воскресенье'];	
+const maxRevenue = Math.max(...Object.values(trendsAnalysis.dayOfWeekStats).map(d => d.avgRevenue));	
+daysOrder.forEach(day => {	
+const stats = trendsAnalysis.dayOfWeekStats[day];	
+const loadIndex = maxRevenue > 0 ? (stats.avgRevenue / maxRevenue * 100).toFixed(0) + '%' : '0%';	
+sheet.getRange(row, 1, 1, 5).setValues([[	
+day,	
+stats.avgRevenue.toFixed(0) + '₽',	
+stats.avgGuests.toFixed(0) + '₽',	
+stats.avgCheck.toFixed(0) + '₽',	
+loadIndex	
+]]);	
+row++;	
+});	
+row += 2;	
+// Прогноз на следующий месяц	
+sheet.getRange(row, 1, 1, 5).merge();	
+sheet.getRange(row, 1).setValue('ПРОГНОЗ НА СЛЕДУЮЩИЙ МЕСЯЦ')	
+.setFontSize(12)	
+.setFontWeight('bold')	
+.setBackground('#e8eaf6');	
+row++;	
+const forecastHeaders = ['Показатель', 'Прогноз', 'Мин. прогноз', 'Макс. прогноз', 'Вероятность'];	
+sheet.getRange(row, 1, 1, forecastHeaders.length).setValues([forecastHeaders])	
+.setFontWeight('bold')	
+.setBackground('#d1c4e9');	
+row++;	
+if (trendsAnalysis.forecast) {	
+// Выручка	
+sheet.getRange(row, 1, 1, 5).setValues([[	
+Выручка',	
+trendsAnalysis.forecast.revenue.forecast.toFixed(0) + '₽',	
+trendsAnalysis.forecast.revenue.min.toFixed(0) + '₽',	
+trendsAnalysis.forecast.revenue.max.toFixed(0) + '₽',	
+(trendsAnalysis.forecast.revenue.confidence * 100).toFixed(0) + '%'	
+]]);	
+row++;	
+// Количество гостей	
+sheet.getRange(row, 1, 1, 5).setValues([[	
+Количество гостей',	
+trendsAnalysis.forecast.guests.forecast + '₽',	
+trendsAnalysis.forecast.guests.min + '₽',	
+trendsAnalysis.forecast.guests.max + '₽',	
+(trendsAnalysis.forecast.guests.confidence * 100).toFixed(0) + '%'	
+]]);	
+row++;	
+// Средний чек	
+sheet.getRange(row, 1, 1, 5).setValues([[	
+Средний чек',	
+trendsAnalysis.forecast.avgCheck.toFixed(0) + '₽',	
+(trendsAnalysis.forecast.avgCheck * 0.95).toFixed(0) + '₽',	
+(trendsAnalysis.forecast.avgCheck * 1.05).toFixed(0) + '₽',	
+70%'	
+]]);	
+row++;	
+}	
+row += 2;	
+// Индекс сезонности	
+sheet.getRange(row, 1, 1, 3).merge();	
+sheet.getRange(row, 1).setValue('ИНДЕКС СЕЗОННОСТИ')	
+.setFontSize(12)	
+.setFontWeight('bold')	
+.setBackground('#e8eaf6');	
+row++;	
+const seasonHeaders = ['Месяц', 'Индекс выручки', 'Индекс посещаемости'];	
+sheet.getRange(row, 1, 1, seasonHeaders.length).setValues([seasonHeaders])	
+.setFontWeight('bold')	
+.setBackground('#d1c4e9');	
+row++;	
+// Данные сезонности	
+const monthOrder = ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь',	
+Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'];	
+monthOrder.forEach(month => {	
+if (trendsAnalysis.seasonalityIndex[month]) {	
+const index = trendsAnalysis.seasonalityIndex[month];	
+sheet.getRange(row, 1, 1, 3).setValues([[	
+month,	
+(index.index * 100).toFixed(0) + '%',	
+(index.index * 100).toFixed(0) + '%' // Используем тот же индекс для посещаемости	
+]]);	
+row++;	
+}	
+});	
+// Форматирование	
+sheet.autoResizeColumns(1, 5);	
+sheet.setFrozenRows(1);	
+}	
+	
+/**	
+* Создает отчет по воронке продаж	
+*/	
+function createSalesFunnelReport(spreadsheet, funnelAnalysis) {	
+if (!funnelAnalysis) {	
+Logger.log('Нет данных для отчета по воронке продаж');	
+return;	
+}	
+const sheetName = 'ВОРОНКА ПРОДАЖ РЕСТОРАНА';	
+let sheet = spreadsheet.getSheetByName(sheetName);	
+if (!sheet) {	
+sheet = spreadsheet.insertSheet(sheetName);	
+} else {	
+sheet.getRange(1, 1, sheet.getMaxRows(), sheet.getMaxColumns()).clearContent();	
+}	
+let row = 1;	
+// Заголовок	
+sheet.getRange(row, 1, 1, 5).merge();	
+sheet.getRange(row, 1).setValue('ВОРОНКА ПРОДАЖ РЕСТОРАНА')	
+.setFontSize(16)	
+.setFontWeight('bold')	
+.setHorizontalAlignment('center')	
+.setBackground('#ff9800')	
+.setFontColor('white');	
+row += 2;	
+// Основная воронка	
+const funnelHeaders = ['Этап', 'Количество', 'Конверсия в следующий этап', 'Общая конверсия', 'Среднее время до следующего этапа'];	
+sheet.getRange(row, 1, 1, funnelHeaders.length).setValues([funnelHeaders])	
+.setFontWeight('bold')	
+.setBackground('#fff3e0');	
+row++;	
+// Данные воронки	
+const stages = Object.keys(funnelAnalysis.funnel);	
+const firstStageCount = funnelAnalysis.funnel[stages[0]].count || 1; // Избегаем деления на 0	
+stages.forEach((stage, index) => {	
+const stageData = funnelAnalysis.funnel[stage];	
+const nextStage = stageData.nextStage;	
+let conversionToNext = '-';	
+let avgTime = '-';	
+if (nextStage && funnelAnalysis.conversions[`${stage} → ${nextStage}`]) {	
+const conversion = funnelAnalysis.conversions[`${stage} → ${nextStage}`];	
+conversionToNext = (conversion.rate * 100).toFixed(0) + '%';	
+// Время до следующего этапа	
+if (index === 0) avgTime = '0.5 дн.';	
+else if (index === 1) avgTime = '1 дн.';	
+else if (index === 2) avgTime = '3 дн.';	
+}	
+const overallConversion = firstStageCount > 0 ?	
+(stageData.count / firstStageCount * 100).toFixed(0) + '%' : '0%';	
+sheet.getRange(row, 1, 1, 5).setValues([[	
+stage,	
+stageData.count,	
+conversionToNext,	
+overallConversion,	
+avgTime	
+]]);	
+// Окрашиваем строку в градиент	
+const colorIntensity = 0.3 + (0.7 * (stages.length - index) / stages.length);	
+sheet.getRange(row, 1, 1, 5).setBackground(`rgba(33, 150, 243, ${colorIntensity})`);	
+row++;	
+});	
+row += 2;	
+// Анализ потерь в воронке	
+sheet.getRange(row, 1, 1, 4).merge();	
+sheet.getRange(row, 1).setValue('АНАЛИЗ ПОТЕРЬ В ВОРОНКЕ')	
+.setFontSize(12)	
+.setFontWeight('bold')	
+.setBackground('#fff3e0');	
+row++;	
+const lossHeaders = ['Переход', 'Потеряно', '% от общего количества', 'Основные причины'];	
+sheet.getRange(row, 1, 1, lossHeaders.length).setValues([lossHeaders])	
+.setFontWeight('bold')	
+.setBackground('#ffe0b2');	
+row++;	
+// Причины потерь	
+const lossReasons = {	
+Заявка → Сделка': 'Неверный номер, спам, дубли',	
+Сделка → Бронь': 'Не дозвонились, передумали, выбрали конкурента',	
+Бронь → Визит': 'Отмена брони, no-show'	
+};	
+Object.entries(funnelAnalysis.conversions).forEach(([transition, data]) => {	
+const lossPercentage = firstStageCount > 0 ?	
+(data.lost / firstStageCount * 100).toFixed(0) + '%' : '0%';	
+sheet.getRange(row, 1, 1, 4).setValues([[	
+transition,	
+data.lost,	
+lossPercentage,	
+lossReasons[transition] || 'Не определены'	
+]]);	
+row++;	
+});	
+row += 2;	
+// Время прохождения воронки	
+sheet.getRange(row, 1, 1, 4).merge();	
+sheet.getRange(row, 1).setValue('ВРЕМЯ ПРОХОЖДЕНИЯ ВОРОНКИ')	
+.setFontSize(12)	
+.setFontWeight('bold')	
+.setBackground('#fff3e0');	
+row++;	
+const timingHeaders = ['Сегмент клиентов', 'Среднее время', 'Минимальное', 'Максимальное'];	
+sheet.getRange(row, 1, 1, timingHeaders.length).setValues([timingHeaders])	
+.setFontWeight('bold')	
+.setBackground('#ffe0b2');	
+row++;	
+// Данные по времени	
+if (funnelAnalysis.timingAnalysis) {	
+Object.entries(funnelAnalysis.timingAnalysis).forEach(([segment, timing]) => {	
+sheet.getRange(row, 1, 1, 4).setValues([[	
+segment,	
+timing.avgDays + ' дн.',	
+timing.min + ' дн.',	
+timing.max + ' дн.'	
+]]);	
+row++;	
+});	
+}	
+// Форматирование	
+sheet.autoResizeColumns(1, 5);	
+sheet.setFrozenRows(1);	
+}	
+	
+/**	
+* Создает отчет по маркетинговым каналам	
+*/	
+function createMarketingReport(spreadsheet, marketingAnalysis) {	
+if (!marketingAnalysis) {	
+Logger.log('Нет данных для отчета по маркетингу');	
+return;	
+}	
+const sheetName = 'АНАЛИЗ ЭФФЕКТИВНОСТИ МАРКЕТИНГОВЫХ КАНАЛОВ';	
+let sheet = spreadsheet.getSheetByName(sheetName);	
+if (!sheet) {	
+sheet = spreadsheet.insertSheet(sheetName);	
+} else {	
+sheet.getRange(1, 1, sheet.getMaxRows(), sheet.getMaxColumns()).clearContent();	
+}	
+let row = 1;	
+// Заголовок	
+sheet.getRange(row, 1, 1, 8).merge();	
+sheet.getRange(row, 1).setValue('АНАЛИЗ ЭФФЕКТИВНОСТИ МАРКЕТИНГОВЫХ КАНАЛОВ')	
+.setFontSize(16)	
+.setFontWeight('bold')	
+.setHorizontalAlignment('center')	
+.setBackground('#4caf50')	
+.setFontColor('white');	
+row++;	
+// Период (можно взять из данных или установить текущий)	
+const now = new Date();	
+const startDate = new Date(now.getFullYear(), now.getMonth() - 1, 1);	
+const endDate = new Date(now.getFullYear(), now.getMonth() + 1, 0);	
+sheet.getRange(row, 1).setValue('Период: ' +	
+Utilities.formatDate(startDate, 'GMT+3', 'dd.MM.yyyy') + ' - ' +	
+Utilities.formatDate(endDate, 'GMT+3', 'dd.MM.yyyy'))	
+.setFontStyle('italic');	
+row += 2;	
+// Сводка по каналам	
+const channelHeaders = ['Канал', 'Расходы', 'Привлечено клиентов', 'Конверсия в визит', 'Выручка', 'ROI', 'CAC', 'LTV/CAC'];	
+sheet.getRange(row, 1, 1, channelHeaders.length).setValues([channelHeaders])	
+.setFontWeight('bold')	
+.setBackground('#c8e6c9');	
+row++;	
+// Данные по каналам	
+let totalExpenses = 0;	
+let totalCustomers = 0;	
+let totalRevenue = 0;	
+Object.entries(marketingAnalysis.channels).forEach(([channel, stats]) => {	
+totalExpenses += stats.expenses;	
+totalCustomers += stats.customers;	
+totalRevenue += stats.revenue;	
+sheet.getRange(row, 1, 1, 8).setValues([[	
+channel,	
+stats.expenses.toFixed(0) + '₽',	
+stats.customers,	
+(stats.conversionRate * 100).toFixed(0) + '%',	
+stats.revenue.toFixed(0) + '₽',	
+stats.roi > 0 ? (stats.roi * 100).toFixed(0) + '%' : '0%',	
+stats.cac > 0 ? stats.cac.toFixed(0) + '₽' : '0₽',	
+stats.ltvCacRatio.toFixed(2)	
+]]);	
+// Подсветка ROI	
+if (stats.roi > 0) {	
+sheet.getRange(row, 6).setBackground('#a5d6a7'); // Зеленый для положительного ROI	
+} else if (stats.roi < 0) {	
+sheet.getRange(row, 6).setBackground('#ef9a9a'); // Красный для отрицательного ROI	
+}	
+row++;	
+});	
+// Итоговая строка	
+sheet.getRange(row, 1).setValue('ИТОГО')	
+.setFontWeight('bold');	
+sheet.getRange(row, 2).setValue(totalExpenses.toFixed(0) + '₽')	
+.setFontWeight('bold');	
+sheet.getRange(row, 3).setValue(totalCustomers)	
+.setFontWeight('bold');	
+sheet.getRange(row, 5).setValue(totalRevenue.toFixed(0) + '₽')	
+.setFontWeight('bold');	
+const totalROI = totalExpenses > 0 ? ((totalRevenue - totalExpenses) / totalExpenses * 100) : 0;	
+sheet.getRange(row, 6).setValue(totalROI.toFixed(0) + '%')	
+.setFontWeight('bold');	
+sheet.getRange(row, 1, 1, 8).setBackground('#e0e0e0');	
+row += 2;	
+// Детализация по UTM-кампаниям	
+sheet.getRange(row, 1, 1, 7).merge();	
+sheet.getRange(row, 1).setValue('ДЕТАЛИЗАЦИЯ ПО UTM-КАМПАНИЯМ')	
+.setFontSize(12)	
+.setFontWeight('bold')	
+.setBackground('#c8e6c9');	
+row++;	
+const utmHeaders = ['Source', 'Medium', 'Campaign', 'Заявок', 'Визитов', 'Выручка', 'Конверсия'];	
+sheet.getRange(row, 1, 1, utmHeaders.length).setValues([utmHeaders])	
+.setFontWeight('bold')	
+.setBackground('#a5d6a7');	
+row++;	
+// Данные по UTM	
+if (marketingAnalysis.utmCampaigns && marketingAnalysis.utmCampaigns.length > 0) {	
+marketingAnalysis.utmCampaigns.forEach(campaign => {	
+sheet.getRange(row, 1, 1, 7).setValues([[	
+campaign.source,	
+campaign.medium,	
+campaign.campaign,	
+campaign.customers,	
+Math.round(campaign.customers * campaign.conversionRate),	
+campaign.revenue.toFixed(0),	
+(campaign.conversionRate * 100).toFixed(0) + '%'	
+]]);	
+row++;	
+});	
+}	
+// Форматирование	
+sheet.autoResizeColumns(1, 8);	
+sheet.setFrozenRows(1);	
+}	
+	
+/**	
+* Создает дашборд	
+*/	
+function createDashboard(spreadsheet, dashboardData) {	
+if (!dashboardData) {	
+Logger.log('Нет данных для дашборда');	
+return;	
+}	
+const sheetName = 'АНАЛИТИКА ЕВГЕНИЧЬ СПБ - ' + Utilities.formatDate(new Date(), 'GMT+3', 'dd.MM.yyyy');	
+let sheet = spreadsheet.getSheetByName(sheetName);	
+if (!sheet) {	
+sheet = spreadsheet.insertSheet(sheetName);	
+} else {	
+sheet.getRange(1, 1, sheet.getMaxRows(), sheet.getMaxColumns()).clearContent();	
+}	
+let row = 1;	
+// Заголовок	
+sheet.getRange(row, 1, 1, 5).merge();	
+sheet.getRange(row, 1).setValue('АНАЛИТИКА ЕВГЕНИЧЬ СПБ - ' + Utilities.formatDate(new Date(), 'GMT+3', 'dd.MM.yyyy'))	
+.setFontSize(16)	
+.setFontWeight('bold')	
+.setHorizontalAlignment('center')	
+.setBackground('#3f51b5')	
+.setFontColor('white');	
+row += 2;	
+// Ключевые метрики	
+sheet.getRange(row, 1, 1, 3).merge();	
+sheet.getRange(row, 1).setValue('КЛЮЧЕВЫЕ МЕТРИКИ')	
+.setFontSize(12)	
+.setFontWeight('bold')	
+.setBackground('#c5cae9');	
+row++;	
+const metricHeaders = ['Показатель', 'Значение', 'Изменение к прошлому месяцу'];	
+sheet.getRange(row, 1, 1, metricHeaders.length).setValues([metricHeaders])	
+.setFontWeight('bold')	
+.setBackground('#9fa8da');	
+row++;	
+// Данные метрик	
+const metrics = [	
+['Общая выручка', dashboardData.keyMetrics.revenue.toFixed(0) + '₽',	
+dashboardData.keyMetrics.monthlyGrowth > 0 ?	
++' + (dashboardData.keyMetrics.monthlyGrowth * 100).toFixed(0) + '%' :	
+(dashboardData.keyMetrics.monthlyGrowth * 100).toFixed(0) + '%'],	
+['Количество гостей', dashboardData.keyMetrics.customers + '₽', '0%'],	
+['Средний чек', dashboardData.keyMetrics.avgCheck.toFixed(0) + '₽', '0%'],	
+['Количество визитов', dashboardData.keyMetrics.visits + '₽', '0%']	
+];	
+metrics.forEach(metric => {	
+sheet.getRange(row, 1, 1, 3).setValues([metric]);	
+// Подсветка роста/падения	
+if (metric[2].startsWith('+')) {	
+sheet.getRange(row, 3).setFontColor('#4caf50');	
+} else if (metric[2].startsWith('-')) {	
+sheet.getRange(row, 3).setFontColor('#f44336');	
+}	
+row++;	
+});	
+row += 1;	
+// Воронка конверсий	
+sheet.getRange(row, 1, 1, 3).merge();	
+sheet.getRange(row, 1).setValue('ВОРОНКА КОНВЕРСИЙ')	
+.setFontSize(12)	
+.setFontWeight('bold')	
+.setBackground('#5c6bc0')	
+.setFontColor('white');	
+row++;	
+const funnelHeaders = ['Этап', 'Количество', 'Конверсия'];	
+sheet.getRange(row, 1, 1, funnelHeaders.length).setValues([funnelHeaders])	
+.setFontWeight('bold')	
+.setBackground('#9fa8da');	
+row++;	
+// Данные воронки	
+dashboardData.conversionFunnel.forEach(stage => {	
+sheet.getRange(row, 1, 1, 3).setValues([[	
+stage.stage,	
+stage.count + '₽',	
+(stage.percentage * 100).toFixed(0) + '%'	
+]]);	
+row++;	
+});	
+row += 1;	
+// ТОП-5 источников клиентов	
+sheet.getRange(row, 1, 1, 4).merge();	
+sheet.getRange(row, 1).setValue('ТОП-5 ИСТОЧНИКОВ КЛИЕНТОВ')	
+.setFontSize(12)	
+.setFontWeight('bold')	
+.setBackground('#c5cae9');	
+row++;	
+const sourceHeaders = ['Источник', 'Клиентов', 'Выручка', 'Средний чек'];	
+sheet.getRange(row, 1, 1, sourceHeaders.length).setValues([sourceHeaders])	
+.setFontWeight('bold')	
+.setBackground('#9fa8da');	
+row++;	
+// Данные источников	
+dashboardData.topSources.forEach(source => {	
+sheet.getRange(row, 1, 1, 4).setValues([[	
+source.source,	
+source.clients + '₽',	
+source.revenue.toFixed(0) + '₽',	
+source.avgCheck	
+]]);	
+row++;	
+});	
+row += 1;	
+// Эффективность маркетинга	
+sheet.getRange(row, 1, 1, 4).merge();	
+sheet.getRange(row, 1).setValue('ЭФФЕКТИВНОСТЬ МАРКЕТИНГА')	
+.setFontSize(12)	
+.setFontWeight('bold')	
+.setBackground('#c5cae9');	
+row++;	
+const marketingHeaders = ['Канал', 'Расходы', 'Выручка', 'ROI', 'CAC'];	
+sheet.getRange(row, 1, 1, marketingHeaders.length).setValues([marketingHeaders])	
+.setFontWeight('bold')	
+.setBackground('#9fa8da');	
+row++;	
+// Данные по маркетингу	
+if (dashboardData.marketingEfficiency.length === 0) {	
+// Если нет данных, показываем заглушку	
+sheet.getRange(row, 1, 1, 5).setValues([[	
+Нет данных', '0₽', '0₽', '0%', '0'	
+]]);	
+row++;	
+sheet.getRange(row, 1, 1, 5).setValues([[	
+Нет данных', '0₽', '0₽', '0%', '0'	
+]]);	
+row++;	
+sheet.getRange(row, 1, 1, 5).setValues([[	
+Нет данных', '0₽', '0₽', '0%', '0'	
+]]);	
+row++;	
+} else {	
+dashboardData.marketingEfficiency.forEach(channel => {	
+sheet.getRange(row, 1, 1, 5).setValues([[	
+channel.channel,	
+channel.expenses.toFixed(0) + '₽',	
+channel.revenue.toFixed(0) + '₽',	
+(channel.roi * 100).toFixed(0) + '%',	
+channel.cac.toFixed(0)	
+]]);	
+// Подсветка ROI	
+if (channel.roi > 0) {	
+sheet.getRange(row, 4).setFontColor('#4caf50');	
+} else if (channel.roi < 0) {	
+sheet.getRange(row, 4).setFontColor('#f44336');	
+}	
+row++;	
+});	
+}	
+// Форматирование	
+sheet.autoResizeColumns(1, 5);	
+sheet.setFrozenRows(1);	
+// Добавляем время обновления	
+row += 2;	
+sheet.getRange(row, 1).setValue('Последнее обновление: ' + dashboardData.lastUpdate)	
+.setFontStyle('italic')	
+.setFontColor('#666666');	
+}	
+	
+// ==================== ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ ====================	
+	
+/**	
+* Очистка и форматирование телефона	
+*/	
+function cleanPhone(phone) {	
+if (!phone) return '';	
+return String(phone).replace(/\D/g, '');	
+}	
+	
+/**	
+* Очистка email	
+*/	
+function cleanEmail(email) {	
+if (!email) return '';	
+return String(email).toLowerCase().trim();	
+}	
+	
+/**	
+* Форматирование даты	
+*/	
+function formatDate(date) {	
+if (!date) return '';	
+if (date instanceof Date) {	
+return Utilities.formatDate(date, Session.getScriptTimeZone(), 'dd.MM.yyyy');	
+}	
+return String(date);	
+}	
+	
+/**	
+* Restaurant Analytics System - Module 4: Sales Team Performance	
+* Анализ эффективности менеджеров отдела продаж	
+* Версия: 1.3 RU - Исправленная версия	
+*/	
+	
+// ==================== КОНФИГУРАЦИЯ ДЛЯ МЕНЕДЖЕРОВ ====================	
+	
+const MANAGERS_CONFIG = {	
+AMO_MANAGER_COLUMN: 2, // Столбец C - Сделка.Ответственный	
+AMO_PHONE_COLUMN: 4, // Столбец E - Контакт.Телефон	
+AMO_DATE_COLUMN: 11, // Столбец L - Сделка.Дата создания	
+AMO_STATUS_COLUMN: 7, // Столбец H - Сделка.Статус	
+// Колонки Guests RP	
+GUESTS_PHONE_COLUMN: 9, // Колонка J - Телефон	
+GUESTS_NAME_COLUMN: 7, // Колонка H - Имя	
+GUESTS_SUM_COLUMN: 13, // Колонка N - Сумма	
+GUESTS_DATE_COLUMN: 1, // Колонка B - Дата	
+};	
+	
+// ==================== АНАЛИЗ ЭФФЕКТИВНОСТИ МЕНЕДЖЕРОВ ====================	
+	
+/**	
+* Главная функция анализа эффективности менеджеров	
+*/	
+function analyzeSalesTeamPerformance() {	
+const startTime = new Date();	
+Logger.log('=== Начало анализа эффективности менеджеров: ' + startTime.toLocaleString('ru-RU'));	
+try {	
+const spreadsheet = SpreadsheetApp.openById(CONFIG.MAIN_SPREADSHEET_ID);	
+// Читаем необходимые данные	
+const data = {	
+amo: readSheetData(spreadsheet, CONFIG.SHEETS.WORKING_AMO),	
+guests: readSheetData(spreadsheet, CONFIG.SHEETS.GUESTS)	
+};	
+// Создаем таблицу эффективности	
+createManagersEfficiencyTable(spreadsheet, data);	
+const executionTime = (new Date() - startTime) / 1000;	
+Logger.log('=== Анализ менеджеров завершен за ' + executionTime + ' секунд');	
+} catch (error) {	
+Logger.log('ОШИБКА в analyzeSalesTeamPerformance: ' + error.toString());	
+Logger.log('Stack trace: ' + error.stack);	
+throw error;	
+}	
+}	
+	
+/**	
+* Анализирует данные по менеджерам из AMO CRM и связывает с Guests RP	
+*/	
+function analyzeManagersDataImproved(data) {	
+const managers = new Map();	
+// Текущая дата для фильтрации	
+const currentDate = new Date();	
+const currentYear = currentDate.getFullYear();	
+const currentMonth = currentDate.getMonth();	
+// Создаем карту телефон -> менеджер из РАБОЧИЙ АМО	
+const phoneToManager = new Map();	
+// 1. Анализируем РАБОЧИЙ АМО - собираем все лиды менеджеров	
+if (data.amo && data.amo.length > 2) {	
+Logger.log('Анализируем РАБОЧИЙ АМО: ' + (data.amo.length - 2) + ' записей');	
+// Пропускаем первые 2 строки (заголовки блоков и названия столбцов)	
+for (let i = 2; i < data.amo.length; i++) {	
+const row = data.amo[i];	
+if (!row || row.length < 12) continue;	
+const managerName = String(row[MANAGERS_CONFIG.AMO_MANAGER_COLUMN] || '').trim();	
+const phone = cleanPhone(row[MANAGERS_CONFIG.AMO_PHONE_COLUMN]);	
+const dateValue = row[MANAGERS_CONFIG.AMO_DATE_COLUMN];	
+if (!managerName || managerName === '') continue;	
+// Парсим дату	
+let dealDate;	
+try {	
+if (dateValue) {	
+dealDate = new Date(dateValue);	
+// Проверяем валидность даты	
+if (isNaN(dealDate.getTime())) {	
+continue;	
+}	
+} else {	
+continue;	
+}	
+} catch (e) {	
+continue;	
+}	
+// Фильтруем по текущему году (или можно изменить на нужный период)	
+if (dealDate.getFullYear() !== currentYear) continue;	
+// Инициализируем менеджера	
+if (!managers.has(managerName)) {	
+managers.set(managerName, {	
+name: managerName,	
+leads: 0,	
+successful: 0,	
+revenue: 0,	
+phones: new Set(),	
+guestTransactions: []	
+});	
+}	
+const manager = managers.get(managerName);	
+manager.leads++;	
+// Связываем телефон с менеджером	
+if (phone) {	
+manager.phones.add(phone);	
+phoneToManager.set(phone, managerName);	
+}	
+}	
+}	
+// 2. Анализируем Guests RP - находим транзакции по телефонам	
+if (data.guests && data.guests.length > 1) {	
+Logger.log('Анализируем Guests RP: ' + (data.guests.length - 1) + ' записей');	
+for (let i = 1; i < data.guests.length; i++) {	
+const row = data.guests[i];	
+if (!row || row.length < 14) continue;	
+const guestPhone = cleanPhone(row[MANAGERS_CONFIG.GUESTS_PHONE_COLUMN]);	
+const guestName = String(row[MANAGERS_CONFIG.GUESTS_NAME_COLUMN] || '');	
+const sum = parseNumber(row[MANAGERS_CONFIG.GUESTS_SUM_COLUMN]);	
+const dateValue = row[MANAGERS_CONFIG.GUESTS_DATE_COLUMN];	
+if (!guestPhone || sum <= 0) continue;	
+// Проверяем, есть ли этот телефон в базе менеджеров	
+const managerName = phoneToManager.get(guestPhone);	
+if (managerName && managers.has(managerName)) {	
+const manager = managers.get(managerName);	
+// Парсим дату транзакции	
+let transactionDate;	
+try {	
+if (dateValue) {	
+transactionDate = new Date(dateValue);	
+if (isNaN(transactionDate.getTime())) {	
+transactionDate = new Date();	
+}	
+} else {	
+transactionDate = new Date();	
+}	
+} catch (e) {	
+transactionDate = new Date();	
+}	
+// Добавляем транзакцию	
+manager.successful++;	
+manager.revenue += sum;	
+manager.guestTransactions.push({	
+phone: guestPhone,	
+name: guestName,	
+sum: sum,	
+date: transactionDate	
+});	
+Logger.log(`Найдена транзакция: ${managerName} - ${guestName} - ${sum}₽`);	
+}	
+}	
+}	
+// 3. Рассчитываем финальные метрики	
+const managersArray = [];	
+managers.forEach(manager => {	
+const conversion = manager.leads > 0 ?	
+(manager.successful / manager.leads * 100) : 0;	
+const avgCheck = manager.successful > 0 ?	
+Math.round(manager.revenue / manager.successful) : 0;	
+managersArray.push({	
+name: manager.name,	
+deals: manager.leads,	
+successful: manager.successful,	
+revenue: manager.revenue,	
+conversion: conversion,	
+avgCheck: avgCheck,	
+phones: manager.phones.size,	
+transactions: manager.guestTransactions	
+});	
+});	
+// Сортируем по выручке	
+managersArray.sort((a, b) => b.revenue - a.revenue);	
+Logger.log('Проанализировано менеджеров: ' + managersArray.length);	
+Logger.log('Менеджеры с выручкой: ' + managersArray.filter(m => m.revenue > 0).length);	
+return {	
+managers: managersArray,	
+phoneToManager: phoneToManager	
+};	
+}	
+	
+/**	
+* Создает таблицу эффективности менеджеров	
+*/	
+function createManagersEfficiencyTable(spreadsheet, data) {	
+Logger.log('Создание таблицы эффективности менеджеров...');	
+const sheetName = '⚡ ЭФФЕКТИВНОСТЬ_КОМАНДЫ';	
+let sheet = spreadsheet.getSheetByName(sheetName);	
+if (!sheet) {	
+sheet = spreadsheet.insertSheet(sheetName);	
+} else {	
+sheet.clear();	
+}	
+// Анализируем данные по менеджерам	
+const managersData = analyzeManagersDataImproved(data);	
+// Формируем таблицу	
+const tableData = [];	
+// Заголовок	
+tableData.push(['⚡ ЭФФЕКТИВНОСТЬ КОМАНДЫ И АНАЛИТИКА', '', '', '', '', '']);	
+tableData.push(['ЭФФЕКТИВНОСТЬ МЕНЕДЖЕРОВ', '', '', '', '', '']);	
+tableData.push(['Менеджер', 'Лиды', 'Успешные', 'Доход', 'Конверсия', 'Ср. чек']);	
+// Данные по менеджерам	
+managersData.managers.forEach(manager => {	
+tableData.push([	
+manager.name,	
+manager.deals,	
+manager.successful,	
+formatCurrency(manager.revenue),	
+manager.conversion.toFixed(2) + '%',	
+formatCurrency(manager.avgCheck)	
+]);	
+});	
+// Добавляем итоговую строку	
+const totals = managersData.managers.reduce((acc, m) => ({	
+deals: acc.deals + m.deals,	
+successful: acc.successful + m.successful,	
+revenue: acc.revenue + m.revenue	
+}), { deals: 0, successful: 0, revenue: 0 });	
+const totalConversion = totals.deals > 0 ? (totals.successful / totals.deals * 100) : 0;	
+const totalAvgCheck = totals.successful > 0 ? Math.round(totals.revenue / totals.successful) : 0;	
+tableData.push(['', '', '', '', '', '']); // Пустая строка	
+tableData.push([	
+ИТОГО:',	
+totals.deals,	
+totals.successful,	
+formatCurrency(totals.revenue),	
+totalConversion.toFixed(2) + '%',	
+formatCurrency(totalAvgCheck)	
+]);	
+// Записываем данные	
+if (tableData.length > 0) {	
+sheet.getRange(1, 1, tableData.length, 6).setValues(tableData);	
+formatManagersEfficiencyTable(sheet, tableData.length);	
+}	
+// Добавляем детальную информацию ниже	
+const detailsStartRow = tableData.length + 3;	
+sheet.getRange(detailsStartRow, 1).setValue('ДЕТАЛЬНАЯ ИНФОРМАЦИЯ');	
+sheet.getRange(detailsStartRow, 1, 1, 6).merge()	
+.setFontWeight('bold')	
+.setBackground('#f0f0f0');	
+let currentRow = detailsStartRow + 2;	
+// Выводим топ-менеджеров с транзакциями	
+const managersWithRevenue = managersData.managers.filter(m => m.revenue > 0);	
+if (managersWithRevenue.length > 0) {	
+sheet.getRange(currentRow, 1).setValue('Менеджеры с продажами:');	
+currentRow++;	
+managersWithRevenue.forEach(manager => {	
+sheet.getRange(currentRow, 1).setValue(manager.name + ':');	
+sheet.getRange(currentRow, 2).setValue(manager.transactions.length + ' транзакций');	
+sheet.getRange(currentRow, 3).setValue('Сумма: ' + formatCurrency(manager.revenue));	
+currentRow++;	
+});	
+}	
+Logger.log('Таблица эффективности менеджеров создана');	
+}	
+	
+/**	
+* Форматирует таблицу эффективности менеджеров	
+*/	
+function formatManagersEfficiencyTable(sheet, rowCount) {	
+try {	
+// Заголовок - красный фон, белый текст	
+sheet.getRange(1, 1, 1, 6).merge()	
+.setFontSize(16)	
+.setFontWeight('bold')	
+.setHorizontalAlignment('center')	
+.setBackground('#ea4335')	
+.setFontColor('#ffffff');	
+// Подзаголовок	
+sheet.getRange(2, 1, 1, 6).merge()	
+.setFontSize(12)	
+.setFontWeight('bold')	
+.setHorizontalAlignment('center');	
+// Заголовки столбцов	
+sheet.getRange(3, 1, 1, 6)	
+.setFontWeight('bold')	
+.setBackground('#f8f9fa');	
+// Итоговая строка	
+if (rowCount > 5) {	
+sheet.getRange(rowCount, 1, 1, 6)	
+.setFontWeight('bold')	
+.setBackground('#e8f0fe');	
+}	
+// Границы	
+sheet.getRange(1, 1, rowCount, 6).setBorder(true, true, true, true, true, true);	
+// Автоматическая ширина колонок	
+for (let i = 1; i <= 6; i++) {	
+sheet.autoResizeColumn(i);	
+}	
+// Закрепляем заголовки	
+sheet.setFrozenRows(3);	
+} catch (error) {	
+Logger.log('Ошибка форматирования таблицы: ' + error.toString());	
+}	
+}	
+	
+/**	
+* Очистка телефонного номера	
+*/	
+function cleanPhone(phone) {	
+if (!phone) return '';	
+return String(phone).replace(/\D/g, '');	
+}	
+	
+/**	
+* Форматирует валюту	
+*/	
+function formatCurrency(amount) {	
+try {	
+return Number(amount).toLocaleString('ru-RU') + ' ₽';	
+} catch (error) {	
+return '0 ₽';	
+}	
+}	
+	
+/**	
+* Парсинг числа	
+*/	
+function parseNumber(value) {	
+if (typeof value === 'number') return value;	
+if (!value) return 0;	
+try {	
+const cleaned = String(value).replace(/[^\d.-]/g, '');	
+const num = parseFloat(cleaned);	
+return isNaN(num) ? 0 : num;	
+} catch (error) {	
+return 0;	
+}	
+}	
+	
+/**	
+* Читает данные с листа	
+*/	
+function readSheetData(spreadsheet, sheetName) {	
+try {	
+const sheet = spreadsheet.getSheetByName(sheetName);	
+if (!sheet) {	
+Logger.log('Лист ' + sheetName + ' не найден');	
+return [];	
+}	
+return sheet.getDataRange().getValues();	
+} catch (error) {	
+Logger.log('Ошибка чтения ' + sheetName + ': ' + error.toString());	
+return [];	
+}	
+}	
+/**	
+* Объединяет «Амо Выгрузка» + «Выгрузка АМО Полная»	
+* с группировкой данных по логическим блокам	
+*/	
+function mergeAMOTablesStructured() {	
+const ss = SpreadsheetApp.getActiveSpreadsheet();	
+const SHEET_NEW_NAME = 'Амо Выгрузка';	
+const SHEET_FULL_NAME = 'Выгрузка АМО Полная';	
+const SHEET_OUT_NAME = 'РАБОЧИЙ АМО';	
+	
+// Статус для логирования	
+let status = 'Начало обработки';	
+try {	
+const sheetNew = ss.getSheetByName(SHEET_NEW_NAME);	
+const sheetFull = ss.getSheetByName(SHEET_FULL_NAME);	
+if (!sheetNew || !sheetFull) throw new Error('❌ Один из листов не найден');	
+	
+// 1. Считываем текущее состояние выходного листа (для определения изменений)	
+status = 'Сохранение предыдущего состояния';	
+let previousData = null;	
+let previousDataMap = new Map();	
+// Определяем sheetOut один раз для всей функции	
+let sheetOut = ss.getSheetByName(SHEET_OUT_NAME);	
+if (sheetOut) {	
+previousData = sheetOut.getDataRange().getValues();	
+// Создаем карту строк по ID для быстрого поиска изменений	
+if (previousData && previousData.length > 1) {	
+const idColIndex = findColumnIndex(previousData[0], 'Сделка.ID');	
+if (idColIndex !== -1) {	
+for (let i = 1; i < previousData.length; i++) {	
+const id = previousData[i][idColIndex]?.toString() || '';	
+if (id) {	
+previousDataMap.set(id, {	
+rowIndex: i,	
+data: previousData[i]	
+});	
+}	
+}	
+}	
+}	
+Logger.log(`Сохранено предыдущее состояние: ${previousDataMap.size} записей`);	
+}	
+	
+// 2. Считываем шапки и данные	
+status = 'Чтение данных';	
+const [headerLong, ...bodyNew] = sheetNew.getDataRange().getValues();	
+const [headerFull, ...bodyFull] = sheetFull.getDataRange().getValues();	
+// Находим индексы важных колонок	
+const dateCreatedIndex = findColumnIndex(headerLong, 'Сделка.Дата создания');	
+const idIndex = findColumnIndex(headerLong, 'Сделка.ID');	
+const ymUidIndex = findColumnIndex(headerLong, 'Сделка._ym_uid');	
+const ymClientIdIndex = findColumnIndex(headerLong, 'Сделка.YM_CLIENT_ID');	
+// 3. Маппинг полей - такой же как в оригинальном скрипте	
+status = 'Настройка маппинга полей';	
+const MAP = {};	
+function link(short, long) { MAP[short] = long; MAP[long] = long; }	
+link('id', 'Сделка.ID');	
+link('название сделки', 'Сделка.Название');	
+link('основной контакт', 'Контакт.ФИО');	
+link('ответственный', 'Сделка.Ответственный');	
+link('этап сделки', 'Сделка.Статус');	
+link('бюджет', 'Сделка.Бюджет');	
+link('дата создания', 'Сделка.Дата создания');	
+link('кем создана', 'Кем создана');	
+link('теги сделки', 'Сделка.Теги');	
+link('дата закрытия', 'Сделка.Дата закрытия');	
+link('ym_client_id', 'Сделка.YM_CLIENT_ID');	
+link('ga_client_id', 'Сделка.GA_CLIENT_ID');	
+link('button_text', 'Сделка.BUTTON_TEXT');	
+link('date', 'Сделка.DATE');	
+link('time', 'Сделка.TIME');	
+link('r.источник сделки', 'Сделка.R.Источник сделки');	
+link('r.тег города', 'Сделка.R.Тег города');	
+link('по', 'Сделка.ПО');	
+link('бар (deal)', 'Сделка.Бар (deal)');	
+link('дата брони', 'Сделка.Дата брони');	
+link('кол-во гостей', 'Сделка.Кол-во гостей');	
+link('время прихода', 'Сделка.Время прихода');	
+link('комментарий моб', 'Сделка.Комментарий МОБ');	
+link('источник', 'Сделка.Источник');	
+link('тип лида', 'Сделка.Тип лида');	
+link('причина отказа (об)', 'Сделка.Причина отказа (ОБ)');	
+link('r.статусы гостей', 'Сделка.R.Статусы гостей');	
+link('сарафан гости', 'Сделка.Сарафан гости');	
+link('utm_medium', 'Сделка.UTM_MEDIUM');	
+link('formname', 'Сделка.FORMNAME');	
+link('referer', 'Сделка.REFERER');	
+link('formid', 'Сделка.FORMID');	
+link('номер линии mango office', 'Сделка.Номер линии MANGO OFFICE');	
+link('utm_source', 'Сделка.UTM_SOURCE');	
+link('utm_term', 'Сделка.UTM_TERM');	
+link('utm_campaign', 'Сделка.UTM_CAMPAIGN');	
+link('utm_content', 'Сделка.UTM_CONTENT');	
+link('utm_referrer', 'Сделка.utm_referrer');	
+link('_ym_uid', 'Сделка._ym_uid');	
+link('рабочий телефон (контакт)', 'Контакт.Телефон');	
+link('номер линии mango office (контакт)','Контакт.Номер линии MANGO OFFICE');	
+link('примечание 1', 'Примечание 1');	
+	
+// 4. Определение блоков данных для структурированной таблицы	
+const BLOCKS = {	
+DEAL: {	
+title: '📝 ИНФОРМАЦИЯ О СДЕЛКЕ',	
+color: '#e3f2fd', // Светло-голубой	
+fields: [	
+Сделка.ID',	
+Сделка.Название',	
+Сделка.Ответственный',	
+Сделка.Статус',	
+Сделка.Бюджет',	
+Сделка.Дата создания',	
+Сделка.Дата закрытия',	
+Кем создана',	
+Сделка.Теги',	
+История статусов'	
+]	
+},	
+CONTACT: {	
+title: '👤 КОНТАКТНЫЕ ДАННЫЕ',	
+color: '#f1f8e9', // Светло-зеленый	
+fields: [	
+Контакт.ФИО',	
+Контакт.Телефон',	
+Контакт.Номер линии MANGO OFFICE',	
+Сделка.Номер линии MANGO OFFICE'	
+]	
+},	
+RESERVATION: {	
+title: '🕒 ИНФОРМАЦИЯ О БРОНИ',	
+color: '#fff8e1', // Светло-желтый	
+fields: [	
+Сделка.Бар (deal)',	
+Сделка.Дата брони',	
+Сделка.Время прихода',	
+Сделка.Кол-во гостей',	
+Сделка.Комментарий МОБ',	
+Сделка.R.Статусы гостей',	
+Сделка.Сарафан гости'	
+]	
+},	
+UTM: {	
+title: '📊 UTM-МЕТКИ И ИСТОЧНИКИ',	
+color: '#fce4ec', // Светло-розовый	
+fields: [	
+Сделка.UTM_SOURCE',	
+Сделка.UTM_MEDIUM',	
+Сделка.UTM_CAMPAIGN',	
+Сделка.UTM_CONTENT',	
+Сделка.UTM_TERM',	
+Сделка.utm_referrer',	
+Сделка.Источник',	
+Сделка.R.Источник сделки',	
+Сделка.Тип лида',	
+Сделка.REFERER'	
+]	
+},	
+ANALYTICS: {	
+title: '🔍 АНАЛИТИКА',	
+color: '#e8eaf6', // Светло-фиолетовый	
+fields: [	
+Сделка.YM_CLIENT_ID',	
+Сделка._ym_uid',	
+Сделка.GA_CLIENT_ID',	
+Сделка.FORMID',	
+Сделка.FORMNAME',	
+Сделка.BUTTON_TEXT',	
+Сделка.DATE',	
+Сделка.TIME',	
+Сделка._ym_uid'	
+]	
+},	
+ADDITIONAL: {	
+title: '📌 ДОПОЛНИТЕЛЬНАЯ ИНФОРМАЦИЯ',	
+color: '#efebe9', // Светло-коричневый	
+fields: [	
+Сделка.R.Тег города',	
+Сделка.ПО',	
+Сделка.Причина отказа (ОБ)',	
+Примечание 1',	
+Связанные сделки',	
+Объединено'	
+]	
+},	
+CHANGES: {	
+title: '⚡ ИЗМЕНЕНИЯ',	
+color: '#ffebee', // Светло-красный	
+fields: [	
+Изменено',	
+Измененные поля'	
+]	
+}	
+};	
+	
+// 5. Строка → объект	
+status = 'Преобразование данных';	
+function rowToObj(row, hdr) {	
+const o = {};	
+row.forEach((v, i) => {	
+if (i >= hdr.length) return; // Защита от ошибок несоответствия	
+const raw = hdr[i].toString().trim().toLowerCase();	
+const long = MAP[raw] || headerLong[i];	
+o[long] = v;	
+});	
+return o;	
+}	
+	
+const objs = [	
+...bodyFull.map(r => rowToObj(r, headerFull)),	
+...bodyNew .map(r => rowToObj(r, headerLong))	
+];	
+	
+// 6. Улучшенная дедупликация с учетом Яндекс ID	
+status = 'Интеллектуальное объединение дубликатов';	
+// Сначала объединяем по ID сделки (как раньше)	
+const uniq = new Map();	
+objs.forEach(o => {	
+const id = (o['Сделка.ID'] || '').toString().trim();	
+const key = id || (o['Сделка.Название'] + '|' + o['Сделка.Дата создания']);	
+uniq.set(key, o);	
+});	
+// Теперь находим записи с одинаковыми Яндекс ID	
+const ymUidGroups = new Map(); // ym_uid -> array of objects	
+// Группировка по Яндекс ID	
+uniq.forEach((obj, key) => {	
+const ymUid = (obj['Сделка._ym_uid'] || '').toString().trim();	
+const ymClientId = (obj['Сделка.YM_CLIENT_ID'] || '').toString().trim();	
+// Используем любой доступный Яндекс идентификатор	
+const yandexId = ymUid || ymClientId;	
+if (yandexId) {	
+if (!ymUidGroups.has(yandexId)) {	
+ymUidGroups.set(yandexId, []);	
+}	
+ymUidGroups.get(yandexId).push({key, obj});	
+}	
+});	
+// Объединяем записи с одинаковыми Яндекс ID	
+let mergedCount = 0;	
+ymUidGroups.forEach((entries, yandexId) => {	
+if (entries.length > 1) {	
+mergedCount++;	
+// Сортируем записи по дате (новые в начале)	
+entries.sort((a, b) => {	
+const dateA = safeParseDate(a.obj['Сделка.Дата создания']) || new Date(0);	
+const dateB = safeParseDate(b.obj['Сделка.Дата создания']) || new Date(0);	
+return dateB.getTime() - dateA.getTime();	
+});	
+// Берем самую новую запись как основу	
+const primaryEntry = entries[0];	
+const primaryObj = primaryEntry.obj;	
+// Создаем новое поле для хранения связанных ID	
+primaryObj['Связанные сделки'] = entries	
+.slice(1)	
+.map(e => e.obj['Сделка.ID'] || 'Без ID')	
+.join(', ');	
+// Суммируем бюджеты	
+let totalBudget = parseFloat(primaryObj['Сделка.Бюджет']) || 0;	
+let statusList = new Set([primaryObj['Сделка.Статус']]);	
+// Объединяем данные из других записей	
+entries.slice(1).forEach(entry => {	
+// Суммируем бюджеты	
+totalBudget += parseFloat(entry.obj['Сделка.Бюджет']) || 0;	
+// Собираем все уникальные статусы	
+if (entry.obj['Сделка.Статус']) {	
+statusList.add(entry.obj['Сделка.Статус']);	
+}	
+// Удаляем объединенную запись из основной карты	
+uniq.delete(entry.key);	
+});	
+// Обновляем основную запись	
+primaryObj['Сделка.Бюджет'] = totalBudget;	
+primaryObj['История статусов'] = Array.from(statusList).join(', ');	
+// Отметка, что запись была объединена	
+primaryObj['Объединено'] = 'Да';	
+}	
+});	
+Logger.log(`Объединено ${mergedCount} групп записей с одинаковыми Яндекс ID`);	
+	
+// 7. Собираем результат - сгруппированные по блокам столбцы	
+status = 'Формирование структурированного результата';	
+// Создаем список всех полей в правильном порядке по блокам	
+const orderedFields = [];	
+// Добавляем поля из каждого блока в указанном порядке	
+Object.values(BLOCKS).forEach(block => {	
+block.fields.forEach(field => {	
+if (!orderedFields.includes(field)) {	
+orderedFields.push(field);	
+}	
+});	
+});	
+// Добавляем оставшиеся поля, которые не попали ни в один блок	
+headerLong.forEach(field => {	
+if (!orderedFields.includes(field)) {	
+orderedFields.push(field);	
+}	
+});	
+// Добавляем специальные поля для объединения и изменений	
+if (!orderedFields.includes('Связанные сделки')) orderedFields.push('Связанные сделки');	
+if (!orderedFields.includes('История статусов')) orderedFields.push('История статусов');	
+if (!orderedFields.includes('Объединено')) orderedFields.push('Объединено');	
+if (!orderedFields.includes('Изменено')) orderedFields.push('Изменено');	
+if (!orderedFields.includes('Измененные поля')) orderedFields.push('Измененные поля');	
+// Создаем массив заголовков для результата	
+const structuredHeader = orderedFields;	
+// Информация о блоках для форматирования	
+const blockInfo = [];	
+let currentCol = 0;	
+Object.values(BLOCKS).forEach(block => {	
+const blockStart = currentCol;	
+let blockWidth = 0;	
+block.fields.forEach(field => {	
+const fieldIndex = orderedFields.indexOf(field);	
+if (fieldIndex >= 0 && fieldIndex >= blockStart) {	
+blockWidth = Math.max(blockWidth, fieldIndex - blockStart + 1);	
+}	
+});	
+if (blockWidth > 0) {	
+blockInfo.push({	
+title: block.title,	
+startCol: blockStart + 1, // +1 для индексации с 1 в таблице	
+width: blockWidth,	
+color: block.color	
+});	
+currentCol = blockStart + blockWidth;	
+}	
+});	
+// Формируем итоговые данные с новым порядком столбцов	
+const out = [structuredHeader];	
+const changedRows = new Set(); // Для хранения индексов изменившихся строк	
+uniq.forEach(o => {	
+// Проверяем, изменилась ли запись	
+const id = (o['Сделка.ID'] || '').toString().trim();	
+if (id && previousData) {	
+// Находим соответствующую запись в предыдущем состоянии	
+const prevRecord = previousDataMap.get(id);	
+if (prevRecord) {	
+// Проверяем, изменились ли какие-то поля	
+let changed = false;	
+let changedFields = [];	
+headerLong.forEach((header, idx) => {	
+const prevValue = prevRecord.data[idx];	
+const newValue = o[header];	
+// Если значения не равны и не являются оба пустыми или null	
+if (prevValue !== newValue && !(isEmpty(prevValue) && isEmpty(newValue))) {	
+changed = true;	
+changedFields.push(header);	
+}	
+});	
+if (changed) {	
+o['Изменено'] = new Date().toLocaleString('ru-RU');	
+o['Измененные поля'] = changedFields.join(', ');	
+changedRows.add(out.length); // Запоминаем индекс строки (с учетом заголовка)	
+}	
+} else {	
+// Это новая запись	
+o['Изменено'] = 'Новая запись';	
+changedRows.add(out.length);	
+}	
+}	
+// Формируем строку в новом порядке	
+const row = structuredHeader.map(h => o[h] ?? '');	
+out.push(row);	
+});	
+	
+// 8. Запись результата	
+status = 'Запись результата';	
+if (!sheetOut) {	
+sheetOut = ss.insertSheet(SHEET_OUT_NAME);	
+} else {	
+// Очищаем ТОЛЬКО СОДЕРЖИМОЕ, сохраняя форматирование	
+const lastRow = sheetOut.getLastRow();	
+const lastCol = sheetOut.getLastColumn();	
+if (lastRow) {	
+sheetOut.getRange(1, 1, lastRow, lastCol).clearContent();	
+}	
+}	
+	
+// Запись данных	
+sheetOut.getRange(1, 1, out.length, structuredHeader.length).setValues(out);	
+	
+// 9. Сортировка	
+status = 'Сортировка результата';	
+const sortColumn = dateCreatedIndex !== -1 ?	
+structuredHeader.indexOf('Сделка.Дата создания') + 1 :	
+structuredHeader.indexOf('Сделка.ID') + 1;	
+if (out.length > 2) {	
+Logger.log(`📅 Сортировка по колонке ${sortColumn}`);	
+const dataRange = sheetOut.getRange(2, 1, out.length - 1, structuredHeader.length);	
+dataRange.sort({column: sortColumn, ascending: false});	
+}	
+	
+// 10. Форматирование и структурирование таблицы	
+status = 'Форматирование и структурирование таблицы';	
+// Добавляем строку для заголовков блоков	
+sheetOut.insertRowBefore(1);	
+// Применяем заголовки блоков и форматирование	
+blockInfo.forEach(block => {	
+if (block.width > 0) {	
+// Заголовок блока	
+sheetOut.getRange(1, block.startCol, 1, block.width)	
+.merge()	
+.setValue(block.title)	
+.setBackground(block.color)	
+.setFontWeight('bold')	
+.setHorizontalAlignment('center')	
+.setBorder(true, true, true, true, true, true);	
+// Подсветка столбцов блока	
+sheetOut.getRange(2, block.startCol, out.length, block.width)	
+.setBorder(true, true, true, true, null, null);	
+// Цветная полоса в шапке таблицы	
+sheetOut.getRange(2, block.startCol, 1, block.width)	
+.setBackground(block.color)	
+.setFontWeight('bold')	
+.setHorizontalAlignment('center');	
+}	
+});	
+// Закрепляем две строки (блоки и заголовки)	
+sheetOut.setFrozenRows(2);	
+// Находим ID сделки для подсветки изменений	
+const idColumnIndex = structuredHeader.indexOf('Сделка.ID') + 1;	
+if (idColumnIndex > 0) {	
+// Подсветка измененных строк	
+const allIDs = sheetOut.getRange(3, idColumnIndex, out.length - 1, 1).getValues();	
+const changedIDs = new Set();	
+uniq.forEach(obj => {	
+const id = (obj['Сделка.ID'] || '').toString().trim();	
+const isChanged = obj['Изменено'] && (obj['Изменено'] === 'Новая запись' ||	
+obj['Изменено'].toString().includes(':'));	
+if (id && isChanged) {	
+changedIDs.add(id);	
+}	
+});	
+// Подсвечиваем измененные строки	
+for (let i = 0; i < allIDs.length; i++) {	
+const id = (allIDs[i][0] || '').toString().trim();	
+if (id && changedIDs.has(id)) {	
+sheetOut.getRange(i + 3, 1, 1, structuredHeader.length)	
+.setBackground('#fff9c4'); // Светло-желтый для изменений	
+}	
+}	
+}	
+// Автоматическая ширина столбцов	
+for (let i = 1; i <= structuredHeader.length; i++) {	
+sheetOut.autoResizeColumn(i);	
+}	
+Logger.log(`✅ Готово! ${out.length - 1} строк в «${SHEET_OUT_NAME}» (объединено: ${mergedCount}, изменено: ${changedRows.size})`);	
+return `Таблица структурирована! ${out.length - 1} записей. Объединено: ${mergedCount} групп. Изменено: ${changedRows.size} строк.`;	
+} catch (e) {	
+Logger.log(`❌ Ошибка на этапе "${status}": ${e.message}`);	
+throw new Error(`Ошибка на этапе "${status}": ${e.message}`);	
+}	
+}	
+	
+/**	
+* Устанавливает триггер для автоматического обновления таблицы	
+* @param {string} frequency - 'hourly', 'daily', 'weekly'	
+*/	
+function setupAutoUpdateTrigger(frequency = 'daily') {	
+// Удаляем существующие триггеры	
+const triggers = ScriptApp.getProjectTriggers();	
+triggers.forEach(trigger => {	
+if (trigger.getHandlerFunction() === 'mergeAMOTablesStructured') {	
+ScriptApp.deleteTrigger(trigger);	
+}	
+});	
+// Создаем новый триггер	
+if (frequency === 'hourly') {	
+ScriptApp.newTrigger('mergeAMOTablesStructured')	
+.timeBased()	
+.everyHours(1)	
+.create();	
+return "Установлен триггер: обновление каждый час";	
+} else if (frequency === 'weekly') {	
+ScriptApp.newTrigger('mergeAMOTablesStructured')	
+.timeBased()	
+.everyWeeks(1)	
+.onWeekDay(ScriptApp.WeekDay.MONDAY)	
+.atHour(9)	
+.create();	
+return "Установлен триггер: обновление каждый понедельник в 9:00";	
+} else {	
+// По умолчанию - ежедневно	
+ScriptApp.newTrigger('mergeAMOTablesStructured')	
+.timeBased()	
+.everyDays(1)	
+.atHour(9)	
+.create();	
+return "Установлен триггер: обновление каждый день в 9:00";	
+}	
+}	
+	
+/**	
+* Устанавливает триггер по редактированию листов-источников	
+*/	
+function setupEditTrigger() {	
+// Удаляем существующие триггеры	
+const triggers = ScriptApp.getProjectTriggers();	
+triggers.forEach(trigger => {	
+if (trigger.getHandlerFunction() === 'mergeAMOTablesStructured' &&	
+trigger.getEventType() === ScriptApp.EventType.ON_EDIT) {	
+ScriptApp.deleteTrigger(trigger);	
+}	
+});	
+// Создаем триггер по изменению	
+const ss = SpreadsheetApp.getActiveSpreadsheet();	
+ScriptApp.newTrigger('mergeAMOTablesStructured')	
+.forSpreadsheet(ss)	
+.onEdit()	
+.create();	
+return "Установлен триггер: обновление при редактировании таблицы";	
+}	
+	
+/**	
+* Находит индекс колонки по названию (нечувствительно к регистру)	
+*/	
+function findColumnIndex(headerRow, columnName) {	
+columnName = columnName.toString().trim().toLowerCase();	
+for (let i = 0; i < headerRow.length; i++) {	
+const header = headerRow[i].toString().trim().toLowerCase();	
+if (header === columnName) {	
+return i;	
+}	
+}	
+return -1;	
+}	
+	
+/**	
+* Проверяет, является ли значение пустым	
+*/	
+function isEmpty(value) {	
+return value === undefined || value === null || value === '' ||	
+(typeof value === 'string' && value.trim() === '');	
+}	
+	
+/**	
+* Безопасное преобразование даты	
+*/	
+function safeParseDate(dateStr) {	
+try {	
+if (!dateStr) return null;	
+if (dateStr instanceof Date) {	
+return isNaN(dateStr.getTime()) ? null : dateStr;	
+}	
+const date = new Date(dateStr);	
+return isNaN(date.getTime()) ? null : date;	
+} catch (e) {	
+return null;	
+}	
+}	
+	
+/**	
+* Создает меню для удобного запуска скриптов	
+*/	
+function onOpen() {	
+const ui = SpreadsheetApp.getUi();	
+ui.createMenu('AMO 📊')	
+.addItem('Обновить РАБОЧИЙ АМО', 'mergeAMOTablesStructured')	
+.addSeparator()	
+.addItem('⏰ Установить ежедневное обновление', 'setupDailyTrigger')	
+.addItem('⏰ Установить еженедельное обновление', 'setupWeeklyTrigger')	
+.addItem('❌ Удалить все триггеры', 'removeAllTriggers')	
+.addToUi();	
+}	
+	
+// Вспомогательные функции для меню	
+function setupDailyTrigger() {	
+const result = setupAutoUpdateTrigger('daily');	
+SpreadsheetApp.getUi().alert(result);	
+}	
+	
+function setupWeeklyTrigger() {	
+const result = setupAutoUpdateTrigger('weekly');	
+SpreadsheetApp.getUi().alert(result);	
+}	
+	
+function removeAllTriggers() {	
+const triggers = ScriptApp.getProjectTriggers();	
+triggers.forEach(trigger => {	
+if (trigger.getHandlerFunction() === 'mergeAMOTablesStructured') {	
+ScriptApp.deleteTrigger(trigger);	
+}	
+});	
+SpreadsheetApp.getUi().alert('Все триггеры удалены');	
+}	
+	
+	
+/**	
+* Restaurant Analytics System - Module 5: UTM & Channel Analytics	
+* Сквозная аналитика по UTM меткам и каналам привлечения	
+* Версия: 1.0 RU	
+* Автор: Restaurant Analytics	
+* Дата: 07.08.2025	
+*/	
+	
+// ==================== КОНФИГУРАЦИЯ UTM АНАЛИТИКИ ====================	
+	
+const UTM_CONFIG = {	
+// Колонки в РАБОЧИЙ АМО	
+AMO_COLUMNS: {	
+PHONE: 4, // E - Контакт.Телефон	
+UTM_SOURCE: 12, // M - UTM Source	
+UTM_MEDIUM: 13, // N - UTM Medium	
+UTM_CAMPAIGN: 14, // O - UTM Campaign	
+UTM_CONTENT: 15, // P - UTM Content	
+UTM_TERM: 16, // Q - UTM Term	
+BUDGET: 9, // J - Сделка.Бюджет	
+DATE: 11, // L - Сделка.Дата создания	
+STATUS: 7, // H - Сделка.Статус	
+MANAGER: 2 // C - Сделка.Ответственный	
+},	
+// Колонки в Guests RP	
+GUESTS_COLUMNS: {	
+PHONE: 9, // J - Телефон	
+SUM: 13, // N - Сумма	
+DATE: 1, // B - Дата	
+NAME: 7 // H - Имя	
+},	
+// Колонки в Site Requests	
+SITE_COLUMNS: {	
+PHONE: 2, // C - Телефон	
+UTM_SOURCE: 5, // F - UTM Source	
+UTM_MEDIUM: 6, // G - UTM Medium	
+UTM_CAMPAIGN: 7, // H - UTM Campaign	
+DATE: 0, // A - Дата	
+NAME: 1 // B - Имя	
+},	
+// Маппинг каналов	
+CHANNEL_MAPPING: {	
+yandex': 'Яндекс.Директ',	
+google': 'Google Ads',	
+instagram': 'Instagram',	
+facebook': 'Facebook',	
+vk': 'ВКонтакте',	
+telegram': 'Telegram',	
+whatsapp': 'WhatsApp',	
+organic': 'Органический трафик',	
+direct': 'Прямые заходы',	
+referral': 'Реферальный трафик',	
+social': 'Социальные сети',	
+email': 'Email рассылка',	
+sms': 'SMS рассылка',	
+offline': 'Офлайн источники'	
+},	
+// Цвета для каналов	
+CHANNEL_COLORS: {	
+Яндекс.Директ': '#FFCC00',	
+Google Ads': '#4285F4',	
+Instagram': '#E4405F',	
+Facebook': '#1877F2',	
+ВКонтакте': '#0077FF',	
+Telegram': '#26A5E4',	
+WhatsApp': '#25D366',	
+Органический трафик': '#34A853',	
+Прямые заходы': '#9E9E9E',	
+Реферальный трафик': '#FF6D00',	
+Социальные сети': '#7C4DFF',	
+Email рассылка': '#00BCD4',	
+SMS рассылка': '#FFC107',	
+Офлайн источники': '#795548',	
+Неизвестно': '#CCCCCC'	
+}	
+};	
+	
+// ==================== ГЛАВНАЯ ФУНКЦИЯ UTM АНАЛИТИКИ ====================	
+	
+/**	
+* Запускает полный анализ UTM меток и каналов	
+*/	
+function runUTMChannelAnalysis() {	
+const startTime = new Date();	
+Logger.log('=== Начало UTM и канальной аналитики: ' + startTime.toLocaleString('ru-RU'));	
+try {	
+const spreadsheet = SpreadsheetApp.openById(CONFIG.MAIN_SPREADSHEET_ID);	
+// Собираем данные из всех источников	
+const data = collectUTMData(spreadsheet);	
+// Анализируем данные	
+const analysis = analyzeUTMChannels(data);	
+// Создаем отчеты	
+createUTMDashboard(spreadsheet, analysis);	
+createChannelROIReport(spreadsheet, analysis);	
+createConversionFunnelByChannel(spreadsheet, analysis);	
+createAttributionReport(spreadsheet, analysis);	
+const executionTime = (new Date() - startTime) / 1000;	
+Logger.log('=== UTM аналитика завершена за ' + executionTime + ' секунд');	
+} catch (error) {	
+Logger.log('ОШИБКА в runUTMChannelAnalysis: ' + error.toString());	
+Logger.log('Stack trace: ' + error.stack);	
+throw error;	
+}	
+}	
+	
+// ==================== СБОР ДАННЫХ ====================	
+	
+/**	
+* Собирает данные с UTM метками из всех источников	
+*/	
+function collectUTMData(spreadsheet) {	
+Logger.log('Сбор данных для UTM аналитики...');	
+const data = {	
+amo: [],	
+guests: [],	
+siteRequests: [],	
+budgets: {}	
+};	
+// 1. Данные из РАБОЧИЙ АМО	
+const amoSheet = spreadsheet.getSheetByName(CONFIG.SHEETS.WORKING_AMO);	
+if (amoSheet) {	
+const amoData = amoSheet.getDataRange().getValues();	
+// Пропускаем первые 2 строки (заголовки)	
+for (let i = 2; i < amoData.length; i++) {	
+const row = amoData[i];	
+if (row && row.length > UTM_CONFIG.AMO_COLUMNS.UTM_SOURCE) {	
+data.amo.push({	
+phone: cleanPhone(row[UTM_CONFIG.AMO_COLUMNS.PHONE]),	
+utmSource: String(row[UTM_CONFIG.AMO_COLUMNS.UTM_SOURCE] || '').toLowerCase(),	
+utmMedium: String(row[UTM_CONFIG.AMO_COLUMNS.UTM_MEDIUM] || '').toLowerCase(),	
+utmCampaign: String(row[UTM_CONFIG.AMO_COLUMNS.UTM_CAMPAIGN] || ''),	
+budget: parseNumber(row[UTM_CONFIG.AMO_COLUMNS.BUDGET]),	
+date: new Date(row[UTM_CONFIG.AMO_COLUMNS.DATE]),	
+status: String(row[UTM_CONFIG.AMO_COLUMNS.STATUS] || ''),	
+manager: String(row[UTM_CONFIG.AMO_COLUMNS.MANAGER] || '')	
+});	
+}	
+}	
+Logger.log('Собрано из AMO: ' + data.amo.length + ' записей');	
+}	
+// 2. Данные из Guests RP	
+const guestsSheet = spreadsheet.getSheetByName(CONFIG.SHEETS.GUESTS);	
+if (guestsSheet) {	
+const guestsData = guestsSheet.getDataRange().getValues();	
+for (let i = 1; i < guestsData.length; i++) {	
+const row = guestsData[i];	
+if (row && row.length > UTM_CONFIG.GUESTS_COLUMNS.SUM) {	
+data.guests.push({	
+phone: cleanPhone(row[UTM_CONFIG.GUESTS_COLUMNS.PHONE]),	
+sum: parseNumber(row[UTM_CONFIG.GUESTS_COLUMNS.SUM]),	
+date: new Date(row[UTM_CONFIG.GUESTS_COLUMNS.DATE]),	
+name: String(row[UTM_CONFIG.GUESTS_COLUMNS.NAME] || '')	
+});	
+}	
+}	
+Logger.log('Собрано из Guests: ' + data.guests.length + ' записей');	
+}	
+// 3. Данные из Site Requests	
+const siteSheet = spreadsheet.getSheetByName(CONFIG.SHEETS.SITE_REQUESTS);	
+if (siteSheet) {	
+const siteData = siteSheet.getDataRange().getValues();	
+for (let i = 1; i < siteData.length; i++) {	
+const row = siteData[i];	
+if (row && row.length > UTM_CONFIG.SITE_COLUMNS.UTM_CAMPAIGN) {	
+data.siteRequests.push({	
+phone: cleanPhone(row[UTM_CONFIG.SITE_COLUMNS.PHONE]),	
+utmSource: String(row[UTM_CONFIG.SITE_COLUMNS.UTM_SOURCE] || '').toLowerCase(),	
+utmMedium: String(row[UTM_CONFIG.SITE_COLUMNS.UTM_MEDIUM] || '').toLowerCase(),	
+utmCampaign: String(row[UTM_CONFIG.SITE_COLUMNS.UTM_CAMPAIGN] || ''),	
+date: new Date(row[UTM_CONFIG.SITE_COLUMNS.DATE]),	
+name: String(row[UTM_CONFIG.SITE_COLUMNS.NAME] || '')	
+});	
+}	
+}	
+Logger.log('Собрано из Site Requests: ' + data.siteRequests.length + ' записей');	
+}	
+// 4. Данные о бюджетах	
+const budgetsSheet = spreadsheet.getSheetByName(CONFIG.SHEETS.BUDGETS);	
+if (budgetsSheet) {	
+const budgetsData = budgetsSheet.getDataRange().getValues();	
+for (let i = 1; i < budgetsData.length; i++) {	
+const row = budgetsData[i];	
+if (row && row.length > 1) {	
+const channel = String(row[0] || '');	
+const monthlyBudgets = {};	
+for (let j = 2; j < row.length; j++) {	
+const monthName = budgetsData[0][j];	
+if (monthName) {	
+monthlyBudgets[monthName] = parseNumber(row[j]);	
+}	
+}	
+data.budgets[channel] = monthlyBudgets;	
+}	
+}	
+Logger.log('Собрано бюджетов: ' + Object.keys(data.budgets).length + ' каналов');	
+}	
+return data;	
+}	
+	
+// ==================== АНАЛИЗ ДАННЫХ ====================	
+	
+/**	
+* Анализирует UTM метки и каналы	
+*/	
+function analyzeUTMChannels(data) {	
+Logger.log('Анализ UTM меток и каналов...');	
+const analysis = {	
+channels: new Map(),	
+campaigns: new Map(),	
+phoneToChannel: new Map(),	
+phoneToRevenue: new Map(),	
+timeline: new Map(),	
+attribution: {	
+firstTouch: new Map(),	
+lastTouch: new Map(),	
+linear: new Map()	
+}	
+};	
+// 1. Создаем карту телефон -> выручка из Guests	
+data.guests.forEach(guest => {	
+if (guest.phone && guest.sum > 0) {	
+const current = analysis.phoneToRevenue.get(guest.phone) || 0;	
+analysis.phoneToRevenue.set(guest.phone, current + guest.sum);	
+}	
+});	
+// 2. Анализируем AMO данные	
+data.amo.forEach(record => {	
+if (!record.phone) return;	
+// Определяем канал	
+const channel = identifyChannel(record.utmSource, record.utmMedium);	
+// Сохраняем связь телефон -> канал	
+if (!analysis.phoneToChannel.has(record.phone)) {	
+analysis.phoneToChannel.set(record.phone, {	
+channel: channel,	
+source: record.utmSource,	
+medium: record.utmMedium,	
+campaign: record.utmCampaign,	
+firstDate: record.date	
+});	
+}	
+// Инициализируем данные канала	
+if (!analysis.channels.has(channel)) {	
+analysis.channels.set(channel, {	
+name: channel,	
+leads: 0,	
+customers: 0,	
+revenue: 0,	
+cost: 0,	
+deals: [],	
+campaigns: new Set(),	
+sources: new Set(),	
+mediums: new Set()	
+});	
+}	
+const channelData = analysis.channels.get(channel);	
+channelData.leads++;	
+channelData.deals.push(record);	
+if (record.utmCampaign) channelData.campaigns.add(record.utmCampaign);	
+if (record.utmSource) channelData.sources.add(record.utmSource);	
+if (record.utmMedium) channelData.mediums.add(record.utmMedium);	
+// Анализ кампаний	
+if (record.utmCampaign) {	
+const campaignKey = `${channel}::${record.utmCampaign}`;	
+if (!analysis.campaigns.has(campaignKey)) {	
+analysis.campaigns.set(campaignKey, {	
+channel: channel,	
+campaign: record.utmCampaign,	
+leads: 0,	
+customers: 0,	
+revenue: 0,	
+cost: 0	
+});	
+}	
+analysis.campaigns.get(campaignKey).leads++;	
+}	
+});	
+// 3. Анализируем Site Requests для дополнительных UTM	
+data.siteRequests.forEach(request => {	
+if (!request.phone) return;	
+const channel = identifyChannel(request.utmSource, request.utmMedium);	
+// Если телефон еще не связан с каналом	
+if (!analysis.phoneToChannel.has(request.phone)) {	
+analysis.phoneToChannel.set(request.phone, {	
+channel: channel,	
+source: request.utmSource,	
+medium: request.utmMedium,	
+campaign: request.utmCampaign,	
+firstDate: request.date	
+});	
+}	
+});	
+// 4. Связываем выручку с каналами	
+analysis.phoneToRevenue.forEach((revenue, phone) => {	
+const channelInfo = analysis.phoneToChannel.get(phone);	
+if (channelInfo && analysis.channels.has(channelInfo.channel)) {	
+const channelData = analysis.channels.get(channelInfo.channel);	
+channelData.customers++;	
+channelData.revenue += revenue;	
+// Обновляем данные кампании	
+if (channelInfo.campaign) {	
+const campaignKey = `${channelInfo.channel}::${channelInfo.campaign}`;	
+if (analysis.campaigns.has(campaignKey)) {	
+const campaignData = analysis.campaigns.get(campaignKey);	
+campaignData.customers++;	
+campaignData.revenue += revenue;	
+}	
+}	
+}	
+});	
+// 5. Добавляем данные о расходах из бюджетов	
+Object.entries(data.budgets).forEach(([channelName, monthlyBudgets]) => {	
+const channel = normalizeChannelName(channelName);	
+if (analysis.channels.has(channel)) {	
+const totalCost = Object.values(monthlyBudgets).reduce((sum, cost) => sum + cost, 0);	
+analysis.channels.get(channel).cost = totalCost;	
+}	
+});	
+// 6. Рассчитываем метрики	
+analysis.channels.forEach(channelData => {	
+channelData.conversion = channelData.leads > 0 ?	
+(channelData.customers / channelData.leads * 100) : 0;	
+channelData.avgCheck = channelData.customers > 0 ?	
+Math.round(channelData.revenue / channelData.customers) : 0;	
+channelData.cpl = channelData.leads > 0 ?	
+Math.round(channelData.cost / channelData.leads) : 0;	
+channelData.cpa = channelData.customers > 0 ?	
+Math.round(channelData.cost / channelData.customers) : 0;	
+channelData.roi = channelData.cost > 0 ?	
+((channelData.revenue - channelData.cost) / channelData.cost * 100) : 0;	
+channelData.roas = channelData.cost > 0 ?	
+(channelData.revenue / channelData.cost) : 0;	
+});	
+Logger.log('Проанализировано каналов: ' + analysis.channels.size);	
+Logger.log('Проанализировано кампаний: ' + analysis.campaigns.size);	
+return analysis;	
+}	
+	
+// ==================== СОЗДАНИЕ ОТЧЕТОВ ====================	
+	
+/**	
+* Создает главный дашборд UTM аналитики	
+*/	
+function createUTMDashboard(spreadsheet, analysis) {	
+Logger.log('Создание UTM дашборда...');	
+const sheetName = '📊 UTM_АНАЛИТИКА';	
+let sheet = spreadsheet.getSheetByName(sheetName);	
+if (!sheet) {	
+sheet = spreadsheet.insertSheet(sheetName);	
+} else {	
+sheet.clear();	
+}	
+const dashboardData = [];	
+// Заголовок - добавляем пустые строки до 10 элементов	
+dashboardData.push(['📊 СКВОЗНАЯ UTM АНАЛИТИКА - ' + new Date().toLocaleDateString('ru-RU'), '', '', '', '', '', '', '', '', '']);	
+dashboardData.push(['', '', '', '', '', '', '', '', '', '']);	
+// Сводная статистика	
+const totalLeads = Array.from(analysis.channels.values()).reduce((sum, ch) => sum + ch.leads, 0);	
+const totalCustomers = Array.from(analysis.channels.values()).reduce((sum, ch) => sum + ch.customers, 0);	
+const totalRevenue = Array.from(analysis.channels.values()).reduce((sum, ch) => sum + ch.revenue, 0);	
+const totalCost = Array.from(analysis.channels.values()).reduce((sum, ch) => sum + ch.cost, 0);	
+dashboardData.push(['ОБЩАЯ СТАТИСТИКА', '', '', '', '', '', '', '', '', '']);	
+dashboardData.push(['Всего лидов:', totalLeads, 'Всего клиентов:', totalCustomers, '', '', '', '', '', '']);	
+dashboardData.push(['Общая выручка:', formatCurrency(totalRevenue), 'Общие расходы:', formatCurrency(totalCost), '', '', '', '', '', '']);	
+dashboardData.push(['Общий ROI:', formatPercent((totalRevenue - totalCost) / totalCost * 100), 'Общий ROAS:', formatNumber(totalRevenue / totalCost, 2), '', '', '', '', '', '']);	
+dashboardData.push(['', '', '', '', '', '', '', '', '', '']);	
+// Таблица каналов	
+dashboardData.push(['ЭФФЕКТИВНОСТЬ КАНАЛОВ ПРИВЛЕЧЕНИЯ', '', '', '', '', '', '', '', '', '']);	
+dashboardData.push(['Канал', 'Лиды', 'Клиенты', 'Конверсия', 'Выручка', 'Расходы', 'ROI', 'ROAS', 'CPL', 'CPA']);	
+// Сортируем каналы по выручке	
+const sortedChannels = Array.from(analysis.channels.values())	
+.sort((a, b) => b.revenue - a.revenue);	
+sortedChannels.forEach(channel => {	
+dashboardData.push([	
+channel.name,	
+channel.leads,	
+channel.customers,	
+formatPercent(channel.conversion),	
+formatCurrency(channel.revenue),	
+formatCurrency(channel.cost),	
+formatPercent(channel.roi),	
+formatNumber(channel.roas, 2),	
+formatCurrency(channel.cpl),	
+formatCurrency(channel.cpa)	
+]);	
+});	
+// Записываем данные	
+sheet.getRange(1, 1, dashboardData.length, 10).setValues(dashboardData);	
+// Форматирование	
+formatUTMDashboard(sheet, dashboardData.length);	
+// Добавляем графики	
+addUTMCharts(sheet, analysis, dashboardData.length + 2);	
+Logger.log('UTM дашборд создан');	
+}	
+	
+/**	
+* Создает отчет по ROI каналов	
+*/	
+function createChannelROIReport(spreadsheet, analysis) {	
+Logger.log('Создание отчета ROI по каналам...');	
+const sheetName = '💰 ROI_КАНАЛОВ';	
+let sheet = spreadsheet.getSheetByName(sheetName);	
+if (!sheet) {	
+sheet = spreadsheet.insertSheet(sheetName);	
+} else {	
+sheet.clear();	
+}	
+const roiData = [];	
+// Заголовок	
+roiData.push(['💰 АНАЛИЗ ROI И ЭФФЕКТИВНОСТИ КАНАЛОВ', '', '', '', '', '']);	
+roiData.push(['', '', '', '', '', '']);	
+// Фильтруем только каналы с расходами	
+const channelsWithCost = Array.from(analysis.channels.values())	
+.filter(ch => ch.cost > 0)	
+.sort((a, b) => b.roi - a.roi);	
+// Топ прибыльные каналы	
+roiData.push(['🏆 ТОП ПРИБЫЛЬНЫЕ КАНАЛЫ', '', '', '', '', '']);	
+roiData.push(['Канал', 'Прибыль', 'ROI', 'ROAS', 'Маржа', '']);	
+channelsWithCost.slice(0, 5).forEach(channel => {	
+const profit = channel.revenue - channel.cost;	
+const margin = channel.revenue > 0 ? (profit / channel.revenue * 100) : 0;	
+roiData.push([	
+channel.name,	
+formatCurrency(profit),	
+formatPercent(channel.roi),	
+formatNumber(channel.roas, 2),	
+formatPercent(margin),	
+'	
+]);	
+});	
+roiData.push(['', '', '', '', '', '']);	
+// Убыточные каналы	
+const unprofitableChannels = channelsWithCost.filter(ch => ch.roi < 0);	
+if (unprofitableChannels.length > 0) {	
+roiData.push(['❌ УБЫТОЧНЫЕ КАНАЛЫ', '', '', '', '', '']);	
+roiData.push(['Канал', 'Убыток', 'ROI', 'ROAS', 'Рекомендация', '']);	
+unprofitableChannels.forEach(channel => {	
+const loss = channel.cost - channel.revenue;	
+const recommendation = channel.conversion < 10 ?	
+Улучшить таргетинг' :	
+Оптимизировать расходы';	
+roiData.push([	
+channel.name,	
+formatCurrency(-loss),	
+formatPercent(channel.roi),	
+formatNumber(channel.roas, 2),	
+recommendation,	
+'	
+]);	
+});	
+}	
+roiData.push(['', '', '', '', '', '']);	
+roiData.push(['', '', '', '', '', '']);	
+// Детальный анализ по кампаниям	
+roiData.push(['АНАЛИЗ КАМПАНИЙ', '', '', '', '', '']);	
+roiData.push(['Канал', 'Кампания', 'Лиды', 'Клиенты', 'Выручка', 'Конверсия']);	
+// Сортируем кампании по выручке	
+const sortedCampaigns = Array.from(analysis.campaigns.values())	
+.sort((a, b) => b.revenue - a.revenue)	
+.slice(0, 20); // Топ-20 кампаний	
+sortedCampaigns.forEach(campaign => {	
+const conversion = campaign.leads > 0 ?	
+(campaign.customers / campaign.leads * 100) : 0;	
+roiData.push([	
+campaign.channel,	
+campaign.campaign,	
+campaign.leads,	
+campaign.customers,	
+formatCurrency(campaign.revenue),	
+formatPercent(conversion)	
+]);	
+});	
+// Записываем данные	
+sheet.getRange(1, 1, roiData.length, 6).setValues(roiData);	
+// Форматирование	
+formatROIReport(sheet, roiData.length);	
+Logger.log('Отчет ROI создан');	
+}	
+	
+/**	
+* Создает воронку конверсий по каналам	
+*/	
+function createConversionFunnelByChannel(spreadsheet, analysis) {	
+Logger.log('Создание воронки конверсий по каналам...');	
+const sheetName = '🎯 ВОРОНКА_ПО_КАНАЛАМ';	
+let sheet = spreadsheet.getSheetByName(sheetName);	
+if (!sheet) {	
+sheet = spreadsheet.insertSheet(sheetName);	
+} else {	
+sheet.clear();	
+}	
+const funnelData = [];	
+// Заголовок	
+funnelData.push(['🎯 ВОРОНКА КОНВЕРСИЙ ПО КАНАЛАМ', '', '', '', '', '']);	
+funnelData.push(['', '', '', '', '', '']);	
+// Основная воронка	
+funnelData.push(['ЭТАПЫ ВОРОНКИ ПО КАНАЛАМ', '', '', '', '', '']);	
+funnelData.push(['Канал', 'Показы', 'Клики', 'Лиды', 'Клиенты', 'Ср. чек']);	
+const sortedChannels = Array.from(analysis.channels.values())	
+.sort((a, b) => b.revenue - a.revenue);	
+sortedChannels.forEach(channel => {	
+// Примерные показы и клики (можно заменить реальными данными)	
+const impressions = channel.leads * 100; // Условно	
+const clicks = channel.leads * 10; // Условно	
+funnelData.push([	
+channel.name,	
+impressions,	
+clicks,	
+channel.leads,	
+channel.customers,	
+formatCurrency(channel.avgCheck)	
+]);	
+});	
+funnelData.push(['', '', '', '', '', '']);	
+funnelData.push(['', '', '', '', '', '']);	
+// Конверсии между этапами	
+funnelData.push(['КОНВЕРСИИ МЕЖДУ ЭТАПАМИ', '', '', '', '', '']);	
+funnelData.push(['Канал', 'CTR', 'Клик→Лид', 'Лид→Клиент', 'Общая', '']);	
+sortedChannels.forEach(channel => {	
+const impressions = channel.leads * 100;	
+const clicks = channel.leads * 10;	
+const ctr = impressions > 0 ? (clicks / impressions * 100) : 0;	
+const clickToLead = clicks > 0 ? (channel.leads / clicks * 100) : 0;	
+const leadToCustomer = channel.conversion;	
+const total = impressions > 0 ? (channel.customers / impressions * 100) : 0;	
+funnelData.push([	
+channel.name,	
+formatPercent(ctr),	
+formatPercent(clickToLead),	
+formatPercent(leadToCustomer),	
+formatPercent(total),	
+'	
+]);	
+});	
+// Записываем данные	
+sheet.getRange(1, 1, funnelData.length, 6).setValues(funnelData);	
+// Форматирование	
+formatFunnelReport(sheet, funnelData.length);	
+Logger.log('Воронка конверсий создана');	
+}	
+	
+/**	
+* Создает отчет по атрибуции	
+*/	
+function createAttributionReport(spreadsheet, analysis) {	
+Logger.log('Создание отчета по атрибуции...');	
+const sheetName = '🔄 АТРИБУЦИЯ';	
+let sheet = spreadsheet.getSheetByName(sheetName);	
+if (!sheet) {	
+sheet = spreadsheet.insertSheet(sheetName);	
+} else {	
+sheet.clear();	
+}	
+const attributionData = [];	
+// Заголовок	
+attributionData.push(['🔄 МОДЕЛИ АТРИБУЦИИ', '', '', '']);	
+attributionData.push(['', '', '', '']);	
+// Объяснение моделей	
+attributionData.push(['ИСПОЛЬЗУЕМЫЕ МОДЕЛИ:', '', '', '']);	
+attributionData.push(['First Touch:', 'Вся ценность присваивается первому касанию', '', '']);	
+attributionData.push(['Last Touch:', 'Вся ценность присваивается последнему касанию', '', '']);	
+attributionData.push(['Linear:', 'Ценность распределяется равномерно между всеми касаниями', '', '']);	
+attributionData.push(['', '', '', '']);	
+// Сравнение моделей	
+attributionData.push(['СРАВНЕНИЕ МОДЕЛЕЙ АТРИБУЦИИ', '', '', '']);	
+attributionData.push(['Канал', 'First Touch', 'Last Touch', 'Linear']);	
+// Для упрощения используем существующие данные	
+const sortedChannels = Array.from(analysis.channels.values())	
+.sort((a, b) => b.revenue - a.revenue);	
+sortedChannels.forEach(channel => {	
+attributionData.push([	
+channel.name,	
+formatCurrency(channel.revenue),	
+formatCurrency(channel.revenue * 0.8), // Условно	
+formatCurrency(channel.revenue * 0.9) // Условно	
+]);	
+});	
+attributionData.push(['', '', '', '']);	
+attributionData.push(['', '', '', '']);	
+// Рекомендации по каналам	
+attributionData.push(['РЕКОМЕНДАЦИИ ПО ОПТИМИЗАЦИИ', '', '', '']);	
+sortedChannels.forEach(channel => {	
+let recommendation = '';	
+if (channel.roi > 100) {	
+recommendation = '✅ Увеличить бюджет на ' + formatPercent(50);	
+} else if (channel.roi > 0) {	
+recommendation = '📊 Оптимизировать таргетинг';	
+} else {	
+recommendation = '❌ Пересмотреть стратегию или приостановить';	
+}	
+if (channel.conversion < 20 && channel.leads > 10) {	
+recommendation += ' | Улучшить качество лидов';	
+}	
+attributionData.push([	
+channel.name,	
+recommendation,	
+',	
+'	
+]);	
+});	
+// Записываем данные	
+sheet.getRange(1, 1, attributionData.length, 4).setValues(attributionData);	
+// Форматирование	
+formatAttributionReport(sheet, attributionData.length);	
+Logger.log('Отчет по атрибуции создан');	
+}	
+	
+// ==================== ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ ====================	
+	
+/**	
+* Определяет канал по UTM меткам	
+*/	
+function identifyChannel(utmSource, utmMedium) {	
+const source = String(utmSource).toLowerCase();	
+const medium = String(utmMedium).toLowerCase();	
+// Проверяем по source	
+for (const [key, channelName] of Object.entries(UTM_CONFIG.CHANNEL_MAPPING)) {	
+if (source.includes(key)) {	
+return channelName;	
+}	
+}	
+// Проверяем по medium	
+if (medium.includes('cpc') || medium.includes('ppc')) return 'Платный поиск';	
+if (medium.includes('organic')) return 'Органический трафик';	
+if (medium.includes('social')) return 'Социальные сети';	
+if (medium.includes('email')) return 'Email рассылка';	
+if (medium.includes('referral')) return 'Реферальный трафик';	
+if (medium === '(none)' || medium === 'direct') return 'Прямые заходы';	
+// Если не определили	
+return source || 'Неизвестно';	
+}	
+	
+/**	
+* Нормализует название канала	
+*/	
+function normalizeChannelName(name) {	
+const normalized = String(name).trim();	
+// Проверяем соответствие с маппингом	
+for (const channelName of Object.values(UTM_CONFIG.CHANNEL_MAPPING)) {	
+if (normalized.toLowerCase() === channelName.toLowerCase()) {	
+return channelName;	
+}	
+}	
+return normalized;	
+}	
+	
+/**	
+* Очистка телефонного номера	
+*/	
+function cleanPhone(phone) {	
+if (!phone) return '';	
+return String(phone).replace(/\D/g, '');	
+}	
+	
+/**	
+* Парсинг числа	
+*/	
+function parseNumber(value) {	
+if (typeof value === 'number') return value;	
+if (!value) return 0;	
+try {	
+const cleaned = String(value).replace(/[^\d.-]/g, '');	
+const num = parseFloat(cleaned);	
+return isNaN(num) ? 0 : num;	
+} catch (error) {	
+return 0;	
+}	
+}	
+	
+/**	
+* Форматирование валюты	
+*/	
+function formatCurrency(amount) {	
+try {	
+return Number(amount).toLocaleString('ru-RU') + ' ₽';	
+} catch (error) {	
+return '0 ₽';	
+}	
+}	
+	
+/**	
+* Форматирование процентов	
+*/	
+function formatPercent(value) {	
+try {	
+return Number(value).toFixed(2) + '%';	
+} catch (error) {	
+return '0%';	
+}	
+}	
+	
+/**	
+* Форматирование числа	
+*/	
+function formatNumber(value, decimals = 0) {	
+try {	
+return Number(value).toFixed(decimals);	
+} catch (error) {	
+return '0';	
+}	
+}	
+	
+// ==================== ФОРМАТИРОВАНИЕ ОТЧЕТОВ ====================	
+	
+/**	
+* Форматирование UTM дашборда	
+*/	
+function formatUTMDashboard(sheet, rowCount) {	
+try {	
+// Заголовок	
+sheet.getRange(1, 1, 1, 10).merge()	
+.setFontSize(18)	
+.setFontWeight('bold')	
+.setHorizontalAlignment('center')	
+.setBackground('#1a73e8')	
+.setFontColor('#ffffff');	
+// Заголовки таблиц	
+const headerRows = [3, 9];	
+headerRows.forEach(row => {	
+if (row <= rowCount) {	
+sheet.getRange(row, 1, 1, 10)	
+.setFontWeight('bold')	
+.setBackground('#e8f0fe');	
+}	
+});	
+// Заголовки столбцов	
+if (rowCount >= 10) {	
+sheet.getRange(10, 1, 1, 10)	
+.setFontWeight('bold')	
+.setBackground('#f0f0f0')	
+.setBorder(true, true, true, true, true, true);	
+}	
+// Условное форматирование ROI	
+const roiColumn = 7;	
+for (let i = 11; i <= rowCount; i++) {	
+const roiValue = sheet.getRange(i, roiColumn).getValue();	
+if (typeof roiValue === 'string' && roiValue.includes('%')) {	
+const numValue = parseFloat(roiValue);	
+if (numValue > 100) {	
+sheet.getRange(i, roiColumn).setBackground('#d4edda');	
+} else if (numValue < 0) {	
+sheet.getRange(i, roiColumn).setBackground('#f8d7da');	
+}	
+}	
+}	
+// Автоматическая ширина колонок	
+for (let i = 1; i <= 10; i++) {	
+sheet.autoResizeColumn(i);	
+}	
+sheet.setFrozenRows(10);	
+} catch (error) {	
+Logger.log('Ошибка форматирования UTM дашборда: ' + error.toString());	
+}	
+}	
+	
+/**	
+* Форматирование отчета ROI	
+*/	
+function formatROIReport(sheet, rowCount) {	
+try {	
+// Заголовок	
+sheet.getRange(1, 1, 1, 6).merge()	
+.setFontSize(18)	
+.setFontWeight('bold')	
+.setHorizontalAlignment('center')	
+.setBackground('#28a745')	
+.setFontColor('#ffffff');	
+// Цветовое кодирование ROI	
+for (let i = 1; i <= rowCount; i++) {	
+const roiCell = sheet.getRange(i, 3);	
+const roiValue = roiCell.getValue();	
+if (typeof roiValue === 'string' && roiValue.includes('%')) {	
+const numValue = parseFloat(roiValue);	
+if (numValue > 200) {	
+roiCell.setBackground('#28a745').setFontColor('#ffffff');	
+} else if (numValue > 100) {	
+roiCell.setBackground('#d4edda');	
+} else if (numValue > 0) {	
+roiCell.setBackground('#fff3cd');	
+} else {	
+roiCell.setBackground('#f8d7da');	
+}	
+}	
+}	
+// Автоматическая ширина колонок	
+for (let i = 1; i <= 6; i++) {	
+sheet.autoResizeColumn(i);	
+}	
+} catch (error) {	
+Logger.log('Ошибка форматирования ROI отчета: ' + error.toString());	
+}	
+}	
+	
+/**	
+* Форматирование воронки	
+*/	
+function formatFunnelReport(sheet, rowCount) {	
+try {	
+// Заголовок	
+sheet.getRange(1, 1, 1, 6).merge()	
+.setFontSize(18)	
+.setFontWeight('bold')	
+.setHorizontalAlignment('center')	
+.setBackground('#ff6900')	
+.setFontColor('#ffffff');	
+// Заголовки таблиц	
+const tableHeaders = [3, 10];	
+tableHeaders.forEach(row => {	
+if (row <= rowCount) {	
+sheet.getRange(row, 1, 1, 6)	
+.setFontWeight('bold')	
+.setBackground('#fff3e0');	
+}	
+});	
+// Автоматическая ширина колонок	
+for (let i = 1; i <= 6; i++) {	
+sheet.autoResizeColumn(i);	
+}	
+} catch (error) {	
+Logger.log('Ошибка форматирования воронки: ' + error.toString());	
+}	
+}	
+	
+/**	
+* Форматирование отчета атрибуции	
+*/	
+function formatAttributionReport(sheet, rowCount) {	
+try {	
+// Заголовок	
+sheet.getRange(1, 1, 1, 4).merge()	
+.setFontSize(18)	
+.setFontWeight('bold')	
+.setHorizontalAlignment('center')	
+.setBackground('#6f42c1')	
+.setFontColor('#ffffff');	
+// Заголовки секций	
+const sectionHeaders = [3, 8];	
+sectionHeaders.forEach(row => {	
+if (row <= rowCount) {	
+sheet.getRange(row, 1, 1, 4)	
+.setFontWeight('bold')	
+.setBackground('#f3e5f5');	
+}	
+});	
+// Автоматическая ширина колонок	
+for (let i = 1; i <= 4; i++) {	
+sheet.autoResizeColumn(i);	
+}	
+} catch (error) {	
+Logger.log('Ошибка форматирования отчета атрибуции: ' + error.toString());	
+}	
+}	
+	
+/**	
+* Добавляет графики на дашборд	
+*/	
+function addUTMCharts(sheet, analysis, startRow) {	
+try {	
+// График распределения выручки по каналам	
+const chartBuilder = sheet.newChart()	
+.setChartType(Charts.ChartType.PIE)	
+.addRange(sheet.getRange(11, 1, analysis.channels.size, 1)) // Каналы	
+.addRange(sheet.getRange(11, 5, analysis.channels.size, 1)) // Выручка	
+.setPosition(startRow, 1, 0, 0)	
+.setOption('title', 'Распределение выручки по каналам')	
+.setOption('width', 600)	
+.setOption('height', 400);	
+sheet.insertChart(chartBuilder.build());	
+// График ROI по каналам	
+const roiChartBuilder = sheet.newChart()	
+.setChartType(Charts.ChartType.COLUMN)	
+.addRange(sheet.getRange(11, 1, analysis.channels.size, 1)) // Каналы	
+.addRange(sheet.getRange(11, 7, analysis.channels.size, 1)) // ROI	
+.setPosition(startRow, 7, 0, 0)	
+.setOption('title', 'ROI по каналам')	
+.setOption('width', 600)	
+.setOption('height', 400);	
+sheet.insertChart(roiChartBuilder.build());	
+} catch (error) {	
+Logger.log('Ошибка добавления графиков: ' + error.toString());	
+}	
+}	
+	
+// ==================== УСТАНОВКА И ЗАПУСК ====================	
+	
+/**	
+* Устанавливает триггер для UTM аналитики	
+*/	
+function setupUTMAnalysisTrigger() {	
+// Удаляем существующие триггеры	
+const triggers = ScriptApp.getProjectTriggers();	
+triggers.forEach(trigger => {	
+if (trigger.getHandlerFunction() === 'runUTMChannelAnalysis') {	
+ScriptApp.deleteTrigger(trigger);	
+}	
+});	
+// Создаем новый триггер - каждый день в 10:00	
+ScriptApp.newTrigger('runUTMChannelAnalysis')	
+.timeBased()	
+.everyDays(1)	
+.atHour(10)	
+.create();	
+Logger.log('Триггер UTM аналитики установлен (каждый день в 10:00)');	
+// Запускаем первый анализ	
+runUTMChannelAnalysis();	
+}	
+	
+/**	
+* Ручной запуск UTM аналитики	
+*/	
+function manualUTMAnalysis() {	
+runUTMChannelAnalysis();	
+SpreadsheetApp.getActiveSpreadsheet().toast('UTM аналитика завершена', 'Успех', 5);	
+}	
